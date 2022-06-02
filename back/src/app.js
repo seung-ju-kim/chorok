@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { specs } from "./config/swaggerDoc.js";
+import {errorMiddleware}  from "./middlewares/errorMiddleware.js";
 const app = express();
 
 // CORS 에러 방지
@@ -21,5 +21,5 @@ app.use(express.json({
 app.get("/", (req, res) => {
     res.send("안녕하세요, AI프로젝트 3팀 서버입니다.");
 });
-
+app.use(errorMiddleware);
 export { app };
