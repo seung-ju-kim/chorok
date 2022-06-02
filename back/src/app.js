@@ -1,6 +1,5 @@
 import cors from "cors";
 import express from "express";
-import swaggerUi from 'swagger-ui-express'
 import { specs } from "./config/swaggerDoc.js";
 const app = express();
 
@@ -17,12 +16,7 @@ app.use(express.json({
     limit: "5mb",
     extended: false 
 }));
-app.use(
-    "/swagger",
-    swaggerUi.serve,
-    swaggerUi.setup(specs, { explorer: true })
-  );
-  
+
 // 기본 페이지
 app.get("/", (req, res) => {
     res.send("안녕하세요, AI프로젝트 3팀 서버입니다.");
