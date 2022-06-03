@@ -1,16 +1,13 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Button, Toolbar, Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+import home from "../imgs/home.png";
+import search from "../imgs/search.png";
+import social from "../imgs/social.png";
+import mypage from "../imgs/mypage.png";
 
 const lightTheme = createTheme({
   palette: {
@@ -42,52 +39,48 @@ function Footer() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Button sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
           <Toolbar sx={{ textAlign: "center" }}>
             <Button
+              component="div"
               onClick={() => {
                 navigate("/");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
             >
-              홈
+              <Box component="img" src={home}></Box>
             </Button>
             <Button
+              component="div"
               onClick={() => {
                 navigate("/search");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
             >
-              검색
+              <Box component="img" src={search}></Box>
             </Button>
             <Button
+              component="div"
               onClick={() => {
                 navigate("/social");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
             >
-              소셜
+              <Box component="img" src={social}></Box>
             </Button>
             <Button
+              component="div"
               onClick={() => {
                 navigate("/mypage");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
             >
-              마이페이지
+              <Box component="img" src={mypage}></Box>
             </Button>
           </Toolbar>
         </AppBar>
-      </Box>
+      </Button>
     </ThemeProvider>
   );
 }

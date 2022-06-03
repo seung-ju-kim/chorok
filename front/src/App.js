@@ -57,6 +57,7 @@ function App() {
       <UserStateContext.Provider value={userState}>
         <Router>
           <Header />
+          <Footer />
           <Routes>
             <Route path="/" exact element={<Mainpage />} />
             <Route path="/search" exact element={<Searchpage />} />
@@ -64,7 +65,6 @@ function App() {
             <Route path="/mypage" exact element={<Mypage />} />
             <Route path="*" element={<Mainpage />} />
           </Routes>
-          <Footer />
         </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
