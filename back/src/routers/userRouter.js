@@ -5,6 +5,32 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
+
+/**
+ * @swagger
+ * paths:
+ *   /user/register:
+ *     post:
+ *       tag: user
+ *       summary: 유저를 등록합니다.
+ *       description: |
+ *         # 유저 등록
+ *         유저 정보를 전달받아 회원가입을 진행합니다.
+ *       requestBody:
+ *         content: 
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/user"
+ *             example:
+ *               name: elice
+ *               email: elice@elice.com
+ *               password: 1234567!
+ *       response:
+ *         "201":
+ *           description: 정상적으로 회원가입이 되었습니다.
+ */
+
+
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
