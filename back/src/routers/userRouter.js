@@ -3,6 +3,12 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
+/**
+ * @swagger
+ * tags:
+ *   name: user
+ */
+
 const userAuthRouter = Router();
 
 
@@ -11,7 +17,7 @@ const userAuthRouter = Router();
  * paths:
  *   /user/register:
  *     post:
- *       tag: user
+ *       tags: [user]
  *       summary: 유저를 등록합니다.
  *       description: |
  *         # 유저 등록
@@ -20,7 +26,7 @@ const userAuthRouter = Router();
  *         content: 
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/user"
+ *               $ref: "#/components/schemas/User"
  *             example:
  *               name: elice
  *               email: elice@elice.com

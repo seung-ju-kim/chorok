@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
  * @swagger
  * components:
  *   schemas: 
- *     user: 
+ *     User: 
  *       type: obejct
  *       required:
  *         - id
