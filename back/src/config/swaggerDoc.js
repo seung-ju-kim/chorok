@@ -6,9 +6,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "version 3.0 team API Docs",
+      title: "3팀 version 3.0 API Docs",
       version: "1.0.0",
-      description: "Elice 4th 3team ",
+      description: "3팀 version 3.0의 API 문서입니다. ",
     },
     components: {
       securitySchemes: {
@@ -24,7 +24,7 @@ const options = {
   },
   swagger: "2.0",
   basePath: "localhost:5005/",
-  apis: [__dirname + "/src/routers/*.js", __dirname + "/src/swagger/*"],
+  apis: [__dirname + "/src/routers/*.js", __dirname + "/src/db/schemas/*.js"],
 };
 
 export const specs = swaggerJSDoc(options);
