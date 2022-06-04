@@ -8,27 +8,25 @@ import {
 } from "@mui/material";
 import test from "../../imgs/testplant.png";
 import * as Api from "../../api.js";
+import { useNavigate } from "react-router-dom";
 
-function SearchCardItem() {
+function SearchCardItem({ card }) {
+  const navigate = useNavigate();
   // const [myPlants, setMyPlants] = useState([]);
   // useEffect(async () => {
   //   await Api.get("/").then((res) => setMyPlants(res.data));
   // }, []);
   return (
-    <Card>
-      <CardActionArea>
-        <CardMedia component="img" image={test} alt="test" />
-        <CardContent>
-          <Typography
-            textAlign="center"
-            gutterBottom
-            variant="h6"
-            component="div"
-          >
-            고무나무
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+    <Card
+      onClick={() => navigate(`/search/${card.name}`)}
+      sx={{ cursor: "pointer" }}
+    >
+      <CardMedia component="img" image={test} alt="test" />
+      <CardContent>
+        <Typography textAlign="center" variant="h6" component="div">
+          {card.name}
+        </Typography>
+      </CardContent>
     </Card>
   );
 }

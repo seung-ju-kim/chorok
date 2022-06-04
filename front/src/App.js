@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Mainpage from "./pages/Mainpage";
 import Mypage from "./pages/Mypage";
 import Searchpage from "./pages/Searchpage";
+import DetailSearchpage from "./components/search/DetailSearchpage";
 import Socialpage from "./pages/Socialpage";
 
 export const UserStateContext = createContext(null);
@@ -61,6 +62,11 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Mainpage />} />
             <Route path="/search" exact element={<Searchpage />} />
+            <Route
+              path="/search/:plantName"
+              exact
+              element={<DetailSearchpage />}
+            />
             <Route path="/social" exact element={<Socialpage />} />
             <Route path="/mypage" exact element={<Mypage />} />
             <Route path="*" element={<Mainpage />} />

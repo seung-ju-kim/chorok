@@ -45,11 +45,7 @@ function Header() {
       <Box sx={{ flexGrow: 1, mb: 3 }}>
         <AppBar position="fixed" elevation={0}>
           <Toolbar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, ml: 3 }}
-            >
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Box component="img" src={logo} width="30px" sx={{ my: 2 }} />
             </Typography>
             <IconButton

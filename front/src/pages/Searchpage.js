@@ -5,7 +5,7 @@ import SearchBar from "../components/search/SearchBar";
 import PopularPlants from "../components/search/PopularPlants";
 function Searchpage() {
   return (
-    <Box sx={{ my: 10 }}>
+    <Box sx={{ mt: 5, mb: 8 }}>
       <SearchBar />
       <PopularPlants />
       <SearchCardList />

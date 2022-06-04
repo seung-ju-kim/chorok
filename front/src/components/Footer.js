@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import { AppBar, Button, Toolbar, Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-import home from "../imgs/home.png";
-import search from "../imgs/search.png";
-import social from "../imgs/social.png";
-import mypage from "../imgs/mypage.png";
-
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -42,42 +40,30 @@ function Footer() {
       <Button sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
           <Toolbar sx={{ textAlign: "center" }}>
-            <Button
-              component="div"
+            <HomeOutlinedIcon
               onClick={() => {
                 navigate("/");
               }}
               sx={{ flexGrow: 1 }}
-            >
-              <Box component="img" src={home}></Box>
-            </Button>
-            <Button
-              component="div"
+            ></HomeOutlinedIcon>
+            <SearchIcon
               onClick={() => {
                 navigate("/search");
               }}
               sx={{ flexGrow: 1 }}
-            >
-              <Box component="img" src={search}></Box>
-            </Button>
-            <Button
-              component="div"
+            ></SearchIcon>
+            <LocalFloristOutlinedIcon
               onClick={() => {
                 navigate("/social");
               }}
               sx={{ flexGrow: 1 }}
-            >
-              <Box component="img" src={social}></Box>
-            </Button>
-            <Button
-              component="div"
+            ></LocalFloristOutlinedIcon>
+            <PersonOutlineIcon
               onClick={() => {
                 navigate("/mypage");
               }}
               sx={{ flexGrow: 1 }}
-            >
-              <Box component="img" src={mypage}></Box>
-            </Button>
+            ></PersonOutlineIcon>
           </Toolbar>
         </AppBar>
       </Button>
