@@ -3,7 +3,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 
-function RegisterForm() {
+const RegisterForm = () => {
   const navigate = useNavigate();
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -56,7 +56,7 @@ function RegisterForm() {
   };
 
   return (
-    <Box sx={{ px: 2, mt: 3 }}>
+    <Box sx={{ px: 5, mt: 3 }}>
       <Typography variant="h6" textAlign="center">
         초록에 오신 것을 환영합니다.
       </Typography>
@@ -104,7 +104,7 @@ function RegisterForm() {
         sx={{
           bgcolor: "#64a68a",
           color: "white",
-          mt: 40,
+          mt: 20,
         }}
         size="large"
         disabled={!isFormValid}
@@ -113,6 +113,6 @@ function RegisterForm() {
       </Button>
     </Box>
   );
-}
+};
 
 export default RegisterForm;

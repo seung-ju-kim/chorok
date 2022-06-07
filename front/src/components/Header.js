@@ -22,7 +22,7 @@ const lightTheme = createTheme({
   },
 });
 
-function Header() {
+const Header = () => {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -69,6 +69,6 @@ function Header() {
       </Box>
     </ThemeProvider>
   );
-}
+};
 
 export default Header;

@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import video from "../video/main.mp4";
 import LoginForm from "../components/user/LoginForm";
 
-function Loginpage() {
+const Loginpage = () => {
   // style
   const boxStyle = {
     color: "white",
@@ -14,10 +14,9 @@ function Loginpage() {
     zIndex: 3,
   };
   const videoBoxStyle = {
-    width: "100%",
-    height: "100%",
+    width: "100vw",
+    height: "100vh",
     display: "block",
-
     "&::before": {
       content: "''",
       top: 0,
@@ -28,6 +27,7 @@ function Loginpage() {
       opacity: "0.5",
       position: "absolute",
     },
+    overflowY: "hidden",
   };
   const videoStyle = {
     width: "100vw",
@@ -59,6 +59,6 @@ function Loginpage() {
       </Box>
     </>
   );
-}
+};
 
 export default Loginpage;

@@ -16,7 +16,7 @@ const lightTheme = createTheme({
   },
 });
 
-function Footer() {
+const Footer = () => {
   const navigate = useNavigate();
 
   const userState = useContext(UserStateContext);
@@ -69,6 +69,6 @@ function Footer() {
       </Button>
     </ThemeProvider>
   );
-}
+};
 
 export default Footer;
