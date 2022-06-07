@@ -37,36 +37,54 @@ const Footer = () => {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Button sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
-          <Toolbar sx={{ textAlign: "center" }}>
-            <CalendarMonthOutlinedIcon
-              onClick={() => {
-                navigate("/");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></CalendarMonthOutlinedIcon>
-            <FenceOutlinedIcon
-              onClick={() => {
-                navigate("/mygarden");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></FenceOutlinedIcon>
-            <ForumOutlinedIcon
-              onClick={() => {
-                navigate("/community");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></ForumOutlinedIcon>
-            <SpaOutlinedIcon
-              onClick={() => {
-                navigate("/diagnosis");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></SpaOutlinedIcon>
-          </Toolbar>
-        </AppBar>
-      </Button>
+      <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
+        <Toolbar sx={{ textAlign: "center" }}>
+          <Button
+            sx={{
+              flexGrow: 1,
+              color: "#404040",
+            }}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <CalendarMonthOutlinedIcon />
+          </Button>
+          <Button
+            sx={{
+              flexGrow: 1,
+              color: "#404040",
+            }}
+            onClick={() => {
+              navigate("/mygarden");
+            }}
+          >
+            <FenceOutlinedIcon />
+          </Button>
+          <Button
+            sx={{
+              flexGrow: 1,
+              color: "#404040",
+            }}
+            onClick={() => {
+              navigate("/community");
+            }}
+          >
+            <ForumOutlinedIcon />
+          </Button>
+          <Button
+            sx={{
+              flexGrow: 1,
+              color: "#404040",
+            }}
+            onClick={() => {
+              navigate("/diagnosis");
+            }}
+          >
+            <SpaOutlinedIcon />
+          </Button>
+        </Toolbar>
+      </AppBar>
     </ThemeProvider>
   );
 };

@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
+import Accountpage from "./pages/Accountpage";
 import Schedule from "./pages/Schedule";
 import MyGarden from "./pages/MyGarden";
 import Diagnosis from "./pages/Diagnosis";
@@ -67,6 +68,7 @@ function App() {
           <Routes>
             <Route path="/login" exact element={<Loginpage />} />
             <Route path="/register" exact element={<Registerpage />} />
+            <Route path="/account" exact element={<Accountpage />} />
             <Route path="/" exact element={<Schedule />} />
             <Route path="/mygarden" exact element={<MyGarden />} />
             <Route path="/community" exact element={<Community />} />

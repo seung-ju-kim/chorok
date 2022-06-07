@@ -93,7 +93,7 @@ function LoginForm() {
       <TextField
         autoComplete="off"
         required
-        sx={{ mt: 2, bgcolor: "white" }}
+        sx={{ mt: 2, bgcolor: "white", width: "80vw" }}
         margin="dense"
         label="Password"
         type="password"
@@ -103,10 +103,17 @@ function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Box textAlign="center" sx={{ mt: 3 }}>
+      <Box textAlign="center" sx={{ mt: 3, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
-          sx={{ bgcolor: "#64a68a", color: "white" }}
+          sx={{
+            bgcolor: "#64a68a",
+            color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
+          }}
           size="large"
           type="submit"
           disabled={!isFormValid}
@@ -114,12 +121,16 @@ function LoginForm() {
           Login
         </Button>
       </Box>
-      <Box textAlign="center" sx={{ mt: 1 }}>
+      <Box textAlign="center" sx={{ mt: 2, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
           sx={{
             bgcolor: "#64a68a",
             color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
           }}
           size="large"
           onClick={() => {

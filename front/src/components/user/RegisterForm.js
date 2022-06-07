@@ -78,6 +78,19 @@ const RegisterForm = () => {
         required
         sx={{ mt: 2, bgcolor: "white" }}
         margin="dense"
+        label="password"
+        type="Password"
+        fullWidth
+        variant="outlined"
+        color="success"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <TextField
+        autoComplete="off"
+        required
+        sx={{ mt: 2, bgcolor: "white" }}
+        margin="dense"
         label="ConfirmPassword"
         type="confirmPassword"
         fullWidth
@@ -105,6 +118,10 @@ const RegisterForm = () => {
           bgcolor: "#64a68a",
           color: "white",
           mt: 20,
+          ":hover": {
+            color: "#64a68a",
+            bgcolor: "white",
+          },
         }}
         size="large"
         disabled={!isFormValid}
