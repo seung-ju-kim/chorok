@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import { AppBar, Button, Toolbar, Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -40,30 +40,30 @@ function Footer() {
       <Button sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
           <Toolbar sx={{ textAlign: "center" }}>
-            <HomeOutlinedIcon
+            <CalendarMonthOutlinedIcon
               onClick={() => {
                 navigate("/");
               }}
               sx={{ flexGrow: 1 }}
-            ></HomeOutlinedIcon>
-            <SearchIcon
+            ></CalendarMonthOutlinedIcon>
+            <FenceOutlinedIcon
               onClick={() => {
-                navigate("/search");
+                navigate("/mygarden");
               }}
               sx={{ flexGrow: 1 }}
-            ></SearchIcon>
-            <LocalFloristOutlinedIcon
+            ></FenceOutlinedIcon>
+            <ForumOutlinedIcon
               onClick={() => {
-                navigate("/social");
+                navigate("/community");
               }}
               sx={{ flexGrow: 1 }}
-            ></LocalFloristOutlinedIcon>
-            <PersonOutlineIcon
+            ></ForumOutlinedIcon>
+            <SpaOutlinedIcon
               onClick={() => {
-                navigate("/mypage");
+                navigate("/diagnosis");
               }}
               sx={{ flexGrow: 1 }}
-            ></PersonOutlineIcon>
+            ></SpaOutlinedIcon>
           </Toolbar>
         </AppBar>
       </Button>
