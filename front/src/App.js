@@ -6,10 +6,12 @@ import { loginReducer } from "./reducer";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Mainpage from "./pages/Mainpage";
-import Mypage from "./pages/Mypage";
-import Searchpage from "./pages/Searchpage";
-import Socialpage from "./pages/Socialpage";
+import Loginpage from "./pages/Loginpage";
+import Registerpage from "./pages/Registerpage";
+import Schedule from "./pages/Schedule";
+import MyGarden from "./pages/MyGarden";
+import Diagnosis from "./pages/Diagnosis";
+import Community from "./pages/Community";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -51,20 +53,26 @@ function App() {
   if (!isFetchCompleted) {
     return "loading...";
   }
-
+  const { pathname } = window.location;
+  const HideHeader =
+    pathname === "/login" || pathname === "/register" ? null : <Header />;
+  const HideFooter =
+    pathname === "/login" || pathname === "/register" ? null : <Footer />;
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
         <Router>
-          <Header />
+          {HideHeader}
+          {HideFooter}
           <Routes>
-            <Route path="/" exact element={<Mainpage />} />
-            <Route path="/search" exact element={<Searchpage />} />
-            <Route path="/social" exact element={<Socialpage />} />
-            <Route path="/mypage" exact element={<Mypage />} />
-            <Route path="*" element={<Mainpage />} />
+            <Route path="/login" exact element={<Loginpage />} />
+            <Route path="/register" exact element={<Registerpage />} />
+            <Route path="/" exact element={<Schedule />} />
+            <Route path="/mygarden" exact element={<MyGarden />} />
+            <Route path="/community" exact element={<Community />} />
+            <Route path="/diagnosis" exact element={<Diagnosis />} />
+            <Route path="*" element={<Schedule />} />
           </Routes>
-          <Footer />
         </Router>
       </UserStateContext.Provider>
     </DispatchContext.Provider>

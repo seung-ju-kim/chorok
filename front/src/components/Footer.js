@@ -1,17 +1,12 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Button, Toolbar, Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -42,52 +37,36 @@ function Footer() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Button sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
           <Toolbar sx={{ textAlign: "center" }}>
-            <Button
+            <CalendarMonthOutlinedIcon
               onClick={() => {
                 navigate("/");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
-            >
-              홈
-            </Button>
-            <Button
+            ></CalendarMonthOutlinedIcon>
+            <FenceOutlinedIcon
               onClick={() => {
-                navigate("/search");
+                navigate("/mygarden");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
-            >
-              검색
-            </Button>
-            <Button
+            ></FenceOutlinedIcon>
+            <ForumOutlinedIcon
               onClick={() => {
-                navigate("/social");
+                navigate("/community");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
-            >
-              소셜
-            </Button>
-            <Button
+            ></ForumOutlinedIcon>
+            <SpaOutlinedIcon
               onClick={() => {
-                navigate("/mypage");
+                navigate("/diagnosis");
               }}
-              variant="h6"
-              component="div"
               sx={{ flexGrow: 1 }}
-            >
-              마이페이지
-            </Button>
+            ></SpaOutlinedIcon>
           </Toolbar>
         </AppBar>
-      </Box>
+      </Button>
     </ThemeProvider>
   );
 }

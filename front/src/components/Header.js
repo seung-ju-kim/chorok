@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import logo from "../imgs/logo.png";
 
 const lightTheme = createTheme({
   palette: {
@@ -23,8 +24,6 @@ const lightTheme = createTheme({
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
-
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 
@@ -40,14 +39,22 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
-
+  if (window.location.path === "/login") return null;
   return (
     <ThemeProvider theme={lightTheme}>
       <Box sx={{ flexGrow: 1, mb: 3 }}>
         <AppBar position="fixed" elevation={0}>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Logo
+              <Box
+                component="img"
+                src={logo}
+                width="30px"
+                sx={{ my: 2, cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
             </Typography>
             <IconButton
               size="large"
