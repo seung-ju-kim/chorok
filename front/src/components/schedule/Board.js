@@ -42,14 +42,14 @@ const Form = styled.form`
 `;
 
 function Board({ toDos, boardId, state }) {
-  const setToDos = useState(state);
+  const [lists, setLists] = useState(state);
   const { register, setValue, handleSubmit } = useForm();
   const onValid = ({ toDo }) => {
     const newToDo = {
       id: Date.now(),
       text: toDo,
     };
-    setToDos((allBoards) => {
+    setLists((allBoards) => {
       return {
         ...allBoards,
         [boardId]: [...allBoards[boardId], newToDo],
