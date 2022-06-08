@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     id: {
       type: String,
       required: true,
+      index : true
     },
     email: {
       type: String,
