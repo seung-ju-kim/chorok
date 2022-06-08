@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import video from "../video/main.mp4";
+import video from "../video/main.webm";
 import LoginForm from "../components/user/LoginForm";
 
 const Loginpage = () => {
@@ -37,7 +37,7 @@ const Loginpage = () => {
   return (
     <>
       <Box sx={boxStyle}>
-        <Typography align="center" variant="h4">
+        <Typography align="center" variant="h4" fontWeight="bold">
           Chorok
         </Typography>
         <Typography align="center" fontSize="0.8rem">

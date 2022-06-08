@@ -76,7 +76,7 @@ function LoginForm() {
   };
 
   return (
-    <Box component="form" sx={boxStyle}>
+    <Box component="form" sx={boxStyle} onSubmit={handleSubmit}>
       <TextField
         autoComplete="off"
         required

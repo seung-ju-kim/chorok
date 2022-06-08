@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import logo from "../imgs/logo.png";
 
 const lightTheme = createTheme({
   palette: {
@@ -76,58 +75,40 @@ const Header = () => {
   };
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Box sx={{ flexGrow: 1, mb: 3 }}>
-        <AppBar position="fixed" elevation={0}>
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Box
-                component="img"
-                src={logo}
-                width="30px"
-                sx={{ my: 2, cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/");
-                }}
-              />
-            </Typography>
-            <IconButton
-              onClick={(e) => {
-                anchorEl ? setAnchorEl(null) : setAnchorEl(e.currentTarget);
-              }}
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              aria-controls={isMenuOpen ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={isMenuOpen ? "true" : undefined}
-            >
-              <MenuIcon />
-
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={isMenuOpen}
-                PaperProps={paperPropsStyle}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <MenuItem
-                  onClick={() => {
-                    navigate("/account");
-                  }}
-                >
-                  Account
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={logout}>Logout</MenuItem>
-              </Menu>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </ThemeProvider>
+    <Box position="fixed" sx={{ top: 20, right: 15 }}>
+      <IconButton
+        onClick={(e) => {
+          anchorEl ? setAnchorEl(null) : setAnchorEl(e.currentTarget);
+        }}
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        aria-controls={isMenuOpen ? "account-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={isMenuOpen ? "true" : undefined}
+      >
+        <MenuIcon />
+        <Menu
+          anchorEl={anchorEl}
+          id="account-menu"
+          open={isMenuOpen}
+          PaperProps={paperPropsStyle}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        >
+          <MenuItem
+            onClick={() => {
+              navigate("/account");
+            }}
+          >
+            Account
+          </MenuItem>
+          <Divider />
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        </Menu>
+      </IconButton>
+    </Box>
   );
 };
 

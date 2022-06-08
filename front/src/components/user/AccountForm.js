@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Grid, Button } from "@mui/material";
 const AccountForm = () => {
   return (
-    <Grid container sx={{ px: 2 }}>
+    <Grid container sx={{ px: 2, mt: 3 }}>
       <Grid item xs={12}>
         <Box component="img"></Box>
       </Grid>

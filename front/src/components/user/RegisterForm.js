@@ -49,15 +49,15 @@ const RegisterForm = () => {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      if (err.response.status == 400) {
+      if (err.response.status === 400) {
       }
       console.log("회원가입에 실패하였습니다.", err);
     }
   };
 
   return (
-    <Box sx={{ px: 5, mt: 3 }}>
-      <Typography variant="h6" textAlign="center">
+    <Box sx={{ px: 5, mt: 3 }} component="form" onSubmit={handleSubmit}>
+      <Typography variant="h6" textAlign="center" fontWeight="bold">
         초록에 오신 것을 환영합니다.
       </Typography>
       <TextField
@@ -92,7 +92,7 @@ const RegisterForm = () => {
         sx={{ mt: 2, bgcolor: "white" }}
         margin="dense"
         label="ConfirmPassword"
-        type="confirmPassword"
+        type="Password"
         fullWidth
         variant="outlined"
         color="success"
@@ -125,6 +125,7 @@ const RegisterForm = () => {
         }}
         size="large"
         disabled={!isFormValid}
+        type="submit"
       >
         계속하기
       </Button>

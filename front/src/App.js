@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { createTheme, ThemeProvider } from "@mui/material";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Loginpage from "./pages/Loginpage";
@@ -13,9 +12,16 @@ import Schedule from "./pages/Schedule";
 import MyGarden from "./pages/MyGarden";
 import Diagnosis from "./pages/Diagnosis";
 import Community from "./pages/Community";
+import "./App.css";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "IBM Plex Sans KR, sans-serif",
+  },
+});
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -55,29 +61,37 @@ function App() {
     return "loading...";
   }
   const { pathname } = window.location;
-  const HideHeader =
-    pathname === "/login" || pathname === "/register" ? null : <Header />;
-  const HideFooter =
-    pathname === "/login" || pathname === "/register" ? null : <Footer />;
+  const HideHeader = ["/login", "/register"].includes(
+    window.location.pathname
+  ) ? null : (
+    <Header />
+  );
+  const HideFooter = ["/login", "/register"].includes(
+    window.location.pathname
+  ) ? null : (
+    <Footer />
+  );
   return (
-    <DispatchContext.Provider value={dispatch}>
-      <UserStateContext.Provider value={userState}>
-        <Router>
-          {HideHeader}
-          {HideFooter}
-          <Routes>
-            <Route path="/login" exact element={<Loginpage />} />
-            <Route path="/register" exact element={<Registerpage />} />
-            <Route path="/account" exact element={<Accountpage />} />
-            <Route path="/" exact element={<Schedule />} />
-            <Route path="/mygarden" exact element={<MyGarden />} />
-            <Route path="/community" exact element={<Community />} />
-            <Route path="/diagnosis" exact element={<Diagnosis />} />
-            <Route path="*" element={<Schedule />} />
-          </Routes>
-        </Router>
-      </UserStateContext.Provider>
-    </DispatchContext.Provider>
+    <ThemeProvider theme={theme}>
+      <DispatchContext.Provider value={dispatch}>
+        <UserStateContext.Provider value={userState}>
+          <Router>
+            {HideHeader}
+            {HideFooter}
+            <Routes>
+              <Route path="/login" exact element={<Loginpage />} />
+              <Route path="/register" exact element={<Registerpage />} />
+              <Route path="/account" exact element={<Accountpage />} />
+              <Route path="/" exact element={<Schedule />} />
+              <Route path="/mygarden" exact element={<MyGarden />} />
+              <Route path="/community" exact element={<Community />} />
+              <Route path="/diagnosis" exact element={<Diagnosis />} />
+              <Route path="*" element={<Schedule />} />
+            </Routes>
+          </Router>
+        </UserStateContext.Provider>
+      </DispatchContext.Provider>
+    </ThemeProvider>
   );
 }
 
