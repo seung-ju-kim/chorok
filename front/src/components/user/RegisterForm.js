@@ -3,7 +3,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 
-function RegisterForm() {
+const RegisterForm = () => {
   const navigate = useNavigate();
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ function RegisterForm() {
     e.preventDefault();
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", {
+      await Api.post("users/register", {
         email,
         password,
         name,
@@ -49,15 +49,15 @@ function RegisterForm() {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
-      if (err.response.status == 400) {
+      if (err.response.status === 400) {
       }
       console.log("회원가입에 실패하였습니다.", err);
     }
   };
 
   return (
-    <Box sx={{ px: 2, mt: 3 }}>
-      <Typography variant="h6" textAlign="center">
+    <Box sx={{ px: 5, mt: 3 }} component="form" onSubmit={handleSubmit}>
+      <Typography variant="h6" textAlign="center" fontWeight="bold">
         초록에 오신 것을 환영합니다.
       </Typography>
       <TextField
@@ -78,8 +78,21 @@ function RegisterForm() {
         required
         sx={{ mt: 2, bgcolor: "white" }}
         margin="dense"
+        label="password"
+        type="Password"
+        fullWidth
+        variant="outlined"
+        color="success"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <TextField
+        autoComplete="off"
+        required
+        sx={{ mt: 2, bgcolor: "white" }}
+        margin="dense"
         label="ConfirmPassword"
-        type="confirmPassword"
+        type="Password"
         fullWidth
         variant="outlined"
         color="success"
@@ -104,15 +117,20 @@ function RegisterForm() {
         sx={{
           bgcolor: "#64a68a",
           color: "white",
-          mt: 40,
+          mt: 20,
+          ":hover": {
+            color: "#64a68a",
+            bgcolor: "white",
+          },
         }}
         size="large"
         disabled={!isFormValid}
+        type="submit"
       >
         계속하기
       </Button>
     </Box>
   );
-}
+};
 
 export default RegisterForm;
