@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
 import Accountpage from "./pages/Accountpage";
-import Schedule from "./pages/Schedule";
+import Main from "./components/Main";
 import MyGarden from "./pages/MyGarden";
 import Diagnosis from "./pages/Diagnosis";
 import Community from "./pages/Community";
@@ -79,14 +79,14 @@ function App() {
             {HideHeader}
             {HideFooter}
             <Routes>
-              <Route path="/" exact element={<Schedule />} />
+              <Route path="/" exact element={<Main />} />
               <Route path="/login" element={<Loginpage />} />
               <Route path="/register" element={<Registerpage />} />
               <Route path="/account" element={<Accountpage />} />
               <Route path="/mygarden" element={<MyGarden />} />
               <Route path="/community" element={<Community />} />
               <Route path="/diagnosis" element={<Diagnosis />} />
-              <Route path="*" element={<Schedule />} />
+              <Route path="*" element={<Main />} />
             </Routes>
           </Router>
         </UserStateContext.Provider>

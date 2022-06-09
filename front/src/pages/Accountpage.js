@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Box } from "@mui/material";
-import AccountForm from "../components/user/AccountForm";
+import AccountForm from "../components/account/AccountForm";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 const Accountpage = () => {
   const navigate = useNavigate();
   return (
