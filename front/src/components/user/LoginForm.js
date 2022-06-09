@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -10,11 +10,6 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
-  //useState로 login 실패 여부를 판단함.
-  const [isLoginFail, setIsLoginFail] = useState(false);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -42,7 +37,7 @@ function LoginForm() {
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("users/login", {
         email,
         password,
       });
@@ -59,10 +54,8 @@ function LoginForm() {
       });
 
       // 기본 페이지로 이동함.
-      // navigate('/', { replace: true });
-      window.location.replace("/");
+      navigate("/", { replace: true });
     } catch (err) {
-      setIsLoginFail(true);
       console.log("로그인에 실패하였습니다.\n", err);
     }
   };
@@ -76,7 +69,7 @@ function LoginForm() {
   };
 
   return (
-    <Box component="form" sx={boxStyle}>
+    <Box component="form" sx={boxStyle} onSubmit={handleSubmit}>
       <TextField
         autoComplete="off"
         required
@@ -90,10 +83,16 @@ function LoginForm() {
         color="success"
         onChange={(e) => setEmail(e.target.value)}
       />
+      {!isEmailValid && (
+        <Typography sx={{ color: "white" }}>
+          이메일 형식이 올바르지 않습니다.
+        </Typography>
+      )}
+
       <TextField
         autoComplete="off"
         required
-        sx={{ mt: 2, bgcolor: "white" }}
+        sx={{ mt: 2, bgcolor: "white", width: "80vw" }}
         margin="dense"
         label="Password"
         type="password"
@@ -103,10 +102,22 @@ function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Box textAlign="center" sx={{ mt: 3 }}>
+      {!isPasswordValid && (
+        <Typography sx={{ color: "white" }}>
+          비밀번호는 4글자 입니다.
+        </Typography>
+      )}
+      <Box textAlign="center" sx={{ mt: 3, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
-          sx={{ bgcolor: "#64a68a", color: "white" }}
+          sx={{
+            bgcolor: "#64a68a",
+            color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
+          }}
           size="large"
           type="submit"
           disabled={!isFormValid}
@@ -114,12 +125,16 @@ function LoginForm() {
           Login
         </Button>
       </Box>
-      <Box textAlign="center" sx={{ mt: 1 }}>
+      <Box textAlign="center" sx={{ mt: 2, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
           sx={{
             bgcolor: "#64a68a",
             color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
           }}
           size="large"
           onClick={() => {

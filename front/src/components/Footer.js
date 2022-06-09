@@ -1,74 +1,94 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserStateContext, DispatchContext } from "../App";
-import { AppBar, Button, Toolbar, Box } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Tab, Tabs, Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
-const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#ffffff",
-    },
+const StyledTabs = styled((props) => (
+  <Tabs
+    {...props}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+  />
+))({
+  "& .MuiTabs-indicator": {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  "& .MuiTabs-indicatorSpan": {
+    width: 0,
   },
 });
 
-function Footer() {
-  const navigate = useNavigate();
-
-  const userState = useContext(UserStateContext);
-  const dispatch = useContext(DispatchContext);
-
-  // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
-  const isLogin = !!userState.user;
-
-  // 로그아웃 클릭 시 실행되는 함수
-  const logout = () => {
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem("userToken");
-    // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: "LOGOUT" });
-    // 기본 페이지로 돌아감.
-    navigate("/");
-  };
-
+function LinkTab(props) {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Button sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" elevation={0} sx={{ top: "auto", bottom: 0 }}>
-          <Toolbar sx={{ textAlign: "center" }}>
-            <CalendarMonthOutlinedIcon
-              onClick={() => {
-                navigate("/");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></CalendarMonthOutlinedIcon>
-            <FenceOutlinedIcon
-              onClick={() => {
-                navigate("/mygarden");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></FenceOutlinedIcon>
-            <ForumOutlinedIcon
-              onClick={() => {
-                navigate("/community");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></ForumOutlinedIcon>
-            <SpaOutlinedIcon
-              onClick={() => {
-                navigate("/diagnosis");
-              }}
-              sx={{ flexGrow: 1 }}
-            ></SpaOutlinedIcon>
-          </Toolbar>
-        </AppBar>
-      </Button>
-    </ThemeProvider>
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
   );
 }
+
+const Footer = () => {
+  const navigate = useNavigate();
+  const [value, setValue] = useState("1");
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  return (
+    <Box
+      sx={{ position: "fixed", bottom: 0, width: "100%", typography: "body1" }}
+    >
+      <StyledTabs
+        value={value}
+        onChange={handleChange}
+        centered
+        textColor="inherit"
+      >
+        <LinkTab
+          icon={<CalendarMonthOutlinedIcon />}
+          label="Schedule"
+          value="1"
+          sx={{ fontSize: "min(2rem,3vw)" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <LinkTab
+          icon={<FenceOutlinedIcon />}
+          label="MyGarden"
+          value="2"
+          sx={{ fontSize: "min(2rem,3vw)" }}
+          onClick={() => {
+            navigate("/mygarden");
+          }}
+        />
+        <LinkTab
+          icon={<ForumOutlinedIcon />}
+          label="Community"
+          value="3"
+          sx={{ fontSize: "min(2rem,3vw)" }}
+          onClick={() => {
+            navigate("/community");
+          }}
+        />
+        <LinkTab
+          icon={<SpaOutlinedIcon />}
+          label="Diagnosis"
+          value="4"
+          sx={{ fontSize: "min(2rem,3vw)" }}
+          onClick={() => {
+            navigate("/diagnosis");
+          }}
+        />
+      </StyledTabs>
+    </Box>
+  );
+};
 
 export default Footer;

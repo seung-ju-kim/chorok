@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { createTheme, ThemeProvider } from "@mui/material";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
-import Schedule from "./pages/Schedule";
+import Accountpage from "./pages/Accountpage";
+import Main from "./components/Main";
 import MyGarden from "./pages/MyGarden";
 import Diagnosis from "./pages/Diagnosis";
 import Community from "./pages/Community";
+import "./App.css";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "IBM Plex Sans KR, sans-serif",
+  },
+});
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -29,7 +36,7 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-      const res = await Api.get("user/current");
+      const res = await Api.get("users/current");
       const currentUser = res.data;
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
@@ -53,29 +60,38 @@ function App() {
   if (!isFetchCompleted) {
     return "loading...";
   }
-  const { pathname } = window.location;
-  const HideHeader =
-    pathname === "/login" || pathname === "/register" ? null : <Header />;
-  const HideFooter =
-    pathname === "/login" || pathname === "/register" ? null : <Footer />;
+
+  const HideHeader = ["/login", "/register"].includes(
+    window.location.pathname
+  ) ? null : (
+    <Header />
+  );
+  const HideFooter = ["/login", "/register"].includes(
+    window.location.pathname
+  ) ? null : (
+    <Footer />
+  );
   return (
-    <DispatchContext.Provider value={dispatch}>
-      <UserStateContext.Provider value={userState}>
-        <Router>
-          {HideHeader}
-          {HideFooter}
-          <Routes>
-            <Route path="/login" exact element={<Loginpage />} />
-            <Route path="/register" exact element={<Registerpage />} />
-            <Route path="/" exact element={<Schedule />} />
-            <Route path="/mygarden" exact element={<MyGarden />} />
-            <Route path="/community" exact element={<Community />} />
-            <Route path="/diagnosis" exact element={<Diagnosis />} />
-            <Route path="*" element={<Schedule />} />
-          </Routes>
-        </Router>
-      </UserStateContext.Provider>
-    </DispatchContext.Provider>
+    <ThemeProvider theme={theme}>
+      <DispatchContext.Provider value={dispatch}>
+        <UserStateContext.Provider value={userState}>
+          <Router>
+            {HideHeader}
+            {HideFooter}
+            <Routes>
+              <Route path="/" exact element={<Main />} />
+              <Route path="/login" element={<Loginpage />} />
+              <Route path="/register" element={<Registerpage />} />
+              <Route path="/account" element={<Accountpage />} />
+              <Route path="/mygarden" element={<MyGarden />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/diagnosis" element={<Diagnosis />} />
+              <Route path="*" element={<Main />} />
+            </Routes>
+          </Router>
+        </UserStateContext.Provider>
+      </DispatchContext.Provider>
+    </ThemeProvider>
   );
 }
 
