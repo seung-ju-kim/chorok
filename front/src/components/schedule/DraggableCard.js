@@ -11,20 +11,51 @@ const Card = styled.div`
     props.isDragging ? "0px 2px 5px rgba(0,0,0,0.05)" : "none"};
 `;
 
-function DraggableCard({ toDoId, index, toDoText }) {
+const CardDeleteButton = styled.button`
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: ${(props) =>
+    props.isDragging === true ? "white" : "rgba(178, 190, 195,1.0)"};
+  color: ${(props) =>
+    props.isDragging === true ? "rgba(178, 190, 195,1.0)" : "white"};
+  padding: 5px 7px;
+  border-radius: 3px;
+  font-size: 12px;
+`;
+
+function DraggableCard({ boardId, toDoId, index, toDoText, setLists }) {
+  console.log(setLists);
+  const handleDeleteTodo = (toDoId) => {
+    setLists((todos) => {
+      const copiedTodos = [...todos[boardId]];
+      const filteredTodos = copiedTodos.filter((todo) => todo.id !== toDoId);
+      const result = { ...todos, [boardId]: filteredTodos };
+      return result;
+    });
+  };
   return (
-    <Draggable draggableId={toDoId + ""} index={index}>
-      {(provided, snapshot) => (
-        <Card
-          isDragging={snapshot.isDragging}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          {toDoText}
-        </Card>
-      )}
-    </Draggable>
+    <>
+      <Draggable draggableId={toDoId + ""} index={index} key={toDoId}>
+        {(provided, snapshot) => (
+          <Card
+            isDragging={snapshot.isDragging}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {toDoText}
+            <CardDeleteButton
+              isDragging={snapshot.isDragging}
+              onClick={() => handleDeleteTodo(toDoId)}
+              type="button"
+            >
+              ✕
+            </CardDeleteButton>
+          </Card>
+        )}
+      </Draggable>
+    </>
   );
 }
 

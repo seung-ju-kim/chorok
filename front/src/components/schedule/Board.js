@@ -1,7 +1,7 @@
-import { Droppable } from "react-beautiful-dnd";
+import React, { useState } from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import DraggableCard from "./DraggableCard";
 import styled from "styled-components";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Wrapper = styled.div`
@@ -41,8 +41,7 @@ const Form = styled.form`
   }
 `;
 
-function Board({ toDos, boardId, state }) {
-  const [lists, setLists] = useState(state);
+function Board({ toDos, boardId, setLists }) {
   const { register, setValue, handleSubmit } = useForm();
   const onValid = ({ toDo }) => {
     const newToDo = {
@@ -83,6 +82,8 @@ function Board({ toDos, boardId, state }) {
                 index={index}
                 toDoId={toDo.id}
                 toDoText={toDo.text}
+                setLists={setLists}
+                boardId
               />
             ))}
             {provided.placeholder}

@@ -4,6 +4,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { axios } from "axios";
 import Board from "./../components/schedule/Board";
+import TrashCan from "../components/schedule/TrashCan";
 
 const Boards = styled.div`
   display: flex;
@@ -35,8 +36,9 @@ function Schedule() {
   const [toDos, setToDos] = useState(toDoState);
 
   const onDragEnd = (info) => {
-    const { destination, draggableId, source } = info;
+    const { destination, source } = info;
     if (!destination) return;
+
     if (destination?.droppableId === source.droppableId) {
       // same board movement
       setToDos((allBoards) => {
@@ -70,18 +72,28 @@ function Schedule() {
         };
       });
     }
+
+    if (destination.droppableId === "trashcan") {
+      setToDos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        return { ...allBoards, [source.droppableId]: boardCopy };
+      });
+    }
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          {Object.keys(toDos).map((boardId) => (
+          {Object.keys(toDos).map((boardId, index) => (
             <Board
               boardId={boardId}
               key={boardId}
               toDos={toDos[boardId]}
-              state={toDoState}
+              lists={toDos}
+              setLists={setToDos}
+              index={index}
             />
           ))}
         </Boards>
