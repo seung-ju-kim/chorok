@@ -17,7 +17,7 @@ const AccountForm = () => {
         <Typography variant="h6">프로필 정보</Typography>
       </Grid>
       <Grid item xs={10} sx={{ mb: 5 }}>
-        <Typography variant="body1">이메일</Typography>
+        <Typography variant="body1">이메일1</Typography>
         <Typography variant="h6"></Typography>
       </Grid>
       <Grid item xs={10} sx={{ mb: 5 }}>
