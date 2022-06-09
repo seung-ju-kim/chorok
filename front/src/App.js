@@ -36,7 +36,7 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-      const res = await Api.get("user/current");
+      const res = await Api.get("users/current");
       const currentUser = res.data;
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
@@ -60,7 +60,7 @@ function App() {
   if (!isFetchCompleted) {
     return "loading...";
   }
-  const { pathname } = window.location;
+
   const HideHeader = ["/login", "/register"].includes(
     window.location.pathname
   ) ? null : (
@@ -79,13 +79,13 @@ function App() {
             {HideHeader}
             {HideFooter}
             <Routes>
-              <Route path="/login" exact element={<Loginpage />} />
-              <Route path="/register" exact element={<Registerpage />} />
-              <Route path="/account" exact element={<Accountpage />} />
               <Route path="/" exact element={<Schedule />} />
-              <Route path="/mygarden" exact element={<MyGarden />} />
-              <Route path="/community" exact element={<Community />} />
-              <Route path="/diagnosis" exact element={<Diagnosis />} />
+              <Route path="/login" element={<Loginpage />} />
+              <Route path="/register" element={<Registerpage />} />
+              <Route path="/account" element={<Accountpage />} />
+              <Route path="/mygarden" element={<MyGarden />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/diagnosis" element={<Diagnosis />} />
               <Route path="*" element={<Schedule />} />
             </Routes>
           </Router>

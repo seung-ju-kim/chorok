@@ -37,8 +37,8 @@ const Header = () => {
     sessionStorage.removeItem("userToken");
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
-    // 기본 페이지로 돌아감.
-    navigate("/");
+    // 로그인 페이지로 돌아감.
+    navigate("/login");
   };
   const paperPropsStyle = {
     elevation: 0,
