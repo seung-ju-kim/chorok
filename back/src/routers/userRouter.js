@@ -3,12 +3,6 @@ import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import is from "@sindresorhus/is";
 
-/**
- * @swagger
- * tags:
- *   name: user
- */
-
 const userAuthRouter = Router();
 
 /**
