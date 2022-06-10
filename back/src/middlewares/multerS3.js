@@ -4,7 +4,7 @@ import multerS3 from "multer-s3";
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretKey: process.env.AWS_SECRET_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION
 });
 
@@ -25,7 +25,7 @@ const s3Upload = () => {
         }
         const timezoneOffset = new Date().getTimezoneOffset() * 60000;
         const time = new Date(Date.now() - timezoneOffset);
-        const newTime = time.toISOString().split("T")[0].replace(/-/gi, "");
+        let newTime = time.toISOString().split("T")[0].replace(/-/gi, "");
         cb(null, `diag_img/${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`);
       }
     }),
