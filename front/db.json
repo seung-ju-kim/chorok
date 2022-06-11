@@ -1,39 +1,9 @@
 {
-  "lists": [
+  "todos": [
     {
-      "content": "테스트 1",
+      "todo": "왜",
       "completed": false,
       "id": 1
-    },
-    {
-      "content": "테스트 2",
-      "completed": true,
-      "id": 2
-    },
-    {
-      "content": "테스트 3",
-      "completed": false,
-      "id": 3
-    },
-    {
-      "content": "테스트 4",
-      "completed": true,
-      "id": 4
-    },
-    {
-      "content": "테스트 5",
-      "completed": true,
-      "id": 5
-    },
-    {
-      "content": "테스트 6",
-      "completed": true,
-      "id": 6
-    },
-    {
-      "content": "테스트 7",
-      "completed": true,
-      "id": 7
     }
   ]
 }
