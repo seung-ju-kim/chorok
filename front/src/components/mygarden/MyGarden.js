@@ -1,7 +1,7 @@
 import React from "react";
-import { Box } from "@mui/material";
+
 const MyGarden = () => {
-  return <Box sx={{ mt: 12 }}>test</Box>;
+  return <div>MyGarden</div>;
 };
 
 export default MyGarden;

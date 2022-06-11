@@ -9,7 +9,7 @@ import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
 import Accountpage from "./pages/Accountpage";
 import Main from "./components/Main";
-import MyGarden from "./pages/MyGarden";
+import MyGardenpage from "./pages/MyGardenpage";
 import Diagnosis from "./pages/Diagnosis";
 import Community from "./pages/Community";
 import "./App.css";
@@ -72,7 +72,7 @@ function App() {
               <Route path="/login" element={<Loginpage />} />
               <Route path="/register" element={<Registerpage />} />
               <Route path="/account" element={<Accountpage />} />
-              <Route path="/mygarden" element={<MyGarden />} />
+              <Route path="/mygarden" element={<MyGardenpage />} />
               <Route path="/community" element={<Community />} />
               <Route path="/diagnosis" element={<Diagnosis />} />
               <Route path="*" element={<Main />} />
