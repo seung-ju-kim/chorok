@@ -73,7 +73,8 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const path = window.location.pathname;
+  if (path === "/login" || path === "/register") return null;
   return (
     <Box position="fixed" sx={{ top: 20, right: 15 }}>
       <IconButton

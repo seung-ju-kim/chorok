@@ -123,7 +123,12 @@ const userAuthService = {
     }
 
     return user;
-  }
+  },
+
+  deleteUser: async ({ user_id }) => {
+    await User.deleteById({ user_id });
+    return;
+  },
 };
 
 export { userAuthService };
