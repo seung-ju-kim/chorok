@@ -7,7 +7,7 @@ const PostSchema = new Schema(
       required: true,
       index: true,
     },
-    user_id:{
+    userID:{
       type: String,
       required: true,
       index: true,
@@ -23,6 +23,9 @@ const PostSchema = new Schema(
     author: {
       type: String,
       required: true,
+    },
+    imageURL: {
+      type: String,
     },
     view: {
       type: Number,

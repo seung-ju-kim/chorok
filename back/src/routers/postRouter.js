@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { postService } from "../services/postService";
 import { userAuthService } from "../services/userService";
+import { s3Upload, s3Delete } from "../middlewares/multerS3";
 import { login_required } from "../middlewares/login_required";
 
 const postRouter = Router();
@@ -10,21 +11,37 @@ const postRouter = Router();
  */
 postRouter.post("/post/create",
   login_required,
+  s3Upload(),
   async (req, res, next) => {
     try {
       //로그인한 유저의 고유id
-      const user_id = req.currentUserId
+      const userID = req.currentUserId
       //로그인 유저의 정보 -> author이름 정보 필요
-      const user = await userAuthService.getUserInfo({user_id});
+      const user = await userAuthService.getUserInfo({user_id : userID});
       const author = user.name;
+
+      //유저가 입력한 request input값
       const {category, title, content} = req.body;
-      
+      const saveFile = req.file;
+      const fileName = String(saveFile.key).split("post_img/")[1];
+      console.log("saveFile",saveFile);
+      console.log("fileName",fileName);
+
+
+      // if (!saveFile){
+      //   return res.status(400).json({
+      //     success: false,
+      //     message: "업로드 실패"
+      //   });
+      // } 
+    
       const newPost = await postService.addPost({
         category,
-        user_id,
+        userID,
         title,
         content,
         author,
+        //imageURL : saveFile.location,
       })
 
       const body = {
@@ -38,12 +55,46 @@ postRouter.post("/post/create",
     }
 });
 
+postRouter.post(
+  "/post/upload",
+  login_required,
+  s3Upload(),
+  async (req, res, next) => {
+    try{
+      const saveFile = req.file;
+      const fileName = String(saveFile.key).split("post_img/")[1];
+      console.log("saveFile",saveFile);
+      console.log("fileName",fileName);
+
+      
+
+      if (!saveFile){
+        return res.status(400).json({
+          success: false,
+          message: "업로드 실패"
+        });
+      } else {
+        return res.status(200).json({
+          success: true,
+          message: "업로드 성공",
+          imageURL : saveFile.location,
+          fileName : fileName
+        });
+      };
+
+    } catch(error) {
+      next(error);
+    }
+  }
+)
+  
+
 /*
  * Community : Post 조회
  */
 postRouter.get(
   "/post/:id",
-  //login_required,
+  login_required,
   async (req, res, next) => {
     try {
       const postId = req.params.id;
@@ -67,7 +118,7 @@ postRouter.get(
  */
 postRouter.get(
   "/postlist",
-  //login_required,
+  login_required,
   async (req, res, next) => {
     try {
       const category = req.query.category || null //입력 없으면 null값
@@ -98,13 +149,21 @@ postRouter.get(
  */
 postRouter.put(
   "/post/:id",
-  //login_required,
+  login_required,
+  s3Upload(),
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
       const postId = req.params.id;
+      
+      const saveFile = req.file ?? null;
+      const imageURL = saveFile ? saveFile.location : null;
 
-      const toUpdate = matchedData(req);
+      const category = req.body.category ?? null;
+      const title = req.body.title ?? null;
+      const content = req.body.content ?? null;
+      
+      const toUpdate = { category, title, content, imageURL };
 
       const updatePost = await postService.setPost({postId, toUpdate });
 
