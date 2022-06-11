@@ -4,11 +4,11 @@ class postService {
     /**
      * Community : post 생성
      */
-    static async addPost({category, userID, title, content, author}) {
+    static async addPost({category, userID, title, content, author, imageURL}) {
   
       //const createdAtKT = await PostService.getCurrentDate();
       const view = 0;
-      const newPost = {category, userID, title, content, author, view};
+      const newPost = {category, userID, title, content, author, imageURL, view};
   
       // db에 저장
       const createdNewPost = await Post.createPost(newPost);
