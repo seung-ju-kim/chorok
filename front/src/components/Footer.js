@@ -47,9 +47,9 @@ const Footer = () => {
       sx={{
         position: "fixed",
         bottom: 0,
-        width: "100%",
-        typography: "body1",
-        pb: 1,
+        bgcolor: "white",
+        width: "100vw",
+        height: "10vh",
       }}
     >
       <StyledTabs

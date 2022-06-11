@@ -51,39 +51,44 @@ const Header = () => {
   const path = window.location.pathname;
   if (path === "/login" || path === "/register") return null;
   return (
-    <Box position="fixed" sx={{ top: 20, right: 15 }}>
-      <IconButton
-        onClick={(e) => {
-          anchorEl ? setAnchorEl(null) : setAnchorEl(e.currentTarget);
-        }}
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        aria-controls={isMenuOpen ? "account-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={isMenuOpen ? "true" : undefined}
-      >
-        <MenuIcon />
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={isMenuOpen}
-          PaperProps={paperPropsStyle}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    <Box
+      position="fixed"
+      sx={{ top: 0, bgcolor: "white", width: "100vw", height: "10vh" }}
+    >
+      <Box position="fixed" sx={{ top: 20, right: 15 }}>
+        <IconButton
+          onClick={(e) => {
+            anchorEl ? setAnchorEl(null) : setAnchorEl(e.currentTarget);
+          }}
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          aria-controls={isMenuOpen ? "account-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={isMenuOpen ? "true" : undefined}
         >
-          <MenuItem
-            onClick={() => {
-              navigate("/account");
-            }}
+          <MenuIcon />
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={isMenuOpen}
+            PaperProps={paperPropsStyle}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            Account
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={logout}>Logout</MenuItem>
-        </Menu>
-      </IconButton>
+            <MenuItem
+              onClick={() => {
+                navigate("/account");
+              }}
+            >
+              Account
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={logout}>Logout</MenuItem>
+          </Menu>
+        </IconButton>
+      </Box>
     </Box>
   );
 };
