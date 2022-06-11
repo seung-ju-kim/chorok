@@ -82,11 +82,7 @@ def predict(name):
     req = urllib.request.urlopen(s3_get_image_url(s3, name))
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
-    # 업로드 폴더에 있는 해당 이미지 읽기
-    # img = cv2.imread(img_l, cv2.IMREAD_COLOR)
-    # img = cv2.imread('./upload/' + filename + '.jpg', cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    #img = cv2.imread("upload/test1.jpg")
     img = cv2.resize(img, None, fx=0.4, fy=0.4)
     height, width, channels = img.shape
     return jsonify(img.shape)
