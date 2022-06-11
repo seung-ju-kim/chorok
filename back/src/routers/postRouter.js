@@ -9,9 +9,8 @@ const postRouter = Router();
 /*
  * Community : Post 생성
  */
-postRouter.post("/post/create",
+postRouter.post("/posts",
   login_required,
-  s3Upload(),
   async (req, res, next) => {
     try {
       //로그인한 유저의 고유id
@@ -20,28 +19,17 @@ postRouter.post("/post/create",
       const user = await userAuthService.getUserInfo({user_id : userID});
       const author = user.name;
 
-      //유저가 입력한 request input값
+      //유저가 입력한 request body값
       const {category, title, content} = req.body;
-      const saveFile = req.file;
-      const fileName = String(saveFile.key).split("post_img/")[1];
-      console.log("saveFile",saveFile);
-      console.log("fileName",fileName);
+      const imageURL = req.body.imageURL ?? "";
 
-
-      // if (!saveFile){
-      //   return res.status(400).json({
-      //     success: false,
-      //     message: "업로드 실패"
-      //   });
-      // } 
-    
       const newPost = await postService.addPost({
         category,
         userID,
         title,
         content,
         author,
-        //imageURL : saveFile.location,
+        imageURL,
       })
 
       const body = {
@@ -56,17 +44,13 @@ postRouter.post("/post/create",
 });
 
 postRouter.post(
-  "/post/upload",
+  "/image",
   login_required,
   s3Upload(),
   async (req, res, next) => {
     try{
       const saveFile = req.file;
-      const fileName = String(saveFile.key).split("post_img/")[1];
-      console.log("saveFile",saveFile);
-      console.log("fileName",fileName);
-
-      
+      const fileName = String(saveFile.key).split("img/")[1];
 
       if (!saveFile){
         return res.status(400).json({
@@ -93,7 +77,7 @@ postRouter.post(
  * Community : Post 조회
  */
 postRouter.get(
-  "/post/:id",
+  "/posts/:id",
   login_required,
   async (req, res, next) => {
     try {
@@ -117,7 +101,7 @@ postRouter.get(
  * Community : Post 리스트(제목) 조회(페이징)
  */
 postRouter.get(
-  "/postlist",
+  "/posts",
   login_required,
   async (req, res, next) => {
     try {
@@ -148,20 +132,17 @@ postRouter.get(
  * Community : Post 수정
  */
 postRouter.put(
-  "/post/:id",
+  "/posts/:id",
   login_required,
-  s3Upload(),
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
       const postId = req.params.id;
-      
-      const saveFile = req.file ?? null;
-      const imageURL = saveFile ? saveFile.location : null;
 
       const category = req.body.category ?? null;
       const title = req.body.title ?? null;
       const content = req.body.content ?? null;
+      const imageURL = req.body.imageURL ?? null;
       
       const toUpdate = { category, title, content, imageURL };
 
@@ -183,7 +164,7 @@ postRouter.put(
  * Community : Post 삭제
  */
 postRouter.delete(
-  "/post/:id",
+  "/posts/:id",
   //login_required,
   async (req, res, next) => {
     try {
