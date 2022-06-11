@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+
 import {
   Button,
   TextField,
@@ -9,7 +9,6 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  FormHelperText,
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,14 +16,13 @@ import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 
 const AccountEditModal = ({ openLogin, setOpenLogin }) => {
-  const navigate = useNavigate();
   const userState = useContext(UserStateContext);
 
   const [user, setUser] = useState(userState.user);
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
-  const [email, setEmail] = useState(user.email);
+  const [email] = useState(user.email);
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
 
