@@ -146,4 +146,18 @@ userAuthRouter.get("/:id", login_required, async (req, res, next) => {
   }
 });
 
+userAuthRouter.delete(
+  "/current",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.currentUserId;
+      await userAuthService.deleteUser({ user_id });
+      res.status(200).send("탈퇴되었습니다.");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { userAuthRouter };

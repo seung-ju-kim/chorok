@@ -60,24 +60,13 @@ function App() {
   if (!isFetchCompleted) {
     return "loading...";
   }
-
-  const HideHeader = ["/login", "/register"].includes(
-    window.location.pathname
-  ) ? null : (
-    <Header />
-  );
-  const HideFooter = ["/login", "/register"].includes(
-    window.location.pathname
-  ) ? null : (
-    <Footer />
-  );
   return (
     <ThemeProvider theme={theme}>
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
           <Router>
-            {HideHeader}
-            {HideFooter}
+            <Header />
+            <Footer />
             <Routes>
               <Route path="/" exact element={<Main />} />
               <Route path="/login" element={<Loginpage />} />

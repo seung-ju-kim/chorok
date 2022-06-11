@@ -40,9 +40,17 @@ const Footer = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const path = window.location.pathname;
+  if (path === "/login" || path === "/register") return null;
   return (
     <Box
-      sx={{ position: "fixed", bottom: 0, width: "100%", typography: "body1" }}
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+        typography: "body1",
+        pb: 1,
+      }}
     >
       <StyledTabs
         value={value}
@@ -52,36 +60,32 @@ const Footer = () => {
       >
         <LinkTab
           icon={<CalendarMonthOutlinedIcon />}
-          label="Schedule"
           value="1"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/");
           }}
         />
         <LinkTab
           icon={<FenceOutlinedIcon />}
-          label="MyGarden"
           value="2"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
           }}
         />
         <LinkTab
           icon={<ForumOutlinedIcon />}
-          label="Community"
           value="3"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/community");
           }}
         />
         <LinkTab
           icon={<SpaOutlinedIcon />}
-          label="Diagnosis"
           value="4"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/diagnosis");
           }}
