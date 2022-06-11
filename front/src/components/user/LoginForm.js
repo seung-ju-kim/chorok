@@ -1,14 +1,16 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
-function LoginForm() {
+
+const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  //useState로 email 상태를 생성함.
+
+  // 상태관리
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -147,6 +149,6 @@ function LoginForm() {
       </Box>
     </Box>
   );
-}
+};
 
 export default LoginForm;

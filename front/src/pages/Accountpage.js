@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Box,
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Button, Box } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 import AccountForm from "../components/user/AccountForm";
 import AccountEditModal from "../components/user/AccountEditModal";
 import AccountWithdrwalModal from "../components/user/AccountWithdrwalModal";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const Accountpage = () => {
   // modal 관리
   const [openLogin, setOpenLogin] = useState(false);
   const [openWithdrawl, setOpenWithdrawl] = useState(false);
   const navigate = useNavigate();
+
   return (
     <Box sx={{ mt: 1 }}>
       <Button

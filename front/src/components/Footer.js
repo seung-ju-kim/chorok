@@ -6,6 +6,7 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
+
 const StyledTabs = styled((props) => (
   <Tabs
     {...props}
@@ -22,7 +23,7 @@ const StyledTabs = styled((props) => (
   },
 });
 
-function LinkTab(props) {
+const LinkTab = (props) => {
   return (
     <Tab
       component="a"
@@ -32,7 +33,7 @@ function LinkTab(props) {
       {...props}
     />
   );
-}
+};
 
 const Footer = () => {
   const navigate = useNavigate();

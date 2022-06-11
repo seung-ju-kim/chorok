@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
+
 const MyGardenCard = ({ data }) => {
   return (
     <Grid item xs={6}>

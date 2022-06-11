@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Modal, Typography } from "@mui/material";
+
 import * as Api from "../../api";
+
 const AccountWithdrwalModal = ({ openWithdrawl, setOpenWithdrawl }) => {
   const navigate = useNavigate();
   const style = {

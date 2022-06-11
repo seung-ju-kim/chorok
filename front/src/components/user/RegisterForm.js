@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 import * as Api from "../../api";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  //useState로 email 상태를 생성함.
+  // 상태관리
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
-  //useState로 confirmPassword 상태를 생성함.
   const [confirmPassword, setConfirmPassword] = useState("");
-  //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.

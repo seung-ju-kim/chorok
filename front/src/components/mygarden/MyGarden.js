@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Grid, Typography } from "@mui/material";
+
 import MyGardenCardList from "./MyGardenCardList";
 import { UserStateContext } from "../../App";
+
 const MyGarden = () => {
+  // 상태관리 및 user 정보
   const userState = useContext(UserStateContext);
   const userName = userState.user.name;
+
   return (
     <Grid container sx={{ mt: 10, px: 3 }} spacing={2}>
       <Grid item xs={12} sx={{ mb: 2 }}>

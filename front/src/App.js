@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import Header from "./components/Header";
@@ -62,6 +64,7 @@ function App() {
   }
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
           <Router>

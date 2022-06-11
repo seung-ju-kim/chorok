@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import swaggerUi from "swagger-ui-express";
+
 import { specs } from "./config/swaggerDoc.js";
 import { userAuthRouter } from "./routers/userRouter";
 import { postRouter } from "./routers/postRouter";
