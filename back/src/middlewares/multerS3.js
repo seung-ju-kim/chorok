@@ -26,7 +26,7 @@ const s3Upload = () => {
         const timezoneOffset = new Date().getTimezoneOffset() * 60000;
         const time = new Date(Date.now() - timezoneOffset);
         let newTime = time.toISOString().split("T")[0].replace(/-/gi, "");
-        cb(null, `post_img/${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`);
+        cb(null, `diag_img/${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`);
       }
     }),
     limits
