@@ -1,35 +1,12 @@
 import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { UserStateContext, DispatchContext } from "../App";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Menu,
-  MenuItem,
-  Divider,
-  IconButton,
-} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { DispatchContext } from "../App";
+import { Box, Menu, MenuItem, Divider, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#ffffff",
-    },
-  },
-});
 
 const Header = () => {
   const navigate = useNavigate();
-  const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
-
-  // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
-  const isLogin = !!userState.user;
 
   // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
@@ -70,9 +47,7 @@ const Header = () => {
   // user nav
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
   const path = window.location.pathname;
   if (path === "/login" || path === "/register") return null;
   return (
