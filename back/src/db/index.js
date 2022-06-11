@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+import { User } from "./models/User";
+import { Post } from "./models/Post";
 
-dotenv.config();
-const MONGODB_URI = 
-process.env.MONGODB_URI || "MONGODB_URI가 설정되지 않았습니다..";
+const DB_URL =
+  process.env.MONGODB_URL ||
+  "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요.";
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log("정상적으로 MongoDB 서버에 연결되었습니다.");
-  })
-  .catch((error) => {
-    console.error("MongoDB 연결에 실패하였습니다..." + "\n" + error);
-  });
+mongoose.connect(DB_URL);
+const db = mongoose.connection;
+
+db.on("connected", () =>
+  console.log("정상적으로 MongoDB 서버에 연결되었습니다.  " + DB_URL)
+);
+db.on("error", (error) =>
+  console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
+);
+
+export { User, Post };
+
