@@ -32,7 +32,13 @@ const User = {
       option
     );
     return updatedUser;
-  }
+  },
+
+  // id를 통해 해당 사용자를 탈퇴시킴
+  deleteById: async ({ user_id }) => {
+    await UserModel.deleteOne({ id: user_id });
+    return;
+  },
 };
 
 export { User };

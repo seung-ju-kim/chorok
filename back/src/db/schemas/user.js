@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
  * @swagger
  * components:
  *   schemas: 
- *     user: 
+ *     User: 
  *       type: obejct
  *       required:
  *         - id
@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     id: {
       type: String,
       required: true,
+      index : true
     },
     email: {
       type: String,
