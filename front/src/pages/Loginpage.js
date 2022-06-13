@@ -38,10 +38,10 @@ const Loginpage = () => {
   return (
     <>
       <Box sx={boxStyle}>
-        <Typography align="center" variant="h4" fontWeight="bold">
+        <Typography align="center" fontSize="3rem" fontWeight="bold">
           Chorok
         </Typography>
-        <Typography align="center" fontSize="0.8rem">
+        <Typography align="center" fontSize="1rem">
           누구나 손 쉽게 홈 가드닝, 초록
         </Typography>
       </Box>

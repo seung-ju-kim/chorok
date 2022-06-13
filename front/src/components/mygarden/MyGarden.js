@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Grid, Typography } from "@mui/material";
 
 import MyGardenCardList from "./MyGardenCardList";
@@ -10,17 +10,19 @@ const MyGarden = () => {
   const userName = userState.user.name;
 
   return (
-    <Grid container sx={{ mt: 10, px: 3 }} spacing={2}>
-      <Grid item xs={12} sx={{ mb: 2 }}>
-        <Typography component="span" fontWeight="bold" variant="h6">
-          {userName}
-        </Typography>
-        <Typography component="span" variant="h6">
-          님의 정원
-        </Typography>
+    <>
+      <Grid container sx={{ px: 3 }} columnSpacing={2}>
+        <Grid item xs={12} sx={{ mb: 3 }}>
+          <Typography component="span" fontWeight="bold" variant="h4">
+            {userName}
+          </Typography>
+          <Typography component="span" variant="h5">
+            님의 정원
+          </Typography>
+        </Grid>
+        <MyGardenCardList />
       </Grid>
-      <MyGardenCardList />
-    </Grid>
+    </>
   );
 };
 

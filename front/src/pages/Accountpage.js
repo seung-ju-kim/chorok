@@ -14,15 +14,7 @@ const Accountpage = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ mt: 1 }}>
-      <Button
-        onClick={() => {
-          navigate(-1);
-        }}
-        sx={{ color: "black", mt: 2 }}
-      >
-        <ArrowBackIosNewIcon />
-      </Button>
+    <Box sx={{ my: 10 }}>
       <AccountForm
         setOpenLogin={setOpenLogin}
         setOpenWithdrawl={setOpenWithdrawl}
