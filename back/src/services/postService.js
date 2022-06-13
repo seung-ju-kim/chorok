@@ -12,8 +12,7 @@ class postService {
   
       // db에 저장
       const createdNewPost = await Post.createPost(newPost);
-      createdNewPost.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
-  
+      
       return createdNewPost;
     }
   
@@ -29,16 +28,16 @@ class postService {
     /**
      * Community : category별 post 목록 읽기(페이징)
      */
-    static async getPostListPage({category, page, perPage}) {
-      const postList = await Post.findPostPage({category, page, perPage});
-      return postList;
+    static async getPosts({category, page, perPage}) {
+      const posts = await Post.findPosts({category, page, perPage});
+      return posts;
     }
     
     /**
      * Community : 페이징 처리한 post 리스트의 마지막 페이지 번호 구하기
      */
-    static async getFinalPage({category, perPage}) {
-      const finalPage = await Post.findFinalPage({category, perPage})
+    static async getLastPage({category, perPage}) {
+      const finalPage = await Post.findLastPage({category, perPage})
       return finalPage;
     }
   

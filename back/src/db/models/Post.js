@@ -1,6 +1,8 @@
 import { PostModel } from '../schemas/post'
 
 class Post {
+  
+  
   /**
    * Post 객체 생성
    */
@@ -21,7 +23,7 @@ class Post {
   /**
    * 각 category(or 전체보기)의 마지막 페이지 번호 반환
    */
-  static async findFinalPage({category, perPage}) {
+  static async findLastPage({category, perPage}) {
     const totalPost = (category === null) 
     ? await PostModel.countDocuments() //null 이면 전체count
     : await PostModel.countDocuments({category}); //아니면 카테고리별
@@ -33,7 +35,7 @@ class Post {
    * { category, page, perPage}
    * 각 category(or 전체보기)의 post 리스트를 perPage 단위로 페이징하여 반환
    */
-  static async findPostPage({category, page, perPage}) {
+  static async findPosts({category, page, perPage}) {
 
     if (category == null) {
       return PostModel

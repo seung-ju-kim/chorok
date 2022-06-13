@@ -108,8 +108,8 @@ postRouter.get(
       const category = req.query.category || null //입력 없으면 null값
       const page = +req.query.page || 1; // default 1페이지
       const perPage = +req.query.perPage || 10; //default 10개
-      const finalPage = await postService.getFinalPage({category, perPage});
-      const postList = await postService.getPostListPage({
+      const lastPage = await postService.getLastPage({category, perPage});
+      const posts = await postService.getPosts({
         category,
         page,
         perPage,
@@ -118,8 +118,8 @@ postRouter.get(
       const body = {
         success: true,
         page: page,
-        finalPage: finalPage,
-        postList: postList,
+        lastPage: lastPage,
+        postList: posts,
       };
 
       res.status(200).json(body);
@@ -165,7 +165,7 @@ postRouter.put(
  */
 postRouter.delete(
   "/posts/:id",
-  //login_required,
+  login_required,
   async (req, res, next) => {
     try {
       const postId = req.params.id;
