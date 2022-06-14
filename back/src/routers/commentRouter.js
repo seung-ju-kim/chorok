@@ -49,10 +49,21 @@ commentRouter.get(
   async (req, res, next) => {
     try {
       const postId = req.params.postId;
-      const comments = await commentService.getComments(postId);
+      const page = +req.query.page || 1; // default 1페이지
+      const perPage = +req.query.perPage || 10; //default 10개
+
+      const comments = await commentService.getComments({
+        postId, 
+        page, 
+        perPage,
+      });
+
+      const lastPage = await commentService.getLastPage({postId, perPage});
 
       const body = {
           success: true,
+          page: page,
+          lastPage: lastPage,
           comments: comments,
         };
 
