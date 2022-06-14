@@ -6,10 +6,11 @@ import {
   Typography,
   Container,
   IconButton,
+  Box,
 } from "@mui/material";
 import { Check, Delete } from "@mui/icons-material";
 
-const Todos = ({ todo, checkTodo, id, isCompleted, deleteTodo }) => {
+const ToDos = ({ todo, checkTodo, id, isCompleted, deleteTodo }) => {
   const markComplete = () => checkTodo(id);
   const delTodo = () => deleteTodo(id);
 
@@ -31,8 +32,8 @@ const Todos = ({ todo, checkTodo, id, isCompleted, deleteTodo }) => {
 
   return (
     <Container>
-      <Card variant="outlined" sx={cardStyle}>
-        <CardContent sx={{ my: "auto" }}>
+      <Box variant="outlined" sx={cardStyle}>
+        <Box>
           <Typography variant="h5" component="h2" sx={{ todoStyle }}>
             <IconButton onClick={markComplete}>
               <Check sx={{ color: "green" }} />
@@ -42,10 +43,10 @@ const Todos = ({ todo, checkTodo, id, isCompleted, deleteTodo }) => {
               <Delete sx={{ color: "red" }} />
             </IconButton>
           </Typography>
-        </CardContent>
-      </Card>
+        </Box>
+      </Box>
     </Container>
   );
 };
 
-export default Todos;
+export default ToDos;
