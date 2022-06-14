@@ -11,13 +11,22 @@ class Comment {
     return comment;
   }
 
-  static async findCommentsByPostId(postId, page, perPage) {
+/**
+ * comments 마지막 페이지 번호 반환
+ */
+    static async findLastPage({postId, perPage}) {
+    const totalPost = await CommentModel.countDocuments({postId}); //postId 별로
+    const lastPage = Math.ceil(totalPost / perPage);
+    return lastPage;
+  }
+
+  static async findCommentsByPostId({postId, page, perPage}) {
     return CommentModel
     .find({ postId })
     .sort({createdAt: -1})
     .limit(perPage)
     .skip((page-1) * perPage)
-    .lean();
+    .exec();
   }
 
   static async update({commentId, fieldToUpdate, newValue}) {
