@@ -18,6 +18,7 @@ const Loginpage = () => {
     width: "100vw",
     height: "100vh",
     display: "block",
+    overflowY: "hidden",
     "&::before": {
       content: "''",
       top: 0,
@@ -28,7 +29,6 @@ const Loginpage = () => {
       opacity: "0.5",
       position: "absolute",
     },
-    overflowY: "hidden",
   };
   const videoStyle = {
     width: "100vw",
@@ -38,10 +38,10 @@ const Loginpage = () => {
   return (
     <>
       <Box sx={boxStyle}>
-        <Typography align="center" variant="h4" fontWeight="bold">
+        <Typography align="center" fontSize="3rem" fontWeight="bold">
           Chorok
         </Typography>
-        <Typography align="center" fontSize="0.8rem">
+        <Typography align="center" fontSize="1rem">
           누구나 손 쉽게 홈 가드닝, 초록
         </Typography>
       </Box>

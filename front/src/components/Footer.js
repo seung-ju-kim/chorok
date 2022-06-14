@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tab, Tabs, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -41,24 +41,19 @@ const Footer = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const path = window.location.pathname;
-  if (path === "/login" || path === "/register") return null;
+  const { pathname } = useLocation();
+  if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box
       sx={{
         position: "fixed",
         bottom: 0,
         bgcolor: "white",
-        width: "100vw",
-        height: "10vh",
+        width: "100%",
+        p: 2,
       }}
     >
-      <StyledTabs
-        value={value}
-        onChange={handleChange}
-        centered
-        textColor="inherit"
-      >
+      <StyledTabs value={value} onChange={handleChange} textColor="inherit">
         <LinkTab
           icon={<CalendarMonthOutlinedIcon />}
           value="1"
@@ -84,11 +79,11 @@ const Footer = () => {
           }}
         />
         <LinkTab
-          icon={<SpaOutlinedIcon />}
+          icon={<PersonOutlineOutlinedIcon />}
           value="4"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
-            navigate("/diagnosis");
+            navigate("/account");
           }}
         />
       </StyledTabs>
