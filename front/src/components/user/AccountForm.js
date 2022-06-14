@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import {
   Container,
   List,
@@ -7,22 +7,17 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { DispatchContext } from "../../App";
 
-const AccountForm = ({ setOpenLogin, setOpenWithdrawl }) => {
-  const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
+import AccountEditModal from "./AccountEditModal";
+import AccountLogoutModal from "./AccountLogoutModal";
+import AccountWithdrwalModal from "./AccountWithdrwalModal";
 
-  // 로그아웃 클릭 시 실행되는 함수
-  const logout = () => {
-    // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
-    sessionStorage.removeItem("userToken");
-    // dispatch 함수를 이용해 로그아웃함.
-    dispatch({ type: "LOGOUT" });
-    // 로그인 페이지로 돌아감.
-    navigate("/login");
-  };
+const AccountForm = () => {
+  // modal 관리
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openLogout, setOpenLogout] = useState(false);
+  const [openWithdrawl, setOpenWithdrawl] = useState(false);
+
   return (
     <Container>
       <List component="nav">
@@ -48,12 +43,19 @@ const AccountForm = ({ setOpenLogin, setOpenWithdrawl }) => {
             secondary="계정을 로그아웃 합니다."
           />
           <Box textAlign="right">
-            <Button color="inherit" onClick={logout}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                setOpenLogout(true);
+              }}
+            >
               Logout
             </Button>
           </Box>
         </ListItem>
-
+        <ListItem divider>
+          <ListItemText primary="버전 정보" secondary="1.0.0" />
+        </ListItem>
         <ListItem divider>
           <ListItemText primary="회원탈퇴" secondary="회원을 탈퇴합니다." />
           <Box textAlign="right">
@@ -68,6 +70,15 @@ const AccountForm = ({ setOpenLogin, setOpenWithdrawl }) => {
           </Box>
         </ListItem>
       </List>
+      <AccountEditModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
+      <AccountLogoutModal
+        openLogout={openLogout}
+        setOpenLogout={setOpenLogout}
+      />
+      <AccountWithdrwalModal
+        openWithdrawl={openWithdrawl}
+        setOpenWithdrawl={setOpenWithdrawl}
+      />
     </Container>
   );
 };

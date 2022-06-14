@@ -18,6 +18,7 @@ const Loginpage = () => {
     width: "100vw",
     height: "100vh",
     display: "block",
+    overflowY: "hidden",
     "&::before": {
       content: "''",
       top: 0,
@@ -28,7 +29,6 @@ const Loginpage = () => {
       opacity: "0.5",
       position: "absolute",
     },
-    overflowY: "hidden",
   };
   const videoStyle = {
     width: "100vw",

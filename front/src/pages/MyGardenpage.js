@@ -5,7 +5,7 @@ import MyGarden from "../components/mygarden/MyGarden";
 
 const MyGardenpage = () => {
   return (
-    <Box sx={{ my: 10 }}>
+    <Box sx={{ mt: 7, mb: 10 }}>
       <MyGarden />
     </Box>
   );

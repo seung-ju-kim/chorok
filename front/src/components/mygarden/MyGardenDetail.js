@@ -4,7 +4,6 @@ import { Tab, Box } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import DiaryTab from "./DiaryTab";
 import CalendarTab from "./CalendarTab";
-import EditIcon from "@mui/icons-material/Edit";
 
 const MyGardenDetail = () => {
   const [value, setValue] = useState("1");
@@ -54,19 +53,6 @@ const MyGardenDetail = () => {
             <CalendarTab />
           </TabPanel>
         </TabContext>
-        <EditIcon
-          sx={{
-            position: "fixed",
-            right: "5%",
-            bottom: "8%",
-            fontSize: "7rem",
-            color: "#64a68a",
-            borderRadius: "50%",
-            boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-            bgcolor: "white",
-            p: 3,
-          }}
-        />
       </Box>
     </>
   );

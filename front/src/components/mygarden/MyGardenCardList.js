@@ -26,39 +26,29 @@ const dummyData = [
   },
   {
     id: 5,
-    name: "쑥쑥이2",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-  {
-    id: 6,
-    name: "쑥쑥이2",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-  {
-    id: 7,
-    name: "쑥쑥이2",
+    name: "쑥쑥이3",
     img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
   },
 ];
 const MyGardenCardList = () => {
+  // style
+  const cardListStyle = {
+    width: "100%",
+    height: "80%",
+    borderRadius: "10px",
+    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
+    bgcolor: "#64a68a",
+    color: "white",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    cursor: "pointer",
+  };
   return (
     <>
       <Grid item xs={6}>
-        <Container
-          sx={{
-            width: "100%",
-            height: "80%",
-            borderRadius: "10px",
-            boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-            bgcolor: "#64a68a",
-            color: "white",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-        >
+        <Container sx={cardListStyle}>
           <AddIcon />
           <Typography>식물 등록하기</Typography>
         </Container>
