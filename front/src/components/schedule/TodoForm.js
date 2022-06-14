@@ -1,43 +1,58 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { FormControl, Container, TextField, Box, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import {
+  FormControl,
+  Container,
+  TextField,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
 
-const TodoForm = ({ addTodo }) => {
-  console.log(addTodo);
-  const [input, setInput] = useState("");
+import * as Api from "../../api";
 
-  const handleSubmit = (e) => {
+const TodoForm = () => {
+  const [todo, setTodo] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addTodo(input);
-    setInput("");
+    try {
+      await Api.post("schedules/post", {
+        todo,
+      });
+    } catch (err) {
+      if (err.response.status === 400) {
+      }
+      console.log(err);
+    }
   };
 
-  const changeText = (e) => {
-    e.preventDefault();
-    setInput(e.target.value);
+  const handleChange = (e) => {
+    setTodo(e.target.value);
   };
   return (
-    <Container maxWidth="sm">
-      <form onSubmit={handleSubmit}>
+    <Box sx={{ mb: 5 }}>
+      <Typography sx={{ mb: 3 }} fontWeight="bold" fontSize="7vw">
+        오늘 할 일
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit}>
         <FormControl fullWidth={true}>
           <TextField
-            variant="standard"
+            variant="outlined"
+            color="success"
             label="I will do this"
-            value={input}
-            onChange={changeText}
+            value={todo}
+            onChange={handleChange}
           />
           <Button
             variant="contained"
-            color="primary"
             type="submit"
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, bgcolor: "#64a68a" }}
           >
             ADD TODO
           </Button>
         </FormControl>
-      </form>
-    </Container>
+      </Box>
+    </Box>
   );
 };
 

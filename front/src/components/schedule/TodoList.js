@@ -1,21 +1,29 @@
 import React from "react";
-import ToDos from "./ToDos";
-import { TextField, Box, Button } from "@mui/material";
+import { List } from "@mui/material";
+import ToDoCard from "./ToDoCard";
 
-const TodoList = ({ todos, checkTodo, deleteTodo }) => {
+const list = [
+  { content: "1" },
+  { content: "2" },
+  { content: "3" },
+  { content: "4" },
+  { content: "1" },
+  { content: "2" },
+  { content: "3" },
+  { content: "4" },
+  { content: "1" },
+  { content: "2" },
+  { content: "3" },
+  { content: "4" },
+];
+
+const TodoList = () => {
   return (
-    <Box>
-      {todos.map((item) => (
-        <ToDos
-          key={item.id}
-          todo={item.content}
-          checkTodo={checkTodo}
-          id={item.id}
-          isCompleted={item.isCompleted}
-          deleteTodo={deleteTodo}
-        />
-      ))}
-    </Box>
+    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+      {list.map((data) => {
+        return <ToDoCard data={data}></ToDoCard>;
+      })}
+    </List>
   );
 };
 

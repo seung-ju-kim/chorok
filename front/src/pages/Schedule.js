@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
-import { DragDropContext } from "react-beautiful-dnd";
-import styled from "styled-components";
-import { axios } from "axios";
-import ToDo from "../components/schedule/ToDo";
-import Header from "./../components/Header";
+import TodoForm from "../components/schedule/TodoForm";
+import TodoList from "../components/schedule/TodoList";
 
 function Schedule() {
   return (
-    <>
-      <ToDo />
-    </>
+    <Box sx={{ my: 10, px: 3 }}>
+      <TodoForm />
+      <TodoList />
+    </Box>
   );
 }
 
