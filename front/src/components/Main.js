@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
-import * as Api from "../api";
+
 import Schedule from "../pages/Schedule";
 import { UserStateContext } from "../App";
+
 const Main = () => {
   const navigate = useNavigate();
   const params = useParams();

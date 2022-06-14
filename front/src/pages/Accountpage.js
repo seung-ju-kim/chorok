@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Box } from "@mui/material";
-import AccountForm from "../components/account/AccountForm";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import React from "react";
+import { Box } from "@mui/material";
+
+import AccountForm from "../components/user/AccountForm";
 
 const Accountpage = () => {
-  const navigate = useNavigate();
   return (
-    <Box sx={{ mt: 1 }}>
-      <Button
-        onClick={() => {
-          navigate(-1);
-        }}
-        sx={{ color: "black", mt: 2 }}
-      >
-        <ArrowBackIosNewIcon />
-      </Button>
+    <Box sx={{ my: 10 }}>
       <AccountForm />
     </Box>
   );

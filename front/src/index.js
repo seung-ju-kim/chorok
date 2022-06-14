@@ -2,15 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import CssBaseline from "@mui/material/CssBaseline";
-import { StyledEngineProvider } from "@mui/styled-engine";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <StyledEngineProvider injectFirst>
-    <CssBaseline />
+  <React.StrictMode>
     <App />
-  </StyledEngineProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

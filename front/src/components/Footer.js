@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tab, Tabs, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+
 const StyledTabs = styled((props) => (
   <Tabs
     {...props}
@@ -22,7 +23,7 @@ const StyledTabs = styled((props) => (
   },
 });
 
-function LinkTab(props) {
+const LinkTab = (props) => {
   return (
     <Tab
       component="a"
@@ -32,7 +33,7 @@ function LinkTab(props) {
       {...props}
     />
   );
-}
+};
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -40,50 +41,49 @@ const Footer = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const { pathname } = useLocation();
+  if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box
-      sx={{ position: "fixed", bottom: 0, width: "100%", typography: "body1" }}
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        bgcolor: "white",
+        width: "100%",
+        p: 2,
+      }}
     >
-      <StyledTabs
-        value={value}
-        onChange={handleChange}
-        centered
-        textColor="inherit"
-      >
+      <StyledTabs value={value} onChange={handleChange} textColor="inherit">
         <LinkTab
           icon={<CalendarMonthOutlinedIcon />}
-          label="Schedule"
           value="1"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/");
           }}
         />
         <LinkTab
           icon={<FenceOutlinedIcon />}
-          label="MyGarden"
           value="2"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
           }}
         />
         <LinkTab
           icon={<ForumOutlinedIcon />}
-          label="Community"
           value="3"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/community");
           }}
         />
         <LinkTab
-          icon={<SpaOutlinedIcon />}
-          label="Diagnosis"
+          icon={<PersonOutlineOutlinedIcon />}
           value="4"
-          sx={{ fontSize: "min(2rem,3vw)" }}
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
-            navigate("/diagnosis");
+            navigate("/account");
           }}
         />
       </StyledTabs>
