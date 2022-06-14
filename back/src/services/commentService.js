@@ -33,8 +33,8 @@ class commentService {
   /**
    * Community : postId로 commentList(comments) 읽기
    */
-  static async getComments(postId) {
-    const comments = await Comment.findCommentsByPostId(postId);
+  static async getComments({postId, page, perPage}) {
+    const comments = await Comment.findCommentsByPostId({postId, page, perPage});
     return comments;
   }
 

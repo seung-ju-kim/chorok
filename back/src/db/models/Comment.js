@@ -26,7 +26,7 @@ class Comment {
     .sort({createdAt: -1})
     .limit(perPage)
     .skip((page-1) * perPage)
-    .exec();
+    .lean();
   }
 
   static async update({commentId, fieldToUpdate, newValue}) {
