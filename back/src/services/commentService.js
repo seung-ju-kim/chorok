@@ -23,6 +23,14 @@ class commentService {
   }
 
   /**
+   * postId로 식별한 commetlist의 마지막 페이지
+   */
+  static async getLastPage({postId, perPage}) {
+    const lastPage = await Comment.findLastPage({postId, perPage})
+    return lastPage;
+  }
+
+  /**
    * Community : postId로 commentList(comments) 읽기
    */
   static async getComments(postId) {
