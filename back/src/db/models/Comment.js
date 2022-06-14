@@ -6,18 +6,22 @@ class Comment {
     return newComment;
   }
 
-  static async findCommentById(commentID) {
-    const comment = await CommentModel.findOne({_id: commentID});
+  static async findCommentById(commentId) {
+    const comment = await CommentModel.findOne({_id: commentId});
     return comment;
   }
 
-  static async findCommentsByPostId(postID) {
-    const commentList = await CommentModel.find({postID});
-    return commentList;
+  static async findCommentsByPostId(postId, page, perPage) {
+    return CommentModel
+    .find({ postId })
+    .sort({createdAt: -1})
+    .limit(perPage)
+    .skip((page-1) * perPage)
+    .lean();
   }
 
-  static async update({commentID, fieldToUpdate, newValue}) {
-    const filter = {_id: commentID};
+  static async update({commentId, fieldToUpdate, newValue}) {
+    const filter = {_id: commentId};
     const update = {[fieldToUpdate]: newValue};
     const option = {returnOriginal: false};
 
@@ -29,8 +33,8 @@ class Comment {
     return updatedComment;
   }
 
-  static async deleteCommentById(commentID) {
-    const deleteResult = await CommentModel.deleteOne({_id: commentID});
+  static async deleteCommentById(commentId) {
+    const deleteResult = await CommentModel.deleteOne({_id: commentId});
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
   }
