@@ -17,12 +17,14 @@ const MyGardenDetail = () => {
     <>
       <Box
         sx={{
-          width: "100%",
-          typography: "body1",
+          height: "100vh",
+          py: 15,
           color: "black",
+          bgcolor: "black",
+          overflow: "auto",
         }}
       >
-        <TabContext value={value}>
+        <TabContext value={value} sx={{ height: "100%" }}>
           <Box>
             <TabList
               onChange={handleChange}
@@ -46,7 +48,7 @@ const MyGardenDetail = () => {
               <Tab label="Calendar" value="2" />
             </TabList>
           </Box>
-          <TabPanel value="1" sx={{ p: 0, my: 15 }}>
+          <TabPanel value="1">
             <DiaryTab />
           </TabPanel>
           <TabPanel value="2">

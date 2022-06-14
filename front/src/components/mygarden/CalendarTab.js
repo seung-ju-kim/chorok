@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import "./Calendar.css";
+import moment from "moment";
 
 const CalendarTab = () => {
-  const [value, onChange] = useState(new Date());
+  const [dateState, setDateState] = useState(new Date());
+  const changeDate = (e) => {
+    setDateState(e);
+  };
 
   return (
-    <Box sx={{ my: 10 }}>
-      <Calendar onChange={onChange} value={value} />
+    <Box sx={{ height: "100%", pt: 3 }}>
+      <Calendar value={dateState} onChange={changeDate} />
+      <p>
+        Current selected date is{" "}
+        <b>{moment(dateState).format("MMMM Do YYYY")}</b>
+      </p>
     </Box>
   );
 };
