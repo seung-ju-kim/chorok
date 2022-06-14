@@ -13,9 +13,9 @@ commentRouter.post(
   login_required,
   async (req, res, next) => {
     try{
-      //post 식별 ID
+      //post 식별 Id
       const postId = req.params.postId;
-      //로그인한 유저 식별 ID
+      //로그인한 유저 식별 Id
       const userId = req.currentUserId
       //로그인 유저의 정보 -> author이름 정보 필요
       const user = await userAuthService.getUserInfo({user_id : userId})
