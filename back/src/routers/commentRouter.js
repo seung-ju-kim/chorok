@@ -9,22 +9,22 @@ const commentRouter = Router();
  * Community : 해당 포스트에 comment 생성
  */
 commentRouter.post(
-  "/comments/:postID",
+  "/comments/:postId",
   login_required,
   async (req, res, next) => {
     try{
       //post 식별 ID
-      const postID = req.params.postID;
+      const postId = req.params.postId;
       //로그인한 유저 식별 ID
-      const userID = req.currentUserId
+      const userId = req.currentUserId
       //로그인 유저의 정보 -> author이름 정보 필요
-      const user = await userAuthService.getUserInfo({user_id : userID})
+      const user = await userAuthService.getUserInfo({user_id : userId})
       const author = user.name;
       
       const {content} = req.body;
 
       const newComment = await commentService.addComment({
-        postID,
+        postId,
         author,
         content,
       })
@@ -44,12 +44,12 @@ commentRouter.post(
  * Community : 해당 포스트에 속한 comments 조회
  */
 commentRouter.get(
-  "/comments/:postID",
+  "/comments/:postId",
   login_required,
   async (req, res, next) => {
     try {
-      const postID = req.params.postID;
-      const comments = await commentService.getComments(postID);
+      const postId = req.params.postId;
+      const comments = await commentService.getComments(postId);
 
       const body = {
           success: true,
@@ -73,12 +73,12 @@ commentRouter.put(
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
-      const commentID = req.params.id;
+      const commentId = req.params.id;
       const content = req.body.content ?? null;
       
       const toUpdate = { content };
 
-      const updateComment = await commentService.setComment({ commentID, toUpdate });
+      const updateComment = await commentService.setComment({ commentId, toUpdate });
 
       const body = {
         success: true,
@@ -100,8 +100,8 @@ commentRouter.delete(
   login_required,
   async (req, res, next) => {
     try {
-      const commentID = req.params.id;
-      const isDeleted = await commentService.deleteComment(commentID);
+      const commentId = req.params.id;
+      const isDeleted = await commentService.deleteComment(commentId);
 
       res.status(200).json(isDeleted);
     } catch (error) {

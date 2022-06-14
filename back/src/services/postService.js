@@ -4,11 +4,11 @@ class postService {
     /**
      * Community : post 생성
      */
-    static async addPost({category, userID, title, content, author, imageURL}) {
+    static async addPost({category, userId, title, content, author, imageURL}) {
   
       //const createdAtKT = await PostService.getCurrentDate();
       const view = 0;
-      const newPost = {category, userID, title, content, author, imageURL, view};
+      const newPost = {category, userId, title, content, author, imageURL, view};
   
       // db에 저장
       const createdNewPost = await Post.createPost(newPost);
@@ -19,8 +19,8 @@ class postService {
     /**
      * Community : post 읽기
      */
-    static async getPost(postID) {
-      const post = await Post.findPostById(postID);
+    static async getPost(postId) {
+      const post = await Post.findPostById(postId);
       return post; 
     }
   

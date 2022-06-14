@@ -14,9 +14,9 @@ postRouter.post("/posts",
   async (req, res, next) => {
     try {
       //로그인한 유저의 고유id
-      const userID = req.currentUserId
+      const userId = req.currentUserId
       //로그인 유저의 정보 -> author이름 정보 필요
-      const user = await userAuthService.getUserInfo({user_id : userID});
+      const user = await userAuthService.getUserInfo({user_id : userId});
       const author = user.name;
 
       //유저가 입력한 request body값
@@ -25,7 +25,7 @@ postRouter.post("/posts",
 
       const newPost = await postService.addPost({
         category,
-        userID,
+        userId,
         title,
         content,
         author,
@@ -84,8 +84,8 @@ postRouter.get(
   login_required,
   async (req, res, next) => {
     try {
-      const postID = req.params.id;
-      const post =await postService.getPost(postID);
+      const postId = req.params.id;
+      const post =await postService.getPost(postId);
 
       const body = {
           success: true,

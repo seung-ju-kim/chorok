@@ -10,7 +10,7 @@ const PostSchema = new Schema(
       required: true,
       index: true,
     },
-    userID:{
+    userId:{
       type: String,
       required: true,
       index: true,
