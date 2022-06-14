@@ -43,6 +43,9 @@ postRouter.post("/posts",
     }
 });
 
+/*
+ * Community : Post 이미지 업로드
+ */
 postRouter.post(
   "/image",
   login_required,
@@ -81,8 +84,8 @@ postRouter.get(
   login_required,
   async (req, res, next) => {
     try {
-      const postId = req.params.id;
-      const post =await postService.getPost(postId);
+      const postID = req.params.id;
+      const post =await postService.getPost(postID);
 
       const body = {
           success: true,
@@ -119,7 +122,7 @@ postRouter.get(
         success: true,
         page: page,
         lastPage: lastPage,
-        postList: posts,
+        posts: posts,
       };
 
       res.status(200).json(body);

@@ -14,8 +14,8 @@ class Post {
   /**
    * PostId(=id)로 해당 post 찾아서 리턴
    */
-  static async findPostById(postId) {
-    const post = await PostModel.findOne({_id: postId});
+  static async findPostById(postID) {
+    const post = await PostModel.findOne({_id: postID});
     return post;
   }
 
