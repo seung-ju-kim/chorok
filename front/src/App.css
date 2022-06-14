@@ -2,3 +2,7 @@
   font-family: "IBM Plex Sans KR, sans-serif";
   src: url(./fonts/font.ttf) format("truetype");
 }
+
+.completed {
+  text-decoration: line-through;
+}
