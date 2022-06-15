@@ -87,12 +87,13 @@ def s3_connection():
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    #s3 = s3_connection()
+    # s3 = s3_connection()
+
     def s3_get_image_url(name):
         # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
         return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
     context = ssl._create_unverified_context()
-    req = urllib.request.urlopen(s3_get_image_url(s3, name), context=context)
+    req = urllib.request.urlopen(s3_get_image_url(name), context=context)
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
