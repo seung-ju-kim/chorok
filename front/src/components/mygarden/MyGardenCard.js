@@ -13,7 +13,8 @@ const MyGardenCard = ({ data }) => {
           width: "100%",
           height: "80%",
           borderRadius: "10px",
-          boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
+          boxShadow:
+            "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
           cursor: "pointer",
         }}
         onClick={() => {
