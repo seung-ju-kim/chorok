@@ -2,14 +2,11 @@ from flask import Flask, render_template, request, jsonify, Blueprint
 from dotenv import load_dotenv
 from torchvision import transforms as T
 import torch
-import pandas as pd
 import urllib.request
 import os
 import cv2
 from PIL import Image
-import pytorch_lightning as pl
 import numpy as np
-import itertools
 import boto3
 
 ml = Blueprint('ml', __name__)
@@ -78,8 +75,6 @@ def predict(name):
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    height, width, channels = img.shape
-    print(img.shape)
     img=Image.fromarray(img)
     VALID_TRANSFORM = T.Compose([
     T.Resize(256),
@@ -90,5 +85,12 @@ def predict(name):
     ])
     img=VALID_TRANSFORM(img)
     idx=work(img)
-    result_string="This pathology is %d"%(idx)
+    my_dict={'cider_apple_rust': 0,'frog_eye_leaf_spot': 1,'healthy': 2,'powdery_mildew': 3,'rust': 4,'scab': 5}
+    def get_key(val):
+        for key, value in my_dict.items():
+         if val == value:
+             return key
+ 
+        return "There is no such Key"
+    result_string="This pathology is %s"%(get_key(idx))
     return jsonify(result_string)

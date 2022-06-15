@@ -1,7 +1,5 @@
 from flask import Flask
 from controller.sick_ML import ml
-from kaggle_imgclassif.plant_pathology.data import PlantPathologyDataset
-import os
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 with app.app_context():
