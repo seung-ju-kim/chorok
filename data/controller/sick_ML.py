@@ -31,6 +31,22 @@ def count_frequency(my_list):
         
     return count
 
+def edge_and_cut(img):
+    emb_img = img.copy()
+    edges = cv2.Canny(img, 100, 200)
+    edge_coors = []
+    for i in range(edges.shape[0]):
+        for j in range(edges.shape[1]):
+            if edges[i][j] != 0:
+                edge_coors.append((i, j))
+    
+    row_min = edge_coors[np.argsort([coor[0] for coor in edge_coors])[0]][0]
+    row_max = edge_coors[np.argsort([coor[0] for coor in edge_coors])[-1]][0]
+    col_min = edge_coors[np.argsort([coor[1] for coor in edge_coors])[0]][1]
+    col_max = edge_coors[np.argsort([coor[1] for coor in edge_coors])[-1]][1]
+    new_img = img[row_min:row_max, col_min:col_max]
+    return new_img
+
 def work(imgs):
     imgs = imgs.unsqueeze(0)
     model2=torch.load('k_cross_CNN.pt', map_location=device)
@@ -38,13 +54,13 @@ def work(imgs):
     with torch.no_grad():
             encode = model2(imgs)
             #print(encode)
-            #print(np.round(encode.numpy()[0], decimals=2))
+            print(np.round(encode.numpy()[0], decimals=2))
             for be in encode:#여기서 be는 encode 원소들 즉, 예측결과
                 #print(be)
                 count= count_frequency(np.round(be.numpy(), decimals=2))
-                if 1.0 in count.keys() and count[1.0]==2 :
-                        lbs=np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
-                        #lbs=int(name.numpy()) if name.numpy() in temp else temp[0]
+                if 1.0 in count.keys() and count[1.0]>=2 :
+                        temp=np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
+                        lbs=4 if 0 in temp else temp[0]
                 else:   lbs=np.argmax(be.detach().numpy())
     return lbs
  
@@ -66,15 +82,15 @@ def s3_connection():
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    s3 = s3_connection()
-
-    def s3_get_image_url(s3, name):
-        # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
+    #s3 = s3_connection()
+    def s3_get_image_url( name):
+            # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
         return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-    req = urllib.request.urlopen(s3_get_image_url(s3, name))
+    req = urllib.request.urlopen(s3_get_image_url( name))
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = edge_and_cut(img)
     img=Image.fromarray(img)
     VALID_TRANSFORM = T.Compose([
     T.Resize(256),
