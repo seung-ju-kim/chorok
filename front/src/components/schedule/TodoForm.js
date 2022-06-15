@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  FormControl,
-  Container,
-  TextField,
-  Box,
-  Button,
-  Typography,
-} from "@mui/material";
-
+import React, { useState } from "react";
+import { Box, Typography, Grid } from "@mui/material";
 import * as Api from "../../api";
+import TodoList from "./TodoList";
 
 const TodoForm = () => {
   const [todo, setTodo] = useState("");
@@ -30,30 +23,26 @@ const TodoForm = () => {
     setTodo(e.target.value);
   };
   return (
-    <Box sx={{ mb: 5 }}>
-      <Typography sx={{ mb: 3 }} fontWeight="bold" fontSize="7vw">
-        오늘 할 일
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit}>
-        <FormControl fullWidth={true}>
-          <TextField
-            variant="outlined"
-            color="success"
-            label="I will do this"
-            value={todo}
-            onChange={handleChange}
-          />
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ mt: 1, bgcolor: "#64a68a" }}
-          >
-            ADD TODO
-          </Button>
-        </FormControl>
-      </Box>
-    </Box>
+    <Grid container sx={{ mb: 5 }}>
+      <Grid item xs={12}>
+        <Typography sx={{ mb: 3 }} fontWeight="bold" fontSize="5vw">
+          물주기 스케쥴
+        </Typography>
+      </Grid>
+      <TodoList />
+    </Grid>
   );
 };
 
 export default TodoForm;
+
+/*
+<Grid container sx={{ px: 3 }} columnSpacing={2}>
+<Grid item xs={12} sx={{ mb: 5, ml: "5%" }}>
+  <Typography fontWeight="bold" fontSize="7vw">
+    나의 정원
+  </Typography>
+</Grid>
+<MyGardenCardList />
+</Grid>
+*/
