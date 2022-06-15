@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request, jsonify, Blueprint
 from dotenv import load_dotenv
+from torchvision import transforms as T
 import torch
 import pandas as pd
 import urllib.request
 import os
 import cv2
+from PIL import Image
 import pytorch_lightning as pl
 import numpy as np
 import itertools
 import boto3
-#from kaggle_imgclassif.plant_pathology.augment import TORCHVISION_TRAIN_TRANSFORM, TORCHVISION_VALID_TRANSFORM
-#from kaggle_imgclassif.plant_pathology.data import PlantPathologyDM
-#from kaggle_imgclassif.plant_pathology.models import MultiPlantPathology
+
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -83,11 +83,17 @@ def predict(name):
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, None, fx=0.4, fy=0.4)
     height, width, channels = img.shape
-    return jsonify(img.shape)
-    # img=np.asarray(bytearray(req.read()),dtype='uint8')
-    # print(img.shape)
-    # #idx=work(img , model)
-    # result_string="This pathology is %d"%(img)
-    # return jsonify(jsonTicker)
+    print(img.shape)
+    img=Image.fromarray(img)
+    VALID_TRANSFORM = T.Compose([
+    T.Resize(256),
+    T.CenterCrop(224),
+    T.ToTensor(),
+    T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+    # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
+    ])
+    img=VALID_TRANSFORM(img)
+    idx=work(img , model)
+    result_string="This pathology is %d"%(idx)
+    return jsonify(result_string)
