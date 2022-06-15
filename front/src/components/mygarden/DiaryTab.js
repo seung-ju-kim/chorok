@@ -21,7 +21,7 @@ const DiaryTab = () => {
   const writeButtonStyle = {
     position: "fixed",
     right: "5%",
-    bottom: "8%",
+    bottom: "15%",
     fontSize: "5rem",
     color: "#64a68a",
     borderRadius: "50%",

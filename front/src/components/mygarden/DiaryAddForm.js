@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -11,11 +11,23 @@ import {
   DialogActions,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
+import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import * as Api from "../../api";
 const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
-  // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터 : 식물 종류, 식물 이름, 식물 사진, 식물 입양한 날, 물주는 간격
+  const today = new Date();
+  // 상태 관리
+  const [fileImage, setFileImage] = useState("");
 
+  // 파일 저장
+  const saveFileImage = (e) => {
+    setFileImage(URL.createObjectURL(e.target.files[0]));
+  };
+
+  // 파일 삭제
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(fileImage);
+    setFileImage("");
+  };
   return (
     <Dialog
       open={openWriteForm}
@@ -42,19 +54,69 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
       </DialogTitle>
       <Box component="form" onSubmit={() => {}}>
         <DialogContent sx={{ bgcolor: "white" }}>
+          {fileImage ? (
+            <Box sx={{ textAlign: "center" }}>
+              <Box component="img" src={fileImage} width="100%" height="50%" />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              <CameraAltOutlinedIcon />
+            </Box>
+          )}
+          <Box sx={{ textAlign: "center" }}>
+            <Button
+              component="label"
+              sx={{
+                p: 2,
+                color: "#64a68a",
+                border: "2px solid #64a68a",
+                borderRadius: "10%",
+                mr: 2,
+              }}
+            >
+              등록
+              <TextField
+                name="imgUpload"
+                label="파일"
+                id="input-file"
+                type="file"
+                accept="imgage/*"
+                sx={{ display: "none" }}
+                variant="filled"
+                color="success"
+                onChange={saveFileImage}
+              />
+            </Button>
+            <Button
+              sx={{
+                p: 2,
+                color: "#64a68a",
+                border: "2px solid #64a68a",
+                borderRadius: "10%",
+              }}
+              onClick={() => deleteFileImage()}
+            >
+              삭제
+            </Button>
+          </Box>
           <DialogContentText
-            align="center"
-            sx={{ color: "#64a68a", fontWeight: "bold", mb: 3 }}
+            sx={{
+              mt: 3,
+              color: "black",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+            }}
           >
-            +
+            {today.toISOString().split("T")[0]}
           </DialogContentText>
-          <DialogContentText sx={{ color: "#64a68a" }}>
-            2022.06.14
-          </DialogContentText>
-
           <TextField
             required
-            sx={{ mt: 5, bgcolor: "white" }}
+            sx={{ mt: 3, bgcolor: "white" }}
+            placeholder="오늘 식물과 어떤 일이 있었나요?"
             rows={10}
             multiline
             fullWidth

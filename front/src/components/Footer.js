@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -80,7 +80,7 @@ const Footer = () => {
           }}
         />
         <LinkTab
-          icon={<PersonOutlineOutlinedIcon />}
+          icon={<SettingsOutlinedIcon />}
           value="4"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {

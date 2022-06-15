@@ -1,11 +1,14 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 const DiaryCard = ({ diary }) => {
   // style
   const cardStyle = {
-    width: "80vw",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
+    width: "90vw",
+    border: "1px solid white",
+    boxShadow:
+      "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
   };
   return (
     <Card sx={cardStyle}>
@@ -20,7 +23,9 @@ const DiaryCard = ({ diary }) => {
       <CardContent>
         <Typography gutterBottom variant="h5">
           {diary.title}
+          <MoreVertOutlinedIcon sx={{ ml: "auto" }} />
         </Typography>
+
         <Typography variant="body1" color="text.secondary">
           {diary.content}
         </Typography>
