@@ -92,5 +92,5 @@ def predict(name):
              return key
  
         return "There is no such Key"
-    result_string="This pathology is %s"%(get_key(idx))
-    return jsonify(result_string)
+    #result_string="This pathology is %s"%(get_key(idx))
+    return jsonify(get_key(idx))
