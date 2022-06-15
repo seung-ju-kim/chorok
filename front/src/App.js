@@ -23,7 +23,7 @@ const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
 const MyGardenDetail = lazy(() =>
   import("./components/mygarden/MyGardenDetail")
 );
-const Community = lazy(() => import("./pages/Community"));
+const Communitypage = lazy(() => import("./pages/Communitypage"));
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -86,7 +86,7 @@ function App() {
                 <Route path="/account" element={<Accountpage />} />
                 <Route path="/mygarden" element={<MyGardenpage />} />
                 <Route path="/mygarden/:id" element={<MyGardenDetail />} />
-                <Route path="/community" element={<Community />} />
+                <Route path="/community" element={<Communitypage />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>
