@@ -25,38 +25,33 @@ aws_region = os.environ.get("AWS_REGION")
 def main():
     return render_template('home.html')
 
+def count_frequency(my_list):
+    
+    count = {}
+    
+    for item in my_list:
+        count[item] = count.get(item, 0) + 1
+        
+    return count
 
-def work(img):
-    train_data = pd.read_csv('files/train.csv')
-    labels_all = list(itertools.chain(
-        *[lbs.split(" ") for lbs in train_data['labels']]))
-    labels_unique = sorted(set(labels_all))
-    labels_lut = {lb: i for i, lb in enumerate(labels_unique)}
-    checkpoint = torch.load('example.ckpt')
-    new_model = MultiPlantPathology(model='resnext101_32x8d', num_classes=7)
-    new_weights = new_model.state_dict()
-    old_weights = list(checkpoint['state_dict'].items())
-
-    i = 0
-    for k, _ in new_weights.items():
-        new_weights[k] = old_weights[i][1]
-        i += 1
-
-    new_model.load_state_dict(new_weights)
-    preds = []
-    new_model.eval()
-#이미지 전처리#
-    # img=img.cuda()
-    # with torch.no_grad():
-    #     encode=new_model(img)
-    # class_prediction=np.round(encode.cpu().detach().numpy(),decimals=2)
-    # def onehot_to_label(val):
-    #     return [k for k,v in labels_lut.items() if v == np.argmax(val.cpu().detach().numpy())]
-    # for be, name in zip(encode, img):
-    #     lbs = onehot_to_label(be)
-    #     preds.append(dict(image=name, labels=" ".join(lbs)))
-
-
+def work(imgs):
+    imgs = imgs.unsqueeze(0)
+    model2=torch.load('k_cross_CNN.pt', map_location=device)
+    model2.eval()
+    with torch.no_grad():
+            encode = model2(imgs)
+            #print(encode)
+            #print(np.round(encode.numpy()[0], decimals=2))
+            for be in encode:#여기서 be는 encode 원소들 즉, 예측결과
+                #print(be)
+                count= count_frequency(np.round(be.numpy(), decimals=2))
+                if 1.0 in count.keys() and count[1.0]==2 :
+                        lbs=np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
+                        #lbs=int(name.numpy()) if name.numpy() in temp else temp[0]
+                else:   lbs=np.argmax(be.detach().numpy())
+    return lbs
+ 
+   
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -94,6 +89,6 @@ def predict(name):
     # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
     ])
     img=VALID_TRANSFORM(img)
-    idx=work(img , model)
+    idx=work(img)
     result_string="This pathology is %d"%(idx)
     return jsonify(result_string)
