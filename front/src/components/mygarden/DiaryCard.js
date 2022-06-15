@@ -20,10 +20,10 @@ const DiaryCard = ({ diary }) => {
           sx={{ p: 2, height: "30vh" }}
         />
       )}
-      <CardContent>
+      <CardContent sx={{ position: "relative" }}>
+        <MoreVertOutlinedIcon sx={{ position: "absolute", right: 10 }} />
         <Typography gutterBottom variant="h5">
           {diary.title}
-          <MoreVertOutlinedIcon sx={{ ml: "auto" }} />
         </Typography>
 
         <Typography variant="body1" color="text.secondary">

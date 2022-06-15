@@ -11,23 +11,55 @@ import {
   DialogActions,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
+
 import * as Api from "../../api";
-const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
+import defaultImg from "../../imgs/default_image.png";
+
+const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
   const today = new Date();
   // 상태 관리
-  const [fileImage, setFileImage] = useState("");
+  const [image, setImage] = useState({
+    imageUrl: "",
+    preview: defaultImg,
+  });
+  const [content, setContent] = useState("");
 
-  // 파일 저장
+  // 사진 저장
   const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+    const fileReader = new FileReader();
+    if (e.target.files[0]) {
+      fileReader.readAsDataURL(e.target.files[0]);
+    }
+    fileReader.onload = () => {
+      setImage({
+        imageUrl: e.target.files[0],
+        preview: fileReader.result,
+      });
+    };
+  };
+  const deleteImage = () => {
+    setImage({
+      imageUrl: "",
+      preview: defaultImg,
+    });
   };
 
-  // 파일 삭제
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("imageUrl", image.imageUrl);
+      formData.append("content", content);
+      await Api.post("/", formData);
+      setImage({
+        imageUrl: "",
+        preview: defaultImg,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <Dialog
       open={openWriteForm}
@@ -54,19 +86,9 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
       </DialogTitle>
       <Box component="form" onSubmit={() => {}}>
         <DialogContent sx={{ bgcolor: "white" }}>
-          {fileImage ? (
-            <Box sx={{ textAlign: "center" }}>
-              <Box component="img" src={fileImage} width="100%" height="50%" />
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                textAlign: "center",
-              }}
-            >
-              <CameraAltOutlinedIcon />
-            </Box>
-          )}
+          <Box sx={{ textAlign: "center" }}>
+            <Box component="img" src={image.preview} width="50%" height="50%" />
+          </Box>
           <Box sx={{ textAlign: "center" }}>
             <Button
               component="label"
@@ -80,14 +102,9 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
             >
               등록
               <TextField
-                name="imgUpload"
-                label="파일"
-                id="input-file"
                 type="file"
-                accept="imgage/*"
+                accept="image/*"
                 sx={{ display: "none" }}
-                variant="filled"
-                color="success"
                 onChange={saveFileImage}
               />
             </Button>
@@ -98,7 +115,7 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
                 border: "2px solid #64a68a",
                 borderRadius: "10%",
               }}
-              onClick={() => deleteFileImage()}
+              onClick={deleteImage}
             >
               삭제
             </Button>
@@ -122,6 +139,7 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
             fullWidth
             variant="filled"
             color="success"
+            onChange={(e) => setContent(e.target.value)}
           />
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
@@ -137,4 +155,4 @@ const DiaryAddForm = ({ openWriteForm, setOpenWriteForm }) => {
   );
 };
 
-export default DiaryAddForm;
+export default DiaryAddModal;

@@ -130,14 +130,9 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
               등록
               <TextField
                 required
-                name="imgUpload"
-                label="파일"
-                id="input-file"
                 type="file"
-                accept="imgage/*"
+                accept="image/*"
                 sx={{ display: "none" }}
-                variant="filled"
-                color="success"
                 onChange={saveFileImage}
               />
             </Button>

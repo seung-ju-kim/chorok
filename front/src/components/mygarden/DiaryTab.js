@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import DiaryCard from "./DiaryCard";
 import img from "../../imgs/testplant.png";
 import EditIcon from "@mui/icons-material/Edit";
-import DiaryAddForm from "./DiaryAddForm";
+import DiaryAddModal from "./DiaryAddModal";
 
 const DiaryTab = () => {
   const [openWriteForm, setOpenWriteForm] = useState(false);
@@ -48,7 +48,7 @@ const DiaryTab = () => {
           setOpenWriteForm(true);
         }}
       />
-      <DiaryAddForm
+      <DiaryAddModal
         openWriteForm={openWriteForm}
         setOpenWriteForm={setOpenWriteForm}
       />

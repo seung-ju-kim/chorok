@@ -43,8 +43,16 @@ const MyGardenDetail = () => {
                 pl: 3,
               }}
             >
-              <Tab label="Diary" value="1" />
-              <Tab label="Calendar" value="2" />
+              <Tab
+                label="Diary"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                value="1"
+              />
+              <Tab
+                label="Calendar"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                value="2"
+              />
             </TabList>
           </Box>
           <TabPanel value="1">
