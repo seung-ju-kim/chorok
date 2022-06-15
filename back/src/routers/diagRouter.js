@@ -12,9 +12,9 @@ diagRouter.post("/",
       const { key } = req.file;
       const fileName = String(key).split("diag_img/")[1];
 
-      const diseaseName = await axios.get(`http://localhost:8000/predict/${fileName}`);
-      const disease = await diagService.getDisease(diseaseName);
-      const result = { ...disease, url: key };
+      const mlResponse = await axios.get(`http://localhost:8000/predict/${fileName}`);
+      const disease = await diagService.getDisease(mlResponse.data);
+      const result = { disease, fileName };
       res.status(200).json(result);
     } catch (error) {
       next(error);
