@@ -101,7 +101,7 @@ def predict(name):
     ])
     img=VALID_TRANSFORM(img)
     idx=work(img)
-    my_dict={'cider_apple_rust': 0,'frog_eye_leaf_spot': 1,'healthy': 2,'powdery_mildew': 3,'rust': 4,'scab': 5}
+    my_dict={'cider apple rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'rust': 4,'scab': 5}
     def get_key(val):
         for key, value in my_dict.items():
          if val == value:
