@@ -47,7 +47,7 @@ plantRouter.post(
  * plant(plant) 이미지 업로드
  */
 plantRouter.post(
-  "/image",
+  "/plants/image",
   login_required,
   s3Upload(),
   async (req, res, next) => {
