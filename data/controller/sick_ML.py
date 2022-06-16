@@ -7,8 +7,7 @@ import os
 import cv2
 from PIL import Image
 import numpy as np
-import boto3
-
+import ssl
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -72,7 +71,8 @@ def predict(name):
         def s3_get_image_url( name):
                     # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
             return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-        req = urllib.request.urlopen(s3_get_image_url( name))
+        context = ssl._create_unverified_context()
+        req = urllib.request.urlopen(s3_get_image_url(name), context=context)
     except:
         print('s3에 해당파일이 없습니다!')
     img = np.asarray(bytearray(req.read()), dtype="uint8")
