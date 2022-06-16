@@ -10,11 +10,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
+import Footer from "./components/Footer";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
 
-const Footer = lazy(() => import("./components/Footer"));
 const Loginpage = lazy(() => import("./pages/Loginpage"));
 const Registerpage = lazy(() => import("./pages/Registerpage"));
 const Accountpage = lazy(() => import("./pages/Accountpage"));
