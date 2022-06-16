@@ -29,14 +29,8 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 jmespath==1.0.0
 joblib==1.1.0
-kaggle-imgclassif @ git+https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team3/ai_model.git@ccc789336385152944d1cb28c1a8549934572f4d
-keras==2.9.0
-Keras-Preprocessing==1.1.2
 kiwisolver==1.4.2
 libclang==14.0.1
-Markdown==3.3.7
-MarkupSafe==2.1.1
-matplotlib==3.5.2
 multidict==6.0.2
 numpy==1.22.4
 oauthlib==3.2.0

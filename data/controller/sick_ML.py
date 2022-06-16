@@ -65,28 +65,16 @@ def work(imgs):
     return lbs
  
    
-def s3_connection():
-    try:
-        s3 = boto3.client(
-            service_name="s3",
-            region_name=aws_region,
-            aws_access_key_id=aws_access_key,
-            aws_secret_access_key=aws_secret_access_key,
-        )
-    except Exception as e:
-        print(e)
-    else:
-        print("s3 bucket connected!")
-        return s3
-
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    #s3 = s3_connection()
-    def s3_get_image_url( name):
-            # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
-        return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-    req = urllib.request.urlopen(s3_get_image_url( name))
+    try:
+        def s3_get_image_url( name):
+                    # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
+            return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
+        req = urllib.request.urlopen(s3_get_image_url( name))
+    except:
+        print('s3에 해당파일이 없습니다!')
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
