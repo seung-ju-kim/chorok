@@ -7,7 +7,7 @@ const ScheduleSchema = new Schema(
   }
 );
 
-const GardenSchema = new Schema(
+const PlantSchema = new Schema(
   {
     userId: {
       type: String,
@@ -43,6 +43,6 @@ const GardenSchema = new Schema(
   }
 )
 
-const GardenModel = model("Garden", GardenSchema);
+const PlantModel = model("Plant", PlantSchema);
 
-export {GardenModel};
+export {PlantModel};
