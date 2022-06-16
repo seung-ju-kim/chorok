@@ -1,40 +1,49 @@
-import {Garden} from "../db";
+import {Plant} from "../db";
 
-class gardenService {
+class plantService {
   /**
    * 나의 식물 생성
    */
-  static async addGarden({userId, species, nickname, imageURL, description, lastWater, termWater}){
+  static async addPlant({userId, species, nickname, imageURL, description, lastWater, termWater}){
     
-    const newGarden = {userId, species, nickname, imageURL, description, lastWater, termWater};
-    const createdNewGarden =  await Garden.createGarden(newGarden);
+    const newPlant = {userId, species, nickname, imageURL, description, lastWater, termWater};
+    const createdNewPlant =  await Plant.createPlant(newPlant);
 
-    return createdNewGarden;
+    return createdNewPlant;
   }
 
   /**
    * 나의 식물 상세 조회
    */
-  static async getGardenById(gardenId){
-    const garden = await Garden.findGardenById(gardenId);
-    return garden;
+  static async getPlantById(plantId){
+    const plant = await Plant.findPlantById(plantId);
+    return plant;
   }
 
   /**
-   * 나의 식물 리스트 조회
+   * 나의 식물 리스트 조회(페이징)
    */
-  static async getGardensByUserId(userId){
-    const gardens = await Garden.findGardensByUserId(userId);
-    return gardens;
+  static async getPlantsByUserId({userId, page, perPage}){
+    const plants = await Plant.findPlantsByUserId({userId, page, perPage});
+    return plants;
   }
+
+  /**
+   * 페이징 처리한 식물 리스트의 마지막 페이지 번호 구하기
+   */
+  static async getLastPage({userId, perPage}) {
+    const lastPage = await Plant.findLastPage({userId, perPage})
+    return lastPage;
+  }
+  
 
   /**
    * 나의 식물 정보 수정
    */
-  static async setGarden({gardenId, toUpdate}){
-    let garden = await Garden.findGardenById(gardenId)
+  static async setPlant({plantId, toUpdate}){
+    let plant = await Plant.findPlantById(plantId)
 
-    if(!garden){
+    if(!plant){
       const error = new Error("수정할 식물이 없습니다.");
       error.status = 404;
       throw error;
@@ -46,16 +55,17 @@ class gardenService {
       if (toUpdate[myKeys[i]] !== null) {
         const fieldToUpdate = myKeys[i];
         const newValue = toUpdate[myKeys[i]];
-        garden = await Garden.update({gardenId, fieldToUpdate, newValue});
+        plant = await Plant.update({plantId, fieldToUpdate, newValue});
       }
     }
+    return plant;
   }
 
   /**
    * 나의 식물 삭제
    */
-   static async deleteGarden(gardenId) {
-    const isDataDeleted = await Garden.deleteGardenById(gardenId);
+   static async deletePlant(plantId) {
+    const isDataDeleted = await Plant.deletePlantById(plantId);
     if (isDataDeleted === false) {
       const error = new Error("삭제할 게시글을 찾을 수 없습니다.");
       error.status = 404;
@@ -65,4 +75,4 @@ class gardenService {
   }
 }
 
-export {gardenService};
+export {plantService};
