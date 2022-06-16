@@ -52,6 +52,7 @@ const Footer = () => {
         width: "100%",
         p: 2,
         zIndex: 1,
+        borderTop: "2px solid #f1f3f5",
       }}
     >
       <StyledTabs value={value} onChange={handleChange} textColor="inherit">

@@ -1,4 +1,4 @@
-import {CommentModel} from "../schemas/comment.js";
+import {CommentModel} from "../schemas/comment";
 
 class Comment {
   static async createComment(Comment) {

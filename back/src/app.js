@@ -6,6 +6,7 @@ import { specs } from "./config/swaggerDoc.js";
 import { userAuthRouter } from "./routers/userRouter";
 import { postRouter } from "./routers/postRouter";
 import { commentRouter } from "./routers/commentRouter";
+import { plantRouter } from "./routers/plantRouter";
 import { diagRouter } from "./routers/diagRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 
@@ -43,9 +44,12 @@ app.get("/", (req, res) => {
 app.use("/users", userAuthRouter);
 app.use(postRouter);
 app.use(commentRouter);
+app.use(plantRouter);
 app.use("/diags", diagRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
 export { app };
+
+

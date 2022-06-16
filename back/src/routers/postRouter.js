@@ -9,7 +9,8 @@ const postRouter = Router();
 /*
  * Community : Post 생성
  */
-postRouter.post("/posts",
+postRouter.post(
+  "/posts",
   login_required,
   async (req, res, next) => {
     try {
@@ -52,10 +53,10 @@ postRouter.post(
   s3Upload(),
   async (req, res, next) => {
     try{
-      const saveFile = req.file;
-      const fileName = String(saveFile.key).split("img/")[1];
+      const uploadFile = req.file;
+      const fileName = String(uploadFile.key).split("img/")[1];
 
-      if (!saveFile){
+      if (!uploadFile){
         return res.status(400).json({
           success: false,
           message: "업로드 실패"
@@ -64,7 +65,7 @@ postRouter.post(
         return res.status(200).json({
           success: true,
           message: "업로드 성공",
-          imageURL : saveFile.location,
+          imageURL : uploadFile.location,
           fileName : fileName
         });
       };
