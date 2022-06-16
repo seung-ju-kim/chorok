@@ -12,17 +12,13 @@ class Plant{
 
     //마지막 물 준 날짜로부터 다음 물 주는 스케줄 생성
     //단, 다음 스케줄이 오늘 날짜보다 이전이면 오늘 날짜부터 스케줄 생성
-    const nextSchedule = today.setMonth(lastWater.getDate()+termWater);
     const today = new Date();
+    const nextSchedule = copiedLastWater.setDate(copiedLastWater.getDate()+termWater);
+   
 
     //새로 생성한 plant 데이터에 다음 스케줄을 입력한다. 
     
-    newPlant.schedule.push({date:copiedLastWater.setDate(copiedLastWater.getDate() + termWater), isChecked:false})
-
-    // while(threeMonthsLater >= lastWater) {
-    //   newPlant.schedule.push({date:copiedLastWater.setDate(copiedLastWater.getDate() + termWater), isChecked:false})
-    // }
-
+    newPlant.schedule.push({date: nextSchedule, isChecked:false})
     newPlant.save();
 
     return newPlant;
@@ -33,10 +29,20 @@ class Plant{
     return plant;
   }
 
+  static async findLastPage({userId, perPage}) {
+    const totalPlants = await PlantModel.countDocuments({userId}); //아니면 카테고리별
+    const lastPage = Math.ceil(totalPlants / perPage);
+    return lastPage;
+  }
 
-  static async findPlantsByUserId(userId) {
-    const plants = await PlantModel.find({userId})
-    return plants;
+
+  static async findPlantsByUserId({userId, page, perPage}) {
+    return await PlantModel
+    .find({userId})
+    .sort({createdAt: -1})
+    .limit(perPage)
+    .skip((page-1) * perPage)
+    .lean();
   }
 
 
