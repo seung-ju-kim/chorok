@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import * as Api from "../../api";
 import TodoList from "./TodoList";
+import DiagImg from "./DiagImg";
 
 const TodoForm = () => {
   const [todo, setTodo] = useState("");
+  const [openDiagPlant, setOpenDiagPlant] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,14 +25,27 @@ const TodoForm = () => {
     setTodo(e.target.value);
   };
   return (
-    <Grid container sx={{ mb: 5 }}>
-      <Grid item xs={12}>
-        <Typography sx={{ mb: 3 }} fontWeight="bold" fontSize="5vw">
-          물주기 스케쥴
-        </Typography>
+    <>
+      <Grid container sx={{ mb: 5 }}>
+        <Grid item xs={12}>
+          <Typography sx={{ mb: 3 }} fontWeight="bold" fontSize="5vw">
+            물주기 스케쥴
+          </Typography>
+        </Grid>
+        <TodoList />
+        <Box
+          onClick={() => {
+            setOpenDiagPlant(true);
+          }}
+        >
+          <Typography>진단식물 등록하기</Typography>
+        </Box>
       </Grid>
-      <TodoList />
-    </Grid>
+      <DiagImg
+        openDiagPlant={openDiagPlant}
+        setOpenDiagPlant={setOpenDiagPlant}
+      />
+    </>
   );
 };
 

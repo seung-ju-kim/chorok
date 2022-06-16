@@ -7,7 +7,6 @@ function Schedule() {
   return (
     <Box sx={{ my: 10, px: 3 }}>
       <TodoForm />
-      <TodoList />
     </Box>
   );
 }
