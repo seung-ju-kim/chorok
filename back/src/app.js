@@ -44,10 +44,11 @@ app.get("/", (req, res) => {
 app.use("/users", userAuthRouter);
 app.use(postRouter);
 app.use(commentRouter);
-app.use(plantRouter);
-app.use("/diag", diagRouter);
+app.use("/diags", diagRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
 
 export { app };
+
+
