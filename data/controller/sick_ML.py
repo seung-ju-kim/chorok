@@ -8,8 +8,7 @@ import os
 import cv2
 from PIL import Image
 import numpy as np
-import boto3
-
+import ssl
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -67,33 +66,19 @@ def work(imgs):
                 lbs = 4 if 0 in temp else temp[0]
             else:
                 lbs = np.argmax(be.detach().numpy())
-    return lbs
-
-
-def s3_connection():
-    try:
-        s3 = boto3.client(
-            service_name="s3",
-            region_name=aws_region,
-            aws_access_key_id=aws_access_key,
-            aws_secret_access_key=aws_secret_access_key,
-        )
-    except Exception as e:
-        print(e)
-    else:
-        print("s3 bucket connected!")
-        return s3
-
+    return lbs   
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    # s3 = s3_connection()
+    try:
+        def s3_get_image_url( name):
+                    # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
+            return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
+        context = ssl._create_unverified_context()
+        req = urllib.request.urlopen(s3_get_image_url(name), context=context)
+    except:
+        print('s3에 해당파일이 없습니다!')
 
-    def s3_get_image_url(name):
-        # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
-        return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-    context = ssl._create_unverified_context()
-    req = urllib.request.urlopen(s3_get_image_url(name), context=context)
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
