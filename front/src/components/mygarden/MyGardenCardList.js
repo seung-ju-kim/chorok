@@ -1,7 +1,8 @@
-import React from "react";
-import { Grid, Typography, Container } from "@mui/material";
+import React, { useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MyGardenCard from "./MyGardenCard";
+import MyGardenAddForm from "./MyGardenAddModal";
 
 const dummyData = [
   {
@@ -31,6 +32,9 @@ const dummyData = [
   },
 ];
 const MyGardenCardList = () => {
+  // modal
+  const [openAddPlant, setOpenAddPlant] = useState(false);
+
   // style
   const cardListStyle = {
     width: "100%",
@@ -48,14 +52,23 @@ const MyGardenCardList = () => {
   return (
     <>
       <Grid item xs={6}>
-        <Container sx={cardListStyle}>
+        <Box
+          sx={cardListStyle}
+          onClick={() => {
+            setOpenAddPlant(true);
+          }}
+        >
           <AddIcon />
           <Typography>식물 등록하기</Typography>
-        </Container>
+        </Box>
       </Grid>
       {dummyData.map((data, i) => {
         return <MyGardenCard key={i} data={data} />;
       })}
+      <MyGardenAddForm
+        openAddPlant={openAddPlant}
+        setOpenAddPlant={setOpenAddPlant}
+      />
     </>
   );
 };

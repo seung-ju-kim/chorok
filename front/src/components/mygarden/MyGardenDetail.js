@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Box } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import DiaryTab from "./DiaryTab";
-import CalendarTab from "./CalendarTab";
 
 const MyGardenDetail = () => {
   const [value, setValue] = useState("1");
@@ -17,12 +16,14 @@ const MyGardenDetail = () => {
     <>
       <Box
         sx={{
-          width: "100%",
-          typography: "body1",
+          height: "100vh",
+          py: 15,
           color: "black",
+          bgcolor: "#f8f9fa",
+          overflow: "auto",
         }}
       >
-        <TabContext value={value}>
+        <TabContext value={value} sx={{ height: "100%" }}>
           <Box>
             <TabList
               onChange={handleChange}
@@ -42,16 +43,22 @@ const MyGardenDetail = () => {
                 pl: 3,
               }}
             >
-              <Tab label="Diary" value="1" />
-              <Tab label="Calendar" value="2" />
+              <Tab
+                label="Diary"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                value="1"
+              />
+              <Tab
+                label="Calendar"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                value="2"
+              />
             </TabList>
           </Box>
-          <TabPanel value="1" sx={{ p: 0, my: 15 }}>
+          <TabPanel value="1">
             <DiaryTab />
           </TabPanel>
-          <TabPanel value="2">
-            <CalendarTab />
-          </TabPanel>
+          <TabPanel value="2"></TabPanel>
         </TabContext>
       </Box>
     </>
