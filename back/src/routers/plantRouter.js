@@ -1,5 +1,5 @@
-import { Router } from express;
-import { gardenService } from "../services/gardenService";
+import { Router } from "express";
+import { gardenService } from "../services/plantService";
 import { s3Upload, s3Delete } from "../middlewares/multerS3";
 import {login_required} from "../middlewares/login_required";
 
@@ -17,13 +17,14 @@ gardenRouter.post(
       const userId = req.currentUserId
 
       //유저가 입력한 request body값
-      const {species, nickname, imageURL, lastWater, termWater} = req.body;
+      const {species, nickname, imageURL, description, lastWater, termWater} = req.body;
 
       const newGarden = await gardenService.addGarden({
         userId,
         species, 
         nickname, 
-        imageURL, 
+        imageURL,
+        description,
         lastWater, 
         termWater
       })
@@ -78,6 +79,25 @@ gardenRouter.post(
  * garden(plant) 상세 조회 
  */
 
+gardenRouter.get(
+  "/gardens/:id",
+  login_required,
+  async (req, res, next) => {
+    try {
+      const gardenId = req.params.id;
+      const garden =await gardenService.getGardenById(gardenId);
+
+      const body = {
+          success: true,
+          garden: garden,
+        };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 /**
  * garden(plant) 목록 조회 
