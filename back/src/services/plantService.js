@@ -4,12 +4,12 @@ class gardenService {
   /**
    * 나의 식물 생성
    */
-  static async addGarden({userId, species, nickname, imageURL, lastWater, termWater}){
+  static async addGarden({userId, species, nickname, imageURL, description, lastWater, termWater}){
     
-    const newGarden = {userId, species, nickname, imageURL, lastWater, termWater};
+    const newGarden = {userId, species, nickname, imageURL, description, lastWater, termWater};
     const createdNewGarden =  await Garden.createGarden(newGarden);
 
-    return createdNewGarden
+    return createdNewGarden;
   }
 
   /**
