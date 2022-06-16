@@ -4,7 +4,7 @@ import ScheduleList from "../components/schedule/ScheduleList";
 
 function Schedulepage() {
   return (
-    <Box sx={{ my: 10, px: 3 }}>
+    <Box sx={{ my: 12, px: "5%" }}>
       <Grid container columnSpacing={2}>
         <Grid item xs={12} sx={{ mb: 5 }}>
           <Typography fontWeight="bold" fontSize="7vw">

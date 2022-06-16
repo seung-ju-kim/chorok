@@ -1,57 +1,57 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Tab, Box } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import DiaryTab from "./DiaryTab";
+import CareTab from "./CareTab";
 
-const MyGardenDetail = () => {
+const MyPlantDetail = () => {
   const [value, setValue] = useState("1");
-  const params = useParams();
-  const navigate = useNavigate();
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <>
       <Box
         sx={{
           height: "100vh",
-          py: 15,
+          py: 10,
           color: "black",
-          bgcolor: "#f8f9fa",
           overflow: "auto",
         }}
       >
-        <TabContext value={value} sx={{ height: "100%" }}>
+        <TabContext value={value}>
           <Box>
             <TabList
               onChange={handleChange}
               aria-label="lab API tabs"
               textColor="inherit"
               sx={{
-                position: "fixed",
                 bgcolor: "white",
-                top: 0,
-                width: "100%",
-                p: 3,
+                width: "90%",
+
                 "& .MuiTabs-indicator": {
                   display: "flex",
                   justifyContent: "center",
                   bgcolor: "#64a68a",
                 },
-                pl: 3,
               }}
             >
               <Tab
-                label="Diary"
+                label="다이어리"
                 sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
                 value="1"
               />
               <Tab
-                label="Calendar"
+                label="캘린더"
                 sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
                 value="2"
+              />
+              <Tab
+                label="식물 관리"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                value="3"
               />
             </TabList>
           </Box>
@@ -59,10 +59,13 @@ const MyGardenDetail = () => {
             <DiaryTab />
           </TabPanel>
           <TabPanel value="2"></TabPanel>
+          <TabPanel value="3">
+            <CareTab />
+          </TabPanel>
         </TabContext>
       </Box>
     </>
   );
 };
 
-export default MyGardenDetail;
+export default MyPlantDetail;

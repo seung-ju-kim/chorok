@@ -12,8 +12,8 @@ const ScheduleList = () => {
   return (
     <Grid item xs={12}>
       <List sx={{ width: "100%" }}>
-        {list.map((data) => {
-          return <ScheduleCard data={data}></ScheduleCard>;
+        {list.map((data, i) => {
+          return <ScheduleCard key={i} data={data}></ScheduleCard>;
         })}
       </List>
     </Grid>
