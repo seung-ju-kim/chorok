@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { gardenService } from "../services/plantService";
+import { plantService } from "../services/plantService";
 import { s3Upload, s3Delete } from "../middlewares/multerS3";
 import {login_required} from "../middlewares/login_required";
 
-const gardenRouter = Router();
+const plantRouter = Router();
 
 /**
- * garden(plant) 생성
+ * plant(plant) 생성
  */
-gardenRouter.post(
-  "/gardens",
+plantRouter.post(
+  "/plants",
   login_required,
   async (req, res, next) => {
     try {
@@ -19,7 +19,7 @@ gardenRouter.post(
       //유저가 입력한 request body값
       const {species, nickname, imageURL, description, lastWater, termWater} = req.body;
 
-      const newGarden = await gardenService.addGarden({
+      const newPlant = await plantService.addPlant({
         userId,
         species, 
         nickname, 
@@ -31,7 +31,7 @@ gardenRouter.post(
 
       const body = {
         success: true,
-        garden: newGarden,
+        plant: newPlant,
       };
 
       res.status(201).json(body);
@@ -44,9 +44,9 @@ gardenRouter.post(
 
 
 /**
- * garden(plant) 이미지 업로드
+ * plant(plant) 이미지 업로드
  */
-gardenRouter.post(
+plantRouter.post(
   "/image",
   login_required,
   s3Upload(),
@@ -76,20 +76,20 @@ gardenRouter.post(
 )
 
 /**
- * garden(plant) 상세 조회 
+ * plant(plant) 상세 조회 
  */
 
-gardenRouter.get(
-  "/gardens/:id",
+plantRouter.get(
+  "/plants/:id",
   login_required,
   async (req, res, next) => {
     try {
-      const gardenId = req.params.id;
-      const garden =await gardenService.getGardenById(gardenId);
+      const plantId = req.params.id;
+      const plant =await plantService.getPlantById(plantId);
 
       const body = {
           success: true,
-          garden: garden,
+          plant: plant,
         };
 
       res.status(200).json(body);
@@ -100,11 +100,90 @@ gardenRouter.get(
 );
 
 /**
- * garden(plant) 목록 조회 
+ * plant(plant) 목록 조회(페이징 처리) 
  */
+plantRouter.get(
+  "/plants",
+  login_required,
+  async (req, res, next) => {
+    try {
+      const page = +req.query.page || 1;
+      const perPage = +req.query.perPage || 10;
+      const userId = req.currentUserId;
+
+      const lastPage = await plantService.getLastPage({userId, page, perPage});
+
+      const plants =await plantService.getPlantsByUserId({
+        userId,
+        page,
+        perPage
+      });
+
+
+      const body = {
+          success: true,
+          page : page,
+          lastPage: lastPage,
+          plants: plants,
+        };
+
+      res.status(200).json(body);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 /**
- * garden(plant) 삭제 
+ * plant(plant) 수정
  */
+plantRouter.put(
+  "/plants/:id",
+  login_required,
+  async (req, res, next) => {
+    try {
+      const plantId = req.params.id;
 
-export {gardenRouter};
+      const species =  req.body.species ?? null;
+      const nickname = req.body.nickname ?? null;
+      const imageURL = req.body.imageURL ?? null;
+      const description = req.body.description ?? null;
+      const lastWater = req.body.lastWater ?? null;
+      const termWater = req.body.termWater ?? null;
+
+      const toUpdate = {species, nickname, imageURL, description, lastWater, termWater};
+
+      const updatedPlant = await plantService.setPlant({plantId, toUpdate });
+
+      const body = {
+        success: true,
+        post: updatedPlant
+      };
+
+      res.status(200).json(body);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+/**
+ * plant(plant) 삭제
+ */
+plantRouter.delete(
+  "/plants/:id",
+  login_required,
+  async(req, res, next) => {
+    try{
+      const plantId = req.params.id;
+      const isDeleted = await plantService.deletePlant(plantId);
+
+      res.status(200).json(isDeleted);
+    } catch (error) {
+      next(error);
+    }
+  }
+)
+
+export {plantRouter};
