@@ -20,7 +20,6 @@ const PlantSchema = new Schema(
     nickname: {
       type: String,
       required: true,
-      unique: true
     },
     imageURL: {
       type: String,
@@ -44,5 +43,6 @@ const PlantSchema = new Schema(
 )
 
 const PlantModel = model("Plant", PlantSchema);
+const ScheduleModel = model("Schedule", ScheduleSchema);
 
 export {PlantModel};
