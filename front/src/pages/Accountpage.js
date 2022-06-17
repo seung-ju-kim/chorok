@@ -5,7 +5,7 @@ import AccountForm from "../components/user/AccountForm";
 
 const Accountpage = () => {
   return (
-    <Box sx={{ py: 12, px: "5%" }}>
+    <Box sx={{ pt: 12, pb: 15, px: "5%" }}>
       <Grid container>
         <Grid item xs={12} sx={{ mb: 5 }}>
           <Typography fontFamily="CookieRun-Regular" fontSize="1.5rem">
