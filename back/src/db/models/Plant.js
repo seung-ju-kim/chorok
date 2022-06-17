@@ -1,28 +1,33 @@
 import { PlantModel } from "../schemas/plant";
 
+
 class Plant{
 
   static async createPlant(Plant) {
     
     const newPlant = await PlantModel.create(Plant);
     //const lastWater = JSON.parse(JSON.stringify(newPlant.lastWater));
-    const lastWater = newPlant.lastWater;
+    const lastWater = await newPlant.lastWater;
     const copiedLastWater = new Date(lastWater.getTime());
-    const termWater = newPlant.termWater;
+    const termWater = await newPlant.termWater;
 
     //마지막 물 준 날짜로부터 다음 물 주는 스케줄 생성
     //단, 다음 스케줄이 오늘 날짜보다 이전이면 오늘 날짜부터 스케줄 생성
     const today = new Date();
     const nextSchedule = copiedLastWater.setDate(copiedLastWater.getDate()+termWater);
-   
 
-    //새로 생성한 plant 데이터에 다음 스케줄을 입력한다. 
-    
-    newPlant.schedule.push({date: nextSchedule, isChecked:false})
-    newPlant.save();
+    if (today >= nextSchedule){
+      //새로 생성한 plant 데이터에 다음 스케줄을 입력 
+      await newPlant.schedule.push({date: today, isChecked:false})
+    }else{
+      await newPlant.schedule.push({date: nextSchedule, isChecked:false})
+    }
+
+    await newPlant.save();
 
     return newPlant;
   }
+
 
   static async findPlantById(plantId) {
     const plant = await PlantModel.findOne({_id: plantId});
@@ -63,6 +68,19 @@ class Plant{
     const deleteResult = await PlantModel.deleteOne({_id: plantId});
     const isDataDeleted = deleteResult.deletedCount === 1;
     return isDataDeleted;
+  }
+
+  static async updateSchedule({plantId, scheduleId, isChecked }) {
+    const updatedSchedule = 
+    PlantModel.findOne({
+      _id: plantId
+    }).then((plant) =>{
+      plant.schedule.id(scheduleId).set({isChecked:isChecked});
+      plant.save();
+      return plant;
+    });
+
+    return updatedSchedule;
   }
 }
 
