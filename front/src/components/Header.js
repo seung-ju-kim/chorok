@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Typography, AppBar, Toolbar } from "@mui/material";
 
 const Footer = () => {
   const navigate = useNavigate();
-
   const { pathname } = useLocation();
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -13,6 +13,9 @@ const Footer = () => {
         <Toolbar>
           <Typography
             sx={{ color: "#21750f", fontSize: "1.5rem", fontWeight: "bold" }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             🍀 Chorok
           </Typography>

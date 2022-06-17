@@ -29,7 +29,7 @@ export const DispatchContext = createContext(null);
 
 const theme = createTheme({
   typography: {
-    fontFamily: "IBM Plex Sans KR, sans-serif",
+    fontFamily: "EF_Diary",
   },
 });
 

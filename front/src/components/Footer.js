@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Tab, Tabs, Box } from "@mui/material";
+import {
+  Tab,
+  Tabs,
+  Box,
+  BottomNavigation,
+  BottomNavigationAction,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
@@ -37,10 +43,8 @@ const LinkTab = (props) => {
 
 const Footer = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState("1");
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState(0);
+
   const { pathname } = useLocation();
   if (pathname === "/login" || pathname === "/register") return null;
   return (
@@ -53,42 +57,54 @@ const Footer = () => {
         py: 1,
         zIndex: 1,
         borderTop: "2px solid #f1f3f5",
+        "& .Mui-selected, .Mui-selected > svg": {
+          color: "black",
+        },
       }}
     >
-      <StyledTabs value={value} onChange={handleChange} textColor="inherit">
-        <LinkTab
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      >
+        <BottomNavigationAction
           icon={<CalendarMonthOutlinedIcon />}
           value="1"
+          label="Schedule"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/");
           }}
         />
-        <LinkTab
+        <BottomNavigationAction
           icon={<FenceOutlinedIcon />}
           value="2"
+          label="MyGarden"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
           }}
         />
-        <LinkTab
+        <BottomNavigationAction
           icon={<ForumOutlinedIcon />}
           value="3"
+          label="Community"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/community");
           }}
         />
-        <LinkTab
+        <BottomNavigationAction
           icon={<SettingsOutlinedIcon />}
           value="4"
+          label="Account"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/account");
           }}
         />
-      </StyledTabs>
+      </BottomNavigation>
     </Box>
   );
 };

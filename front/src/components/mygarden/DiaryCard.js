@@ -7,23 +7,33 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-
+import ConfirmModal from "./ConfirmModal";
+import * as Api from "../../api";
 const DiaryCard = ({ diary }) => {
+  const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const today = new Date();
+  const { id } = useParams();
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleDelete = () => {
+    Api.delete(`diary/${id}`);
+    navigate("/mygarden");
+  };
 
   // style
   const cardStyle = {
     width: "90vw",
     border: "1px solid white",
-    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   };
   return (
     <Card sx={cardStyle}>
@@ -41,16 +51,29 @@ const DiaryCard = ({ diary }) => {
           onClick={handleClick}
         />
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem>삭제</MenuItem>
+          <MenuItem
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            삭제
+          </MenuItem>
         </Menu>
         <Typography gutterBottom variant="h5">
-          {diary.title}
+          {today.toISOString().split("T")[0]}
         </Typography>
 
         <Typography variant="body1" color="text.secondary">
           {diary.content}
         </Typography>
       </CardContent>
+      <ConfirmModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        handleEvent={handleDelete}
+        title="다이어리 삭제"
+        subTitle="정말로 삭제하시겠습니까?"
+      />
     </Card>
   );
 };

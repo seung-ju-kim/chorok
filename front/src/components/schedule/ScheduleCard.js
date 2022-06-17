@@ -7,7 +7,7 @@ const ScheduleCard = ({ data }) => {
       sx={{
         mb: 2,
         height: "10vh",
-        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
       }}
     >
       <ListItemText primary={data.title} secondary={data.content} />
