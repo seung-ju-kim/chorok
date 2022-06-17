@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import Schedule from "../pages/Schedule";
+import Schedulepage from "../pages/Schedulepage";
 import { UserStateContext } from "../App";
 
 const Main = () => {
@@ -17,7 +17,7 @@ const Main = () => {
     }
   }, [params, userState, navigate]);
 
-  return <Schedule></Schedule>;
+  return <Schedulepage></Schedulepage>;
 };
 
 export default Main;

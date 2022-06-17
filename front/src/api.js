@@ -32,6 +32,16 @@ async function post(endpoint, data) {
     },
   });
 }
+async function postForm(endpoint, data) {
+  console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${data}`, "color: #296aba;");
+  return axios.post(serverUrl + endpoint, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
 
 async function put(endpoint, data) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
@@ -44,6 +54,18 @@ async function put(endpoint, data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+
+async function putForm(endpoint, data) {
+  console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
+  console.log(`%cPUT 요청 데이터: ${data}`, "color: #059c4b;");
+
+  return axios.put(serverUrl + endpoint, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
@@ -76,4 +98,4 @@ async function del(endpoint, params = "") {
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, patch, del as delete };
+export { get, post, postForm, put, putForm, patch, del as delete };

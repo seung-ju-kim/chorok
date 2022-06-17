@@ -11,60 +11,79 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DatePicker from "react-datepicker";
 
+import { useNavigate, useParams } from "react-router-dom";
 import "./react-datepicker.css";
-import { ko } from "date-fns/esm/locale";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
+import { useEffect } from "react";
 
-const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
+const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
+  const { id } = useParams();
+  const navigate = useNavigate("/mygarden");
   // 상태 관리
   const [image, setImage] = useState({
-    imageUrl: "",
-    preview: defaultImg,
+    imageFile: "",
+    previewURL: defaultImg,
   });
   const [species, setSpecies] = useState("");
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
-  const [term, setTerm] = useState();
-  const [lastSupplyDate, setLastSupplyDate] = useState(new Date());
+  const [term, setTerm] = useState(null);
 
-  // 사진 저장
-  const saveFileImage = (e) => {
+  useEffect(() => {
+    Api.get(`plants/${id}`).then((res) => {
+      setSpecies(res.data.plant.species);
+      setNickname(res.data.plant.nickname);
+      setDescription(res.data.plant.description);
+      setTerm(res.data.plant.termWater);
+      setImage({ previewURL: res.data.plant.imageURL });
+    });
+  }, []);
+
+  const saveImage = (e) => {
+    e.preventDefault();
     const fileReader = new FileReader();
+
     if (e.target.files[0]) {
       fileReader.readAsDataURL(e.target.files[0]);
     }
     fileReader.onload = () => {
       setImage({
-        imageUrl: e.target.files[0],
-        preview: fileReader.result,
+        imageFile: e.target.files[0],
+        previewURL: fileReader.result,
       });
     };
   };
+
   const deleteImage = () => {
     setImage({
-      imageUrl: "",
-      preview: defaultImg,
+      imageFile: "",
+      previewURL: defaultImg,
     });
   };
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", image.imageFile);
     try {
-      const formData = new FormData();
-      formData.append("imageUrl", image.imageUrl);
-      formData.append("species", species);
-      formData.append("nickname", nickname);
-      formData.append("description", description);
-      formData.append("term", term);
-      formData.append("lastSupplyDate", lastSupplyDate);
-      await Api.post("/", formData);
+      const res = await Api.postForm("image", formData);
       setImage({
-        imageUrl: "",
-        preview: defaultImg,
+        imageFile: "",
+        previewURL: defaultImg,
       });
+      await Api.put(`plants/${id}`, {
+        species,
+        nickname,
+        imageURL: res.data.imageURL,
+        description,
+        termWater: Number(term),
+      });
+      setOpenEditModal(false);
+      navigate("/mygarden");
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -72,16 +91,16 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
 
   return (
     <Dialog
-      open={openAddPlant}
+      open={openEditModal}
       onClose={() => {
-        setOpenAddPlant(false);
+        setOpenEditModal(false);
       }}
     >
-      <DialogTitle sx={{ pt: 5, bgcolor: "white" }}>
+      <DialogTitle sx={{ pt: 2, bgcolor: "white" }}>
         <IconButton
           aria-label="close"
           onClick={() => {
-            setOpenAddPlant(false);
+            setOpenEditModal(false);
           }}
           sx={{
             position: "absolute",
@@ -113,7 +132,12 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
           </DialogContentText>
 
           <Box sx={{ textAlign: "center" }}>
-            <Box component="img" src={image.preview} width="50%" height="50%" />
+            <Box
+              component="img"
+              src={image.previewURL}
+              width="50%"
+              height="50%"
+            />
           </Box>
 
           <Box sx={{ textAlign: "center" }}>
@@ -130,15 +154,10 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
               등록
               <TextField
                 required
-                name="imgUpload"
-                label="파일"
-                id="input-file"
                 type="file"
-                accept="imgage/*"
+                accept="image/*"
                 sx={{ display: "none" }}
-                variant="filled"
-                color="success"
-                onChange={saveFileImage}
+                onChange={saveImage}
               />
             </Button>
             <Button
@@ -153,12 +172,11 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
               삭제
             </Button>
           </Box>
-
           <TextField
             required
             sx={{ mt: 2, bgcolor: "white" }}
             type="text"
-            label="식물명"
+            label="식물 종류"
             fullWidth
             variant="outlined"
             color="success"
@@ -205,21 +223,6 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
               setTerm(e.target.value);
             }}
           />
-          <DatePicker
-            selected={lastSupplyDate}
-            onChange={(date) => setLastSupplyDate(date)}
-            locale={ko}
-            dateFormat="yyyy.MM.dd (eee)"
-            showPopperArrow={false}
-            customInput={
-              // 날짜 뜨는 인풋 커스텀
-              <TextField
-                label="🗓 마지막으로 물 준 날"
-                fullWidth
-                sx={{ mt: 2 }}
-              />
-            }
-          />
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
@@ -234,4 +237,4 @@ const MyGardenAddForm = ({ openAddPlant, setOpenAddPlant }) => {
   );
 };
 
-export default MyGardenAddForm;
+export default MyPlantEditModal;

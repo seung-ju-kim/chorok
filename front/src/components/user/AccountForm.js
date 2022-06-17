@@ -19,7 +19,7 @@ const AccountForm = () => {
   const [openWithdrawl, setOpenWithdrawl] = useState(false);
 
   return (
-    <Container>
+    <Box>
       <List component="nav">
         <ListItem divider>
           <ListItemText
@@ -79,7 +79,7 @@ const AccountForm = () => {
         openWithdrawl={openWithdrawl}
         setOpenWithdrawl={setOpenWithdrawl}
       />
-    </Container>
+    </Box>
   );
 };
 

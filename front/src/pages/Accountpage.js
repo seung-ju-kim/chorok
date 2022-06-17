@@ -5,7 +5,7 @@ import AccountForm from "../components/user/AccountForm";
 
 const Accountpage = () => {
   return (
-    <Box sx={{ my: 10 }}>
+    <Box sx={{ my: 12, px: "5%" }}>
       <AccountForm />
     </Box>
   );
