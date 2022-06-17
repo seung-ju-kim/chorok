@@ -10,18 +10,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
 
-const Footer = lazy(() => import("./components/Footer"));
 const Loginpage = lazy(() => import("./pages/Loginpage"));
 const Registerpage = lazy(() => import("./pages/Registerpage"));
 const Accountpage = lazy(() => import("./pages/Accountpage"));
 const Main = lazy(() => import("./components/Main"));
 const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
-const MyGardenDetail = lazy(() =>
-  import("./components/mygarden/MyGardenDetail")
+const MyPlantDetail = lazy(() =>
+  import("./components/mygarden/MyPlantDetail")
 );
 const Communitypage = lazy(() => import("./pages/Communitypage"));
 const CommunityInfoList = lazy(() => 
@@ -83,15 +84,16 @@ function App() {
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
           <Router>
+            <Header />
+            <Footer />
             <Suspense fallback={<div>Loading..</div>}>
-              <Footer />
               <Routes>
                 <Route path="/" exact element={<Main />} />
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/register" element={<Registerpage />} />
                 <Route path="/account" element={<Accountpage />} />
                 <Route path="/mygarden" element={<MyGardenpage />} />
-                <Route path="/mygarden/:id" element={<MyGardenDetail />} />
+                <Route path="/mygarden/:id" element={<MyPlantDetail />} />
                 <Route path="/community" element={<Communitypage />} />
                 <Route path="/community/CommunityInfoList" element={<CommunityInfoList />} />
                 <Route path="/community/CommunityFreeList" element={<CommunityFreeList />} />

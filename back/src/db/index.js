@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import { User } from "./models/User";
 import { Post } from "./models/Post";
 import { Comment } from "./models/Comment";
+import { Plant } from "./models/Plant";
+import { Diag } from "./models/Diag";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -17,5 +19,5 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export { User, Post, Comment };
+export { User, Post, Comment, Diag, Plant };
 

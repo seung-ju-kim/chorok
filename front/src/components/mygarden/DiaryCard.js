@@ -1,11 +1,29 @@
-import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 const DiaryCard = ({ diary }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   // style
   const cardStyle = {
-    width: "80vw",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
+    width: "90vw",
+    border: "1px solid white",
+    boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
   };
   return (
     <Card sx={cardStyle}>
@@ -17,10 +35,18 @@ const DiaryCard = ({ diary }) => {
           sx={{ p: 2, height: "30vh" }}
         />
       )}
-      <CardContent>
+      <CardContent sx={{ position: "relative" }}>
+        <MoreVertOutlinedIcon
+          sx={{ position: "absolute", right: 10 }}
+          onClick={handleClick}
+        />
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem>삭제</MenuItem>
+        </Menu>
         <Typography gutterBottom variant="h5">
           {diary.title}
         </Typography>
+
         <Typography variant="body1" color="text.secondary">
           {diary.content}
         </Typography>
