@@ -1,7 +1,16 @@
 import React from "react";
 import { Box } from "@mui/material";
+
+import CommunityMain from "../components/community/CommunityMain"
+
 const Community = () => {
-  return <Box sx={{ my: 12, px: "5%" }}>Community</Box>;
+  return (
+    <>
+      <Box sx={{ mt: 12 }}>
+        <CommunityMain />
+      </Box>
+    </>
+  );
 };
 
 export default Community;
