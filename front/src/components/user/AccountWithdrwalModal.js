@@ -6,7 +6,8 @@ import * as Api from "../../api";
 
 const AccountWithdrwalModal = ({ openWithdrawl, setOpenWithdrawl }) => {
   const navigate = useNavigate();
-  const style = {
+
+  const modalStyle = {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -16,6 +17,7 @@ const AccountWithdrwalModal = ({ openWithdrawl, setOpenWithdrawl }) => {
     borderRadius: "10px",
     p: 4,
   };
+
   const userDelete = async (e) => {
     e.preventDefault();
 
@@ -34,7 +36,7 @@ const AccountWithdrwalModal = ({ openWithdrawl, setOpenWithdrawl }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             회원가입 탈퇴
           </Typography>

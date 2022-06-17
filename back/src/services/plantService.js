@@ -73,6 +73,27 @@ class plantService {
     }
     return {status: "삭제 ok"};
   }
+
+  /**
+   * case 1 마지막 스케줄을 완료하면 다음 스케줄이 발생하도록 하는 메소드
+   * => 스케줄 리스트의 마지막 객체 isChecked 필드를 확인하고 true면 다음 스케줄 생성, false면 다음 스케줄 생성X 대신 재촉하는 메세지 리턴
+   * when? 마지막 스케줄을 체크하면 다음 스케줄이 발생하도록 해당 메소드 실행
+   * where? router단 콜백함수로 연결..?
+   */
+  static async pushWaterSchedule(plant) {
+    
+    const lastSchedule = plant.schedule[plant.schedule.length - 1].date;
+    const copiedLastSchedule = new Date(lastSchedule.getTime());
+    const termWater = plant.termWater;
+
+    const nextSchedule = copiedLastSchedule.setDate(copiedLastSchedule.getDate()+termWater);
+
+    if (lastSchedule.isChecked == true) {
+      plant.schedule.push({date: nextSchedule, isChecked:false})
+    } 
+
+    return plant;
+  }
 }
 
 export {plantService};

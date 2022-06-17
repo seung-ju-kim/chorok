@@ -4,11 +4,15 @@ import MyGardenCardList from "../components/mygarden/MyGardenCardList";
 
 const MyGardenpage = () => {
   return (
-    <Box sx={{ pt: 10, pb: 15, px: "5%" }}>
-      <Typography fontWeight="bold" fontSize="7vw" sx={{ mb: 3 }}>
+    <Box sx={{ pt: 12, pb: 15, px: "5%" }}>
+      <Typography
+        fontFamily="CookieRun-Regular"
+        fontSize="1.5rem"
+        sx={{ mb: 5 }}
+      >
         나의 정원
       </Typography>
-      <Grid container rowSpacing={6} columnSpacing={3}>
+      <Grid container rowSpacing={5} columnSpacing={3}>
         <MyGardenCardList />
       </Grid>
     </Box>

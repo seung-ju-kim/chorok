@@ -39,28 +39,28 @@ const MyPlantDetail = () => {
               }}
             >
               <Tab
-                label="다이어리"
-                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                label="식물 관리"
+                sx={{
+                  fontFamily: "CookieRun-Regular",
+                  fontSize: "1.2rem",
+                }}
                 value="1"
               />
               <Tab
-                label="캘린더"
-                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+                label="다이어리"
+                sx={{
+                  fontFamily: "CookieRun-Regular",
+                  fontSize: "1.2rem",
+                }}
                 value="2"
-              />
-              <Tab
-                label="식물 관리"
-                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
-                value="3"
               />
             </TabList>
           </Box>
           <TabPanel value="1">
-            <DiaryTab />
-          </TabPanel>
-          <TabPanel value="2"></TabPanel>
-          <TabPanel value="3">
             <CareTab />
+          </TabPanel>
+          <TabPanel value="2">
+            <DiaryTab />
           </TabPanel>
         </TabContext>
       </Box>

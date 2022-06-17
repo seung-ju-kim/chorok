@@ -9,14 +9,17 @@ const list = [
 ];
 
 const ScheduleList = () => {
+  const today = new Date();
   return (
-    <Grid item xs={12}>
-      <List sx={{ width: "100%" }}>
-        {list.map((data, i) => {
-          return <ScheduleCard key={i} data={data}></ScheduleCard>;
-        })}
-      </List>
-    </Grid>
+    <>
+      <Grid item xs={12}>
+        <List sx={{ width: "100%" }}>
+          {list.map((data, i) => {
+            return <ScheduleCard key={i} data={data}></ScheduleCard>;
+          })}
+        </List>
+      </Grid>
+    </>
   );
 };
 

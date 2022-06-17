@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Button,
-} from "@mui/material";
+import { Grid, List, ListItem, ListItemText, Box, Button } from "@mui/material";
 
 import AccountEditModal from "./AccountEditModal";
 import AccountLogoutModal from "./AccountLogoutModal";
@@ -19,8 +12,8 @@ const AccountForm = () => {
   const [openWithdrawl, setOpenWithdrawl] = useState(false);
 
   return (
-    <Box>
-      <List component="nav">
+    <Grid item xs={12}>
+      <List component="nav" sx={{ width: "100%" }}>
         <ListItem divider>
           <ListItemText
             primary="개인정보 변경"
@@ -79,7 +72,7 @@ const AccountForm = () => {
         openWithdrawl={openWithdrawl}
         setOpenWithdrawl={setOpenWithdrawl}
       />
-    </Box>
+    </Grid>
   );
 };
 
