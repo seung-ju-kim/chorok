@@ -19,6 +19,8 @@ import defaultImg from "../../imgs/default_image.png";
 import { useEffect } from "react";
 
 const MyPlantImageEditModal = ({
+  plants,
+  setPlants,
   openImageEditModal,
   setOpenImageEditModal,
 }) => {
@@ -27,7 +29,7 @@ const MyPlantImageEditModal = ({
   // 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
-    previewURL: defaultImg,
+    previewURL: plants.imageURL,
   });
 
   useEffect(() => {
@@ -73,9 +75,8 @@ const MyPlantImageEditModal = ({
       await Api.put(`plants/${id}`, {
         imageURL: res.data.imageURL,
       });
+      setPlants({ ...plants, imageURL: res.data.imageURL });
       setOpenImageEditModal(false);
-      navigate(`/mygarden/${id}`);
-      window.location.reload();
     } catch (e) {
       console.log(e);
     }

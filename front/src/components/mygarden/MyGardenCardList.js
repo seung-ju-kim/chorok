@@ -22,8 +22,8 @@ const MyGardenCardList = () => {
   const addButtonStyle = {
     position: "fixed",
     right: "5%",
-    bottom: "10%",
-    fontSize: "4rem",
+    bottom: "15%",
+    fontSize: "3rem",
     color: "#64a68a",
     borderRadius: "10%",
     boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",

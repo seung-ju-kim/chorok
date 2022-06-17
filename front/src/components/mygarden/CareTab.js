@@ -33,12 +33,12 @@ const CareTab = () => {
   return (
     <Grid container>
       <Grid item xs={12} sx={{ mb: 4 }}>
-        <IconButton>
-          <ArrowBackIosNewIcon
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
+        <IconButton
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <ArrowBackIosNewIcon />
         </IconButton>
       </Grid>
       <Grid item xs={12} sx={{ textAlign: "center", mb: 2 }}>
@@ -93,10 +93,14 @@ const CareTab = () => {
         </Box>
       </Grid>
       <MyPlantImageEditModal
+        plants={plants}
+        setPlants={setPlants}
         openImageEditModal={openImageEditModal}
         setOpenImageEditModal={setOpenImageEditModal}
       />
       <MyPlantEditModal
+        plants={plants}
+        setPlants={setPlants}
         openEditModal={openEditModal}
         setOpenEditModal={setOpenEditModal}
       />
