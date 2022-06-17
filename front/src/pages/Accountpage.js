@@ -1,12 +1,19 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 
 import AccountForm from "../components/user/AccountForm";
 
 const Accountpage = () => {
   return (
-    <Box sx={{ my: 12, px: "5%" }}>
-      <AccountForm />
+    <Box sx={{ py: 12, px: "5%" }}>
+      <Grid container>
+        <Grid item xs={12} sx={{ mb: 5 }}>
+          <Typography fontFamily="CookieRun-Regular" fontSize="1.5rem">
+            계정 관리
+          </Typography>
+        </Grid>
+        <AccountForm />
+      </Grid>
     </Box>
   );
 };

@@ -22,10 +22,6 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
   const { id } = useParams();
   const navigate = useNavigate("/mygarden");
   // 상태 관리
-  const [image, setImage] = useState({
-    imageFile: "",
-    previewURL: defaultImg,
-  });
   const [species, setSpecies] = useState("");
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
@@ -37,52 +33,22 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
       setNickname(res.data.plant.nickname);
       setDescription(res.data.plant.description);
       setTerm(res.data.plant.termWater);
-      setImage({ previewURL: res.data.plant.imageURL });
     });
   }, []);
 
-  const saveImage = (e) => {
-    e.preventDefault();
-    const fileReader = new FileReader();
-
-    if (e.target.files[0]) {
-      fileReader.readAsDataURL(e.target.files[0]);
-    }
-    fileReader.onload = () => {
-      setImage({
-        imageFile: e.target.files[0],
-        previewURL: fileReader.result,
-      });
-    };
-  };
-
-  const deleteImage = () => {
-    setImage({
-      imageFile: "",
-      previewURL: defaultImg,
-    });
-  };
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", image.imageFile);
+
     try {
-      const res = await Api.postForm("image", formData);
-      setImage({
-        imageFile: "",
-        previewURL: defaultImg,
-      });
       await Api.put(`plants/${id}`, {
         species,
         nickname,
-        imageURL: res.data.imageURL,
         description,
         termWater: Number(term),
       });
       setOpenEditModal(false);
-      navigate("/mygarden");
+      navigate(`/mygarden/${id}`);
       window.location.reload();
     } catch (e) {
       console.log(e);
@@ -122,58 +88,15 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
               fontSize: "1rem",
             }}
           >
-            내 식물 등록
+            내 식물 정보 수정
           </DialogContentText>
           <DialogContentText
             align="center"
-            sx={{ color: "#64a68a", fontWeight: "bold", mb: 3 }}
+            sx={{ color: "#64a68a", fontFamily: "CookieRun-Regular", mb: 3 }}
           >
-            아이의 사진을 먼저 등록해주세요!
+            아이의 정보를 수정합니다.
           </DialogContentText>
-
-          <Box sx={{ textAlign: "center" }}>
-            <Box
-              component="img"
-              src={image.previewURL}
-              width="50%"
-              height="50%"
-            />
-          </Box>
-
-          <Box sx={{ textAlign: "center" }}>
-            <Button
-              component="label"
-              sx={{
-                p: 2,
-                color: "#64a68a",
-                border: "2px solid #64a68a",
-                borderRadius: "10%",
-                mr: 2,
-              }}
-            >
-              등록
-              <TextField
-                required
-                type="file"
-                accept="image/*"
-                sx={{ display: "none" }}
-                onChange={saveImage}
-              />
-            </Button>
-            <Button
-              sx={{
-                p: 2,
-                color: "#64a68a",
-                border: "2px solid #64a68a",
-                borderRadius: "10%",
-              }}
-              onClick={deleteImage}
-            >
-              삭제
-            </Button>
-          </Box>
           <TextField
-            required
             sx={{ mt: 2, bgcolor: "white" }}
             type="text"
             label="식물 종류"
@@ -186,7 +109,6 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             }}
           />
           <TextField
-            required
             sx={{ mt: 2, bgcolor: "white" }}
             label="애칭"
             type="text"
@@ -211,7 +133,6 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             }}
           />
           <TextField
-            required
             sx={{ mt: 2, bgcolor: "white" }}
             label="물 주는 주기"
             type="number"
@@ -229,7 +150,7 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
             type="submit"
           >
-            추가
+            수정
           </Button>
         </DialogActions>
       </Box>

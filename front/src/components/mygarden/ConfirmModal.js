@@ -1,7 +1,13 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 
-const ConfirmModal = ({ openModal, setOpenModal, handleEvent }) => {
+const ConfirmModal = ({
+  openModal,
+  setOpenModal,
+  handleEvent,
+  title,
+  subTitle,
+}) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -23,10 +29,10 @@ const ConfirmModal = ({ openModal, setOpenModal, handleEvent }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            식물과 작별
+            {title}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            정말로 작별하시겠습니까 ?
+            {subTitle}
           </Typography>
           <Box sx={{ mt: 5 }} textAlign="right">
             <Button

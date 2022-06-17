@@ -46,15 +46,20 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", image.imageFile);
     try {
-      const formData = new FormData();
-      formData.append("imageUrl", image.imageUrl);
-      formData.append("content", content);
-      await Api.post("/", formData);
+      const res = await Api.postForm("image", formData);
       setImage({
-        imageUrl: "",
-        preview: defaultImg,
+        imageFile: "",
+        previewURL: defaultImg,
       });
+      await Api.post("diary", {
+        imageURL: res.data.imageURL,
+        content,
+      });
+      setOpenWriteForm(false);
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
