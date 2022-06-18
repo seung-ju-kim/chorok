@@ -11,35 +11,8 @@ import { styled } from "@mui/material/styles";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-
-const StyledTabs = styled((props) => (
-  <Tabs
-    {...props}
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))({
-  "& .MuiTabs-indicator": {
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  "& .MuiTabs-indicatorSpan": {
-    width: 0,
-  },
-});
-
-const LinkTab = (props) => {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-};
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -57,7 +30,7 @@ const Footer = () => {
         py: 1,
         zIndex: 1,
         borderTop: "2px solid #f1f3f5",
-        "& .Mui-selected, .Mui-selected > svg": {
+        " & .Mui-selected, .Mui-selected > svg": {
           color: "black",
         },
       }}
@@ -96,8 +69,17 @@ const Footer = () => {
           }}
         />
         <BottomNavigationAction
-          icon={<SettingsOutlinedIcon />}
+          icon={<LocalHospitalOutlinedIcon />}
           value="4"
+          label="Diagnosis"
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
+          onClick={() => {
+            navigate("/diagnosis");
+          }}
+        />
+        <BottomNavigationAction
+          icon={<SettingsOutlinedIcon />}
+          value="5"
           label="Account"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {

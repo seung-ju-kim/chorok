@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 
-const ScheduleCard = ({ data }) => {
+const ScheduleCard = ({ schedule }) => {
   return (
     <ListItem
       sx={{
@@ -10,7 +10,7 @@ const ScheduleCard = ({ data }) => {
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
       }}
     >
-      <ListItemText primary={data.title} secondary={data.content} />
+      <ListItemText primary={schedule.title} secondary={schedule.content} />
     </ListItem>
   );
 };

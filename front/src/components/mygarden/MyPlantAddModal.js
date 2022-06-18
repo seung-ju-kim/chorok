@@ -17,7 +17,6 @@ import "./react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
-import { useEffect } from "react";
 
 const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
   // 상태 관리
@@ -82,6 +81,7 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
   return (
     <Dialog
       open={openAddPlant}
+      fullScreen
       onClose={() => {
         setOpenAddPlant(false);
       }}

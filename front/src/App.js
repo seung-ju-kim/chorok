@@ -23,6 +23,10 @@ const Main = lazy(() => import("./components/Main"));
 const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
 const MyPlantDetail = lazy(() => import("./components/mygarden/MyPlantDetail"));
 const Communitypage = lazy(() => import("./pages/Communitypage"));
+const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
+const DiagnosisPicture = lazy(() =>
+  import("./components/diagnosis/DiagnosisPicture")
+);
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -87,6 +91,11 @@ function App() {
                 <Route path="/mygarden" element={<MyGardenpage />} />
                 <Route path="/mygarden/:id" element={<MyPlantDetail />} />
                 <Route path="/community" element={<Communitypage />} />
+                <Route path="/diagnosis" element={<Diagnosispage />} />
+                <Route
+                  path="/diagnosis/picture"
+                  element={<DiagnosisPicture />}
+                />
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>

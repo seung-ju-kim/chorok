@@ -16,7 +16,7 @@ const MyPlantDetail = () => {
       <Box
         sx={{
           height: "100vh",
-          py: 10,
+          py: 8,
           color: "black",
           overflow: "auto",
         }}
