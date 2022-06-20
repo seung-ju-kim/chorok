@@ -61,10 +61,6 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
     formData.append("file", image.imageFile);
     try {
       const res = await Api.postForm("image", formData);
-      setImage({
-        imageFile: "",
-        previewURL: defaultImg,
-      });
 
       await Api.post("plants", {
         species,
@@ -79,6 +75,15 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
         setMyPlants(res.data.plants);
       });
 
+      setImage({
+        imageFile: "",
+        previewURL: defaultImg,
+      });
+      setSpecies("");
+      setNickname("");
+      setDescription("");
+      setTerm("");
+      setLastSupplyDate(new Date());
       setOpenAddPlant(false);
     } catch (e) {
       console.log(e);

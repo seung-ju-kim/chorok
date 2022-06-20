@@ -55,7 +55,7 @@ const DiagnosisPicture = () => {
       >
         진단 받을 아이의 사진을 등록해주세요
       </Typography>
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", px: 5 }}>
         <Box
           component="img"
           src={image.previewURL}
@@ -63,7 +63,6 @@ const DiagnosisPicture = () => {
           height="100%"
         />
       </Box>
-
       <Box
         sx={{ textAlign: "center" }}
         component="form"
@@ -102,7 +101,17 @@ const DiagnosisPicture = () => {
         <Box sx={{ textAlign: "center", mt: 5 }}>
           <Button
             fullWidth
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            variant="contained"
+            color="success"
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
           >
             진단받기

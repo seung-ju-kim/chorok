@@ -67,14 +67,16 @@ const MyPlantImageEditModal = ({
     formData.append("file", image.imageFile);
     try {
       const res = await Api.postForm("image", formData);
+      setPlants({ ...plants, imageURL: res.data.imageURL });
       setImage({
         imageFile: "",
         previewURL: defaultImg,
       });
+
       await Api.put(`plants/${id}`, {
-        imageURL: res.data.imageURL,
+        imageURL: plants.imageURL,
       });
-      setPlants({ ...plants, imageURL: res.data.imageURL });
+
       setOpenImageEditModal(false);
     } catch (e) {
       console.log(e);
@@ -87,6 +89,8 @@ const MyPlantImageEditModal = ({
       onClose={() => {
         setOpenImageEditModal(false);
       }}
+      fullWidth
+      maxWidth="lg"
     >
       <DialogTitle sx={{ pt: 2, bgcolor: "white" }}>
         <IconButton
@@ -132,8 +136,8 @@ const MyPlantImageEditModal = ({
             <Box
               component="img"
               src={image.previewURL}
-              width="50%"
-              height="50%"
+              width="100%"
+              height="auto"
             />
           </Box>
 

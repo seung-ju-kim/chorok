@@ -120,10 +120,10 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ px: 10 }}>
+        <DialogActions sx={{ px: 10, mb: 10 }}>
           <Button
             color="success"
-            variant="outlined"
+            variant="contained"
             size="large"
             sx={{
               mx: "auto",
