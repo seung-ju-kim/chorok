@@ -6,17 +6,16 @@ import MyPlantAddModal from "./MyPlantAddModal";
 import * as Api from "../../api";
 
 const MyGardenCardList = () => {
-  // 상태관리
+  // 나의 식물 상태관리
   const [myPlants, setMyPlants] = useState([]);
+  const [openAddPlant, setOpenAddPlant] = useState(false);
 
+  // 나의 식물 리스트 받아오기
   useEffect(() => {
     Api.get("plants").then((res) => {
       setMyPlants(res.data.plants);
     });
   }, []);
-
-  // modal
-  const [openAddPlant, setOpenAddPlant] = useState(false);
 
   // style
   const addButtonStyle = {
@@ -78,6 +77,7 @@ const MyGardenCardList = () => {
       <MyPlantAddModal
         openAddPlant={openAddPlant}
         setOpenAddPlant={setOpenAddPlant}
+        setMyPlants={setMyPlants}
       />
     </>
   );

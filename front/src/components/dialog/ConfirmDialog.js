@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Modal, Typography } from "@mui/material";
 
-const ConfirmModal = ({
+const ConfirmDialog = ({
   openModal,
   setOpenModal,
   handleEvent,
@@ -63,4 +63,4 @@ const ConfirmModal = ({
   );
 };
 
-export default ConfirmModal;
+export default ConfirmDialog;

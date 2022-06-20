@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Tab,
-  Tabs,
-  Box,
-  BottomNavigation,
-  BottomNavigationAction,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
@@ -16,7 +9,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const Footer = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("1");
 
   const { pathname } = useLocation();
   if (pathname === "/login" || pathname === "/register") return null;
@@ -42,21 +35,21 @@ const Footer = () => {
         }}
       >
         <BottomNavigationAction
-          icon={<CalendarMonthOutlinedIcon />}
-          value="1"
-          label="Schedule"
-          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-        <BottomNavigationAction
           icon={<FenceOutlinedIcon />}
-          value="2"
+          value="1"
           label="MyGarden"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
+          }}
+        />
+        <BottomNavigationAction
+          icon={<LocalHospitalOutlinedIcon />}
+          value="2"
+          label="Diagnosis"
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
+          onClick={() => {
+            navigate("/diagnosis");
           }}
         />
         <BottomNavigationAction
@@ -69,17 +62,8 @@ const Footer = () => {
           }}
         />
         <BottomNavigationAction
-          icon={<LocalHospitalOutlinedIcon />}
-          value="4"
-          label="Diagnosis"
-          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
-          onClick={() => {
-            navigate("/diagnosis");
-          }}
-        />
-        <BottomNavigationAction
           icon={<SettingsOutlinedIcon />}
-          value="5"
+          value="4"
           label="Account"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {

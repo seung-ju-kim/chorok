@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -12,11 +13,9 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { useNavigate, useParams } from "react-router-dom";
 import "./react-datepicker.css";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
-import { useEffect } from "react";
 
 const MyPlantImageEditModal = ({
   plants,
@@ -24,20 +23,21 @@ const MyPlantImageEditModal = ({
   openImageEditModal,
   setOpenImageEditModal,
 }) => {
-  const { id } = useParams();
-  const navigate = useNavigate("/mygarden");
-  // 상태 관리
+  // 편집한 식물 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
-    previewURL: plants.imageURL,
+    previewURL: "",
   });
 
+  // 이미지 미리보기 사진 연결
   useEffect(() => {
-    Api.get(`plants/${id}`).then((res) => {
-      setImage({ previewURL: res.data.plant.imageURL });
-    });
-  }, []);
+    setImage({ ...image, previewURL: plants.imageURL });
+  }, [plants]);
 
+  const { id } = useParams();
+  const navigate = useNavigate("/mygarden");
+
+  // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveImage = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
@@ -52,7 +52,7 @@ const MyPlantImageEditModal = ({
       });
     };
   };
-
+  // 등록 된 미리보기 이미지를 삭제하는 이벤트
   const deleteImage = () => {
     setImage({
       imageFile: "",
@@ -60,8 +60,7 @@ const MyPlantImageEditModal = ({
     });
   };
 
-  // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
-
+  // 새로운 식물을 등록하는 이벤트
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();

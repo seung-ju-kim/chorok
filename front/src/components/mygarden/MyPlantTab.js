@@ -4,12 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import * as Api from "../../api";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmDialog from "../dialog/ConfirmDialog";
 import MyPlantEditModal from "./MyPlantEditModal";
 import MyPlantImageEditModal from "./MyPlantImageEditModal";
 
 const CareTab = () => {
-  // 상태 관리
+  // 식물 정보와 모달창 상태 관리
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openImageEditModal, setOpenImageEditModal] = useState(false);
@@ -22,7 +22,7 @@ const CareTab = () => {
   // params를 통해 식물 정보 불러오기
   useEffect(() => {
     Api.get(`plants/${id}`).then((res) => setPlants(res.data.plant));
-  }, []);
+  }, [id]);
 
   // 식물 삭제
   const handleDelete = () => {
@@ -104,7 +104,7 @@ const CareTab = () => {
         openEditModal={openEditModal}
         setOpenEditModal={setOpenEditModal}
       />
-      <ConfirmModal
+      <ConfirmDialog
         openModal={openModal}
         setOpenModal={setOpenModal}
         handleEvent={handleDelete}

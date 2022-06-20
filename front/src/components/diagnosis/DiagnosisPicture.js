@@ -41,7 +41,6 @@ const DiagnosisPicture = () => {
         imageFile: "",
         previewURL: defaultImg,
       });
-      console.log(res.data);
     } catch (e) {
       console.log(e);
     }

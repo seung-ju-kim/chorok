@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -6,6 +6,7 @@ import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
 
 const DiaryTab = () => {
+  // 다이어리 상태 관리
   const [openWriteForm, setOpenWriteForm] = useState(false);
   const [diaries, setDiaries] = useState([]);
 

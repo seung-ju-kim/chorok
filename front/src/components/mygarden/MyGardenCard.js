@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const MyGardenCard = ({ myplant }) => {
   const navigate = useNavigate();
+
   return (
     <>
       {myplant ? (
