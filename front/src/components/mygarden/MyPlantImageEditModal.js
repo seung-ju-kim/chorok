@@ -175,8 +175,18 @@ const MyPlantImageEditModal = ({
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             수정
           </Button>

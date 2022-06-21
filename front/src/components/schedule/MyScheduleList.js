@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+
 const MyScheduleList = () => {
   return (
     <Box sx={{ py: 12, px: "5%" }}>

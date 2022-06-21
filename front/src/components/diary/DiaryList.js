@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
+import * as Api from "../../api";
+import df from "../../imgs/default_image.png";
 
-const DiaryTab = () => {
+const DiaryList = () => {
   // 다이어리 상태 관리
   const [openWriteForm, setOpenWriteForm] = useState(false);
-  const [diaries, setDiaries] = useState([]);
+  const [diaries, setDiaries] = useState([{ img: df, content: "hi" }]);
+
+  // 다이어리 불러오기
+  // useEffect(async () => {
+  //   const res = await Api.get("diary");
+  //   setDiaries(res.data);
+  // }, []);
 
   // style
   const writeButtonStyle = {
@@ -29,7 +37,7 @@ const DiaryTab = () => {
       {diaries.map((diary, i) => {
         return (
           <Grid item sx={{ mx: "auto" }} key={i}>
-            <DiaryCard diary={diary} />
+            <DiaryCard setDiaries={setDiaries} diary={diary} />
           </Grid>
         );
       })}
@@ -47,4 +55,4 @@ const DiaryTab = () => {
   );
 };
 
-export default DiaryTab;
+export default DiaryList;
