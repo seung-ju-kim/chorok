@@ -4,7 +4,6 @@ import ListIcon from "@mui/icons-material/List";
 import { useNavigate } from "react-router-dom";
 import CommunityInfo from "./CommunityInfo";
 import CommunityFree from "./CommunityFree";
-import CommunityFreeComment from "./CommunityFreeComment";
 
 const CommunityMain = () => {
   const navigate = useNavigate();
