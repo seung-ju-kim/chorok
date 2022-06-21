@@ -24,6 +24,16 @@ const dummyData = [
       name: "쑥쑥이2",
       img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
     },
+    {
+      id: 5,
+      name: "쑥쑥이2",
+      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+    },
+    {
+      id: 6,
+      name: "쑥쑥이2",
+      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+    },
   ];
 
 const CommunityFree = () => {
@@ -32,7 +42,7 @@ const CommunityFree = () => {
     height: "100%",
     color: "white",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     cursor: "pointer",
@@ -55,10 +65,6 @@ const CommunityFree = () => {
   return (
     <>
       <Container sx={cardListStyle1}>
-        <Container sx={cardListStyle2}>
-          <AddIcon />
-          <Typography>글쓰기</Typography>
-        </Container>
         {dummyData.map((data, i) => {
             return <CommunityFreeCard key={i} data={data} />;
         })}

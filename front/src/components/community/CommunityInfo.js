@@ -32,7 +32,7 @@ const CommunityInfo = () => {
     height: "100%",
     color: "white",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     cursor: "pointer",
@@ -55,10 +55,6 @@ const CommunityInfo = () => {
   return (
     <>
       <Container sx={cardListStyle1}>
-        <Container sx={cardListStyle2}>
-          <AddIcon />
-          <Typography>글쓰기</Typography>
-        </Container>
         {dummyData.map((data, i) => {
             return <CommunityInfoCard key={i} data={data} />;
         })}
