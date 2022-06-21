@@ -33,3 +33,5 @@ class Diary{
     });
   }
 }
+
+export {Diary};
