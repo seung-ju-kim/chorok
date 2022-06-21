@@ -30,7 +30,6 @@ const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
 const DiagnosisPicture = lazy(() =>
   import("./components/diagnosis/DiagnosisPicture")
 );
-
 const CommunityInfoList = lazy(() =>
   import("./components/community/CommunityInfoList")
 );
@@ -104,7 +103,6 @@ function App() {
                   path="/mygarden/myschedule"
                   element={<MyScheduleList />}
                 />
-                <Route path="/mygarden/:id" element={<MyPlantDetail />} />
                 <Route path="/community" element={<Communitypage />} />
                 <Route path="/diagnosis" element={<Diagnosispage />} />
                 <Route
