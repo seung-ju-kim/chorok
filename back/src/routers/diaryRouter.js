@@ -70,7 +70,9 @@ diaryRouter.get(
   login_required, 
   async (req, res, next) => {
     try{
-      const plantId = req.query.plantId || null;
+      const id = req.query.plantId;
+      const plantId = id.split("/")[0]
+      console.log(plantId);
       const diaries = await diaryService.getDiariesByPlantId(plantId);
 
       const body = {
