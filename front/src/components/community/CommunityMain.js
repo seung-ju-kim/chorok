@@ -54,7 +54,6 @@ const CommunityMain = () => {
           <CommunityFree />
         </Grid>
       </Grid>
-      <CommunityFreeComment />
     </>
   );
 };
