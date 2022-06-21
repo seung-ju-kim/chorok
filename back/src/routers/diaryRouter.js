@@ -71,7 +71,7 @@ diaryRouter.get(
   async (req, res, next) => {
     try{
       const plantId = req.query.plantId || null;
-      const diaries = await diaryService.getDiaryByPlantId(plantId);
+      const diaries = await diaryService.getDiariesByPlantId(plantId);
 
       const body = {
         success: true,
