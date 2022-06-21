@@ -1,41 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+
 import MyGardenCard from "./MyGardenCard";
 import MyPlantAddModal from "./MyPlantAddModal";
 import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const MyGardenCardList = () => {
-  // 상태관리
+  // 나의 식물 상태관리
   const [myPlants, setMyPlants] = useState([]);
+  const [openAddPlant, setOpenAddPlant] = useState(false);
 
+  const navigate = useNavigate();
+  // 나의 식물 리스트 받아오기
   useEffect(() => {
     Api.get("plants").then((res) => {
       setMyPlants(res.data.plants);
     });
   }, []);
 
-  // modal
-  const [openAddPlant, setOpenAddPlant] = useState(false);
-
   // style
   const addButtonStyle = {
     position: "fixed",
     right: "5%",
-    bottom: "10%",
-    fontSize: "4rem",
+    bottom: "12%",
     color: "#64a68a",
-    borderRadius: "10%",
+    borderRadius: "50%",
     boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
     bgcolor: "white",
-    p: 2,
-    cursor: "pointer",
+    p: 2.5,
   };
 
   return (
     <>
-      <Grid item xs={12} sx={{ mb: 2 }}>
-        <Typography>{myPlants.length}개의 식물을 키우고 있습니다.</Typography>
+      <Button
+        size="small"
+        variant="outlined"
+        color="success"
+        sx={{ position: "absolute", right: 20, top: 100 }}
+        startIcon={<CalendarMonthOutlinedIcon />}
+        onClick={() => {
+          navigate("/mygarden/myschedule");
+        }}
+      >
+        스케줄
+      </Button>
+      <Grid item xs={12} sx={{ my: "auto" }}>
+        <Typography variant="body2">
+          현재 {myPlants.length}개의 식물을 키우고 있습니다.
+        </Typography>
       </Grid>
       {myPlants.length === 0 ? (
         <Grid item xs={12}>
@@ -78,6 +93,7 @@ const MyGardenCardList = () => {
       <MyPlantAddModal
         openAddPlant={openAddPlant}
         setOpenAddPlant={setOpenAddPlant}
+        setMyPlants={setMyPlants}
       />
     </>
   );

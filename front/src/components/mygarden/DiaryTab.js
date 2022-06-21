@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -6,6 +6,7 @@ import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
 
 const DiaryTab = () => {
+  // 다이어리 상태 관리
   const [openWriteForm, setOpenWriteForm] = useState(false);
   const [diaries, setDiaries] = useState([]);
 
@@ -13,13 +14,13 @@ const DiaryTab = () => {
   const writeButtonStyle = {
     position: "fixed",
     right: "5%",
-    bottom: "10%",
-    fontSize: "5rem",
+    bottom: "15%",
+    fontSize: "3rem",
     color: "#64a68a",
     borderRadius: "50%",
     boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
     bgcolor: "white",
-    p: 2,
+    p: 1,
     cursor: "pointer",
   };
 

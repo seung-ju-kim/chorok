@@ -12,15 +12,14 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DatePicker from "react-datepicker";
+import { ko } from "date-fns/esm/locale";
 
 import "./react-datepicker.css";
-import { ko } from "date-fns/esm/locale";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
-import { useEffect } from "react";
 
-const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
-  // 상태 관리
+const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
+  // 식물 추가 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
     previewURL: defaultImg,
@@ -31,6 +30,7 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
   const [term, setTerm] = useState("");
   const [lastSupplyDate, setLastSupplyDate] = useState(new Date());
 
+  // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveImage = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
@@ -46,24 +46,22 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
     };
   };
 
+  // 등록 된 미리보기 이미지를 삭제하는 이벤트
   const deleteImage = () => {
     setImage({
       imageFile: "",
       previewURL: defaultImg,
     });
   };
-  // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
 
+  // 새로운 식물을 등록하는 이벤트
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", image.imageFile);
     try {
       const res = await Api.postForm("image", formData);
-      setImage({
-        imageFile: "",
-        previewURL: defaultImg,
-      });
+
       await Api.post("plants", {
         species,
         nickname,
@@ -72,8 +70,21 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
         lastWater: lastSupplyDate,
         termWater: Number(term),
       });
+
+      await Api.get("plants").then((res) => {
+        setMyPlants(res.data.plants);
+      });
+
+      setImage({
+        imageFile: "",
+        previewURL: defaultImg,
+      });
+      setSpecies("");
+      setNickname("");
+      setDescription("");
+      setTerm("");
+      setLastSupplyDate(new Date());
       setOpenAddPlant(false);
-      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -82,6 +93,7 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant }) => {
   return (
     <Dialog
       open={openAddPlant}
+      fullScreen
       onClose={() => {
         setOpenAddPlant(false);
       }}

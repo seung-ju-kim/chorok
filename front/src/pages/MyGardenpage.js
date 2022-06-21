@@ -8,10 +8,11 @@ const MyGardenpage = () => {
       <Typography
         fontFamily="CookieRun-Regular"
         fontSize="1.5rem"
-        sx={{ mb: 5 }}
+        sx={{ mb: 3 }}
       >
         나의 정원
       </Typography>
+
       <Grid container rowSpacing={5} columnSpacing={3}>
         <MyGardenCardList />
       </Grid>

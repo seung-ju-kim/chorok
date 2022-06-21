@@ -21,8 +21,17 @@ const Registerpage = lazy(() => import("./pages/Registerpage"));
 const Accountpage = lazy(() => import("./pages/Accountpage"));
 const Main = lazy(() => import("./components/Main"));
 const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
-const MyPlantDetail = lazy(() => import("./components/mygarden/MyPlantDetail"));
+const MyGardenDetail = lazy(() =>
+  import("./components/mygarden/MyGardenDetail")
+);
+const MyScheduleList = lazy(() =>
+  import("./components/mygarden/MyScheduleList")
+);
 const Communitypage = lazy(() => import("./pages/Communitypage"));
+const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
+const DiagnosisPicture = lazy(() =>
+  import("./components/diagnosis/DiagnosisPicture")
+);
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -85,8 +94,17 @@ function App() {
                 <Route path="/register" element={<Registerpage />} />
                 <Route path="/account" element={<Accountpage />} />
                 <Route path="/mygarden" element={<MyGardenpage />} />
-                <Route path="/mygarden/:id" element={<MyPlantDetail />} />
+                <Route path="/mygarden/:id" element={<MyGardenDetail />} />
+                <Route
+                  path="/mygarden/myschedule"
+                  element={<MyScheduleList />}
+                />
                 <Route path="/community" element={<Communitypage />} />
+                <Route path="/diagnosis" element={<Diagnosispage />} />
+                <Route
+                  path="/diagnosis/picture"
+                  element={<DiagnosisPicture />}
+                />
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>

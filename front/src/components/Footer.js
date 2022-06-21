@@ -1,49 +1,15 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Tab,
-  Tabs,
-  Box,
-  BottomNavigation,
-  BottomNavigationAction,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-
-const StyledTabs = styled((props) => (
-  <Tabs
-    {...props}
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))({
-  "& .MuiTabs-indicator": {
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  "& .MuiTabs-indicatorSpan": {
-    width: 0,
-  },
-});
-
-const LinkTab = (props) => {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-};
 
 const Footer = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("1");
 
   const { pathname } = useLocation();
   if (pathname === "/login" || pathname === "/register") return null;
@@ -57,7 +23,7 @@ const Footer = () => {
         py: 1,
         zIndex: 1,
         borderTop: "2px solid #f1f3f5",
-        "& .Mui-selected, .Mui-selected > svg": {
+        " & .Mui-selected, .Mui-selected > svg": {
           color: "black",
         },
       }}
@@ -69,21 +35,21 @@ const Footer = () => {
         }}
       >
         <BottomNavigationAction
-          icon={<CalendarMonthOutlinedIcon />}
-          value="1"
-          label="Schedule"
-          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-        <BottomNavigationAction
           icon={<FenceOutlinedIcon />}
-          value="2"
+          value="1"
           label="MyGarden"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
+          }}
+        />
+        <BottomNavigationAction
+          icon={<LocalHospitalOutlinedIcon />}
+          value="2"
+          label="Diagnosis"
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
+          onClick={() => {
+            navigate("/diagnosis");
           }}
         />
         <BottomNavigationAction

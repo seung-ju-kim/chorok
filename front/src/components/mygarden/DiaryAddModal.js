@@ -17,14 +17,14 @@ import defaultImg from "../../imgs/default_image.png";
 
 const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
   const today = new Date();
-  // 상태 관리
+  // 다이어리 상태 관리
   const [image, setImage] = useState({
     imageUrl: "",
     preview: defaultImg,
   });
   const [content, setContent] = useState("");
 
-  // 사진 저장
+  // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveFileImage = (e) => {
     const fileReader = new FileReader();
     if (e.target.files[0]) {
@@ -37,6 +37,8 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
       });
     };
   };
+
+  // 등록 된 미리보기 이미지를 삭제하는 이벤트
   const deleteImage = () => {
     setImage({
       imageUrl: "",
@@ -44,6 +46,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
     });
   };
 
+  // 새로운 식물을 등록하는 이벤트
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();

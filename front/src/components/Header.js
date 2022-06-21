@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Box, Typography, AppBar, Toolbar } from "@mui/material";
-
+import { IconButton, Box, Typography, AppBar, Toolbar } from "@mui/material";
+import EnergySavingsLeafOutlinedIcon from "@mui/icons-material/EnergySavingsLeafOutlined";
 const Footer = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -17,7 +17,12 @@ const Footer = () => {
               navigate("/");
             }}
           >
-            🍀 Chorok
+            <IconButton
+              sx={{ color: "#21750f", fontSize: "1.5rem", fontWeight: "bold" }}
+            >
+              <EnergySavingsLeafOutlinedIcon />
+            </IconButton>
+            Chorok
           </Typography>
         </Toolbar>
       </AppBar>
