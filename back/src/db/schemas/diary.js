@@ -22,7 +22,10 @@ const DiarySchema = new Schema(
     status:{
       type: String
     },
-  }
+  },
+  {
+    timestamps: true,
+  },
 )
 
 const DiaryModel = model("Diary", DiarySchema);
