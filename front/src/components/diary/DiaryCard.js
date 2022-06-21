@@ -13,7 +13,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import ConfirmDialog from "../dialog/ConfirmDialog";
 import * as Api from "../../api";
 
-const DiaryCard = ({ diary }) => {
+const DiaryCard = ({ diary, setDiaries }) => {
   // 모달창 상태관리
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,9 +30,11 @@ const DiaryCard = ({ diary }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleDelete = () => {
-    Api.delete(`diary/${id}`);
-    navigate("/mygarden");
+  const handleDelete = async () => {
+    await Api.delete(`diary/${id}`);
+    const res = await Api.get("diary");
+    setDiaries(res.data);
+    setOpenModal(false);
   };
 
   // style

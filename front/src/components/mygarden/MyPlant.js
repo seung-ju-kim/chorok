@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
-import DiaryTab from "./DiaryTab";
-import MyPlantTab from "./MyPlantTab";
+import DiaryList from "../diary/DiaryList";
+import MyPlantCare from "./MyPlantCare";
 
-const MyPlantDetail = () => {
+const MyPlant = () => {
   // 탭 상태 관리
   const [value, setValue] = useState("1");
   const handleChange = (event, newValue) => {
@@ -56,14 +56,14 @@ const MyPlantDetail = () => {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <MyPlantTab />
+          <MyPlantCare />
         </TabPanel>
         <TabPanel value="2">
-          <DiaryTab />
+          <DiaryList />
         </TabPanel>
       </TabContext>
     </Box>
   );
 };
 
-export default MyPlantDetail;
+export default MyPlant;

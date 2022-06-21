@@ -59,6 +59,7 @@ const DiagnosisPicture = () => {
         <Box
           component="img"
           src={image.previewURL}
+          alt="previewImg"
           width="100%"
           height="100%"
         />

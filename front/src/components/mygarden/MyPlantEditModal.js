@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -23,7 +23,6 @@ const MyPlantEditModal = ({
   setOpenEditModal,
 }) => {
   const { id } = useParams();
-  const navigate = useNavigate("/mygarden");
 
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
   const handleSubmit = async (e) => {
@@ -133,8 +132,18 @@ const MyPlantEditModal = ({
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             수정
           </Button>

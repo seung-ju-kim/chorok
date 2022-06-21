@@ -11,8 +11,9 @@ const Loginpage = () => {
     position: "absolute",
     top: "15%",
     left: "50%",
+    width: "100%",
     transform: "translate(-50%, 50%)",
-    zIndex: 3,
+    zIndex: 1,
   };
   const videoBoxStyle = {
     width: "100vw",
@@ -38,10 +39,15 @@ const Loginpage = () => {
   return (
     <>
       <Box sx={boxStyle}>
-        <Typography align="center" fontSize="3rem" fontWeight="bold">
+        <Typography
+          align="center"
+          fontSize="4rem"
+          fontWeight="bold"
+          fontFamily="Hi Melody"
+        >
           Chorok
         </Typography>
-        <Typography align="center" fontSize="1rem">
+        <Typography align="center" fontSize="1.2rem" fontFamily="Hi Melody">
           누구나 손 쉽게 홈 가드닝, 초록
         </Typography>
       </Box>
@@ -56,7 +62,7 @@ const Loginpage = () => {
         >
           <Box component="source" src={video} type="video/webm" />
         </Box>
-        <LoginForm></LoginForm>
+        <LoginForm />
       </Box>
     </>
   );

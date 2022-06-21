@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import MyGardenCard from "./MyGardenCard";
-import MyPlantAddModal from "./MyPlantAddModal";
+import MyGardenAddModal from "./MyGardenAddModal";
 import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
 
@@ -31,6 +31,10 @@ const MyGardenCardList = () => {
     boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
     bgcolor: "white",
     p: 2.5,
+    ":hover": {
+      bgcolor: "white",
+      color: "#64a68a",
+    },
   };
 
   return (
@@ -85,12 +89,14 @@ const MyGardenCardList = () => {
             onClick={() => {
               setOpenAddPlant(true);
             }}
+            color="success"
+            variant="contained"
           >
             <AddIcon />
           </Button>
         </>
       )}
-      <MyPlantAddModal
+      <MyGardenAddModal
         openAddPlant={openAddPlant}
         setOpenAddPlant={setOpenAddPlant}
         setMyPlants={setMyPlants}

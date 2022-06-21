@@ -21,11 +21,9 @@ const Registerpage = lazy(() => import("./pages/Registerpage"));
 const Accountpage = lazy(() => import("./pages/Accountpage"));
 const Main = lazy(() => import("./components/Main"));
 const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
-const MyGardenDetail = lazy(() =>
-  import("./components/mygarden/MyGardenDetail")
-);
+const MyPlant = lazy(() => import("./components/mygarden/MyPlant"));
 const MyScheduleList = lazy(() =>
-  import("./components/mygarden/MyScheduleList")
+  import("./components/schedule/MyScheduleList")
 );
 const Communitypage = lazy(() => import("./pages/Communitypage"));
 const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
@@ -94,7 +92,7 @@ function App() {
                 <Route path="/register" element={<Registerpage />} />
                 <Route path="/account" element={<Accountpage />} />
                 <Route path="/mygarden" element={<MyGardenpage />} />
-                <Route path="/mygarden/:id" element={<MyGardenDetail />} />
+                <Route path="/mygarden/:id" element={<MyPlant />} />
                 <Route
                   path="/mygarden/myschedule"
                   element={<MyScheduleList />}

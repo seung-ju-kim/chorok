@@ -10,6 +10,7 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
+import dayjs from "dayjs";
 import CloseIcon from "@mui/icons-material/Close";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
@@ -18,7 +19,7 @@ import "./react-datepicker.css";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
 
-const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
+const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   // 식물 추가 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
@@ -28,7 +29,7 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
   const [term, setTerm] = useState("");
-  const [lastSupplyDate, setLastSupplyDate] = useState(new Date());
+  const [lastSupplyDate, setLastSupplyDate] = useState(dayjs().$d);
 
   // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveImage = (e) => {
@@ -243,8 +244,18 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             추가
           </Button>
@@ -254,4 +265,4 @@ const MyPlantAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   );
 };
 
-export default MyPlantAddModal;
+export default MyGardenAddModal;

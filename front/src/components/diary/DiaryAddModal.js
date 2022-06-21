@@ -11,12 +11,15 @@ import {
   DialogActions,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import dayjs from "dayjs";
 
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
 
 const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
-  const today = new Date();
+  // 오늘 날짜
+  const today = dayjs().$d;
+
   // 다이어리 상태 관리
   const [image, setImage] = useState({
     imageUrl: "",
@@ -62,7 +65,6 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
         content,
       });
       setOpenWriteForm(false);
-      window.location.reload();
     } catch (e) {
       console.log(e);
     }

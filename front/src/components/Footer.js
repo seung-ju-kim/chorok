@@ -10,8 +10,11 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 const Footer = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-
   const { pathname } = useLocation();
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box
@@ -23,15 +26,15 @@ const Footer = () => {
         py: 1,
         zIndex: 1,
         borderTop: "2px solid #f1f3f5",
-        " & .Mui-selected, .Mui-selected > svg": {
-          color: "black",
-        },
       }}
     >
       <BottomNavigation
         value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
+        onChange={handleChange}
+        sx={{
+          "& .Mui-selected, .Mui-selected > svg": {
+            color: "black",
+          },
         }}
       >
         <BottomNavigationAction
