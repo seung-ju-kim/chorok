@@ -2,18 +2,22 @@ import {Schema, model} from "mongoose";
 
 const DiarySchema = new Schema(
   {
+    userId:{
+      type: String,
+      index: true,
+    },
     plantId:{
       type: String,
       index: true,
+    },
+    imageURL:{
+      type: String,
     },
     content:{
       type: String,
     },
     date:{
       type:Date,
-    },
-    imageURL:{
-      type: String,
     },
     status:{
       type: String
