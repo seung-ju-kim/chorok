@@ -32,6 +32,7 @@ async function post(endpoint, data) {
     },
   });
 }
+
 async function postForm(endpoint, data) {
   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: ${data}`, "color: #296aba;");

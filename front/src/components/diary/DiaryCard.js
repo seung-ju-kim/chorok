@@ -9,24 +9,32 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import ConfirmModal from "./ConfirmModal";
+
+import ConfirmDialog from "../dialog/ConfirmDialog";
 import * as Api from "../../api";
-const DiaryCard = ({ diary }) => {
+
+const DiaryCard = ({ diary, setDiaries }) => {
+  // 모달창 상태관리
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const today = new Date();
+
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 카드 메뉴 관리
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleDelete = () => {
-    Api.delete(`diary/${id}`);
-    navigate("/mygarden");
+  const handleDelete = async () => {
+    await Api.delete(`diary/${id}`);
+    const res = await Api.get("diary");
+    setDiaries(res.data);
+    setOpenModal(false);
   };
 
   // style
@@ -35,6 +43,7 @@ const DiaryCard = ({ diary }) => {
     border: "1px solid white",
     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   };
+
   return (
     <Card sx={cardStyle}>
       {diary.img && (
@@ -67,7 +76,7 @@ const DiaryCard = ({ diary }) => {
           {diary.content}
         </Typography>
       </CardContent>
-      <ConfirmModal
+      <ConfirmDialog
         openModal={openModal}
         setOpenModal={setOpenModal}
         handleEvent={handleDelete}

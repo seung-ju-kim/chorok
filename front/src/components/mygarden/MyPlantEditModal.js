@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -12,44 +13,28 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { useNavigate, useParams } from "react-router-dom";
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.png";
-import { useEffect } from "react";
 
-const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
+const MyPlantEditModal = ({
+  plants,
+  setPlants,
+  openEditModal,
+  setOpenEditModal,
+}) => {
   const { id } = useParams();
-  const navigate = useNavigate("/mygarden");
-  // 상태 관리
-  const [species, setSpecies] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [description, setDescription] = useState("");
-  const [term, setTerm] = useState(null);
-
-  useEffect(() => {
-    Api.get(`plants/${id}`).then((res) => {
-      setSpecies(res.data.plant.species);
-      setNickname(res.data.plant.nickname);
-      setDescription(res.data.plant.description);
-      setTerm(res.data.plant.termWater);
-    });
-  }, []);
 
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await Api.put(`plants/${id}`, {
-        species,
-        nickname,
-        description,
-        termWater: Number(term),
+        species: plants.species,
+        nickname: plants.nickname,
+        description: plants.description,
+        termWater: Number(plants.term),
       });
       setOpenEditModal(false);
-      navigate(`/mygarden/${id}`);
-      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -103,9 +88,9 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             fullWidth
             variant="outlined"
             color="success"
-            value={species}
+            value={plants.species}
             onChange={(e) => {
-              setSpecies(e.target.value);
+              setPlants({ ...plants, species: e.target.value });
             }}
           />
           <TextField
@@ -115,9 +100,9 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             fullWidth
             variant="outlined"
             color="success"
-            value={nickname}
+            value={plants.nickname}
             onChange={(e) => {
-              setNickname(e.target.value);
+              setPlants({ ...plants, nickname: e.target.value });
             }}
           />
           <TextField
@@ -127,9 +112,9 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             fullWidth
             variant="outlined"
             color="success"
-            value={description}
+            value={plants.description}
             onChange={(e) => {
-              setDescription(e.target.value);
+              setPlants({ ...plants, description: e.target.value });
             }}
           />
           <TextField
@@ -139,16 +124,26 @@ const MyPlantEditModal = ({ openEditModal, setOpenEditModal }) => {
             fullWidth
             variant="outlined"
             color="success"
-            value={term}
+            value={plants.termWater}
             onChange={(e) => {
-              setTerm(e.target.value);
+              setPlants({ ...plants, term: e.target.value });
             }}
           />
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             수정
           </Button>
