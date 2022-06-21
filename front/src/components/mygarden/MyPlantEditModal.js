@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -12,10 +13,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { useNavigate, useParams } from "react-router-dom";
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import { useEffect } from "react";
 
 const MyPlantEditModal = ({
   plants,
@@ -24,23 +23,10 @@ const MyPlantEditModal = ({
   setOpenEditModal,
 }) => {
   const { id } = useParams();
-  const navigate = useNavigate("/mygarden");
-
-  useEffect(() => {
-    Api.get(`plants/${id}`).then((res) => {
-      setPlants({
-        species: res.data.plant.species,
-        nickname: res.data.plant.nickname,
-        description: res.data.plant.description,
-        term: res.data.plant.termWater,
-      });
-    });
-  }, []);
 
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await Api.put(`plants/${id}`, {
         species: plants.species,
@@ -146,8 +132,18 @@ const MyPlantEditModal = ({
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": {
+                bgcolor: "#64a68a",
+                color: "white",
+              },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             수정
           </Button>
