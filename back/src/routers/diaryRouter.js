@@ -65,11 +65,12 @@ diaryRouter.get(
  * 다이어리 목록 조회
  */
 diaryRouter.get(
-  "/diarylist/:plantId", 
+  "/diaries", 
   login_required, 
   async (req, res, next) => {
     try{
-      const plantId = req.params.plantId;
+      const id = req.query.plantId;
+      const plantId = id.split("/")[0]
       const diaries = await diaryService.getDiariesByPlantId(plantId);
 
       const body = {
