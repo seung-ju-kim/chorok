@@ -10,19 +10,21 @@ import {
   Button,
   DialogActions,
 } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import dayjs from "dayjs";
 
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
 
-const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
-  // 오늘 날짜
-  const today = dayjs().$d;
+const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
+  // useParams, useNavigate
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   // 다이어리 상태 관리
   const [image, setImage] = useState({
-    imageUrl: "",
+    imageURL: "",
     preview: defaultImg,
   });
   const [content, setContent] = useState("");
@@ -35,7 +37,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
     }
     fileReader.onload = () => {
       setImage({
-        imageUrl: e.target.files[0],
+        imageURL: e.target.files[0],
         preview: fileReader.result,
       });
     };
@@ -44,7 +46,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
   // 등록 된 미리보기 이미지를 삭제하는 이벤트
   const deleteImage = () => {
     setImage({
-      imageUrl: "",
+      imageURL: "",
       preview: defaultImg,
     });
   };
@@ -52,18 +54,32 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
   // 새로운 식물을 등록하는 이벤트
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", image.imageFile);
     try {
-      const res = await Api.postForm("image", formData);
+      if (image.imageURL !== "") {
+        const formData = new FormData();
+        formData.append("file", image.imageURL);
+        const res = await Api.postForm("image", formData);
+
+        await Api.post("diaries", {
+          plantId: id,
+          imageURL: res.data.imageURL,
+          content,
+        });
+      } else {
+        await Api.post("diaries", {
+          plantId: id,
+          imageURL: "",
+          content,
+        });
+      }
+      const res = await Api.get(`diaries/${id}`);
+      setDiaries(res.data.diaries);
+
       setImage({
-        imageFile: "",
-        previewURL: defaultImg,
+        imageURL: "",
+        preview: defaultImg,
       });
-      await Api.post("diary", {
-        imageURL: res.data.imageURL,
-        content,
-      });
+      setContent("");
       setOpenWriteForm(false);
     } catch (e) {
       console.log(e);
@@ -94,7 +110,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <Box component="form" onSubmit={() => {}}>
+      <Box component="form" onSubmit={handleSubmit}>
         <DialogContent sx={{ bgcolor: "white" }}>
           <Box sx={{ textAlign: "center" }}>
             <Box component="img" src={image.preview} width="50%" height="50%" />
@@ -137,9 +153,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
               fontWeight: "bold",
               fontSize: "1.5rem",
             }}
-          >
-            {today.toISOString().split("T")[0]}
-          </DialogContentText>
+          ></DialogContentText>
           <TextField
             required
             sx={{ mt: 3, bgcolor: "white" }}

@@ -46,10 +46,10 @@ const DiaryCard = ({ diary, setDiaries }) => {
 
   return (
     <Card sx={cardStyle}>
-      {diary.img && (
+      {diary.imageURL && (
         <CardMedia
           component="img"
-          image={diary.img}
+          image={diary.imageURL}
           alt="diary img"
           sx={{ p: 2, height: "30vh" }}
         />

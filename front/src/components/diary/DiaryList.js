@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
@@ -10,13 +11,16 @@ import df from "../../imgs/default_image.png";
 const DiaryList = () => {
   // 다이어리 상태 관리
   const [openWriteForm, setOpenWriteForm] = useState(false);
-  const [diaries, setDiaries] = useState([{ img: df, content: "hi" }]);
+  const [diaries, setDiaries] = useState([]);
+
+  // useParams, useNavigate
+  const { id } = useParams();
 
   // 다이어리 불러오기
-  // useEffect(async () => {
-  //   const res = await Api.get("diary");
-  //   setDiaries(res.data);
-  // }, []);
+  useEffect(() => {
+    const res = Api.get(`diarylist/${id}`);
+    console.log(res.data);
+  }, [id]);
 
   // style
   const writeButtonStyle = {
@@ -50,6 +54,7 @@ const DiaryList = () => {
       <DiaryAddModal
         openWriteForm={openWriteForm}
         setOpenWriteForm={setOpenWriteForm}
+        setDiaries={setDiaries}
       />
     </Grid>
   );
