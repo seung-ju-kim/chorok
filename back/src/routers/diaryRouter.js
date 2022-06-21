@@ -15,7 +15,7 @@ diaryRouter.post(
       const userId = req.currentUserId;
 
       //유저가 입력한 request body값
-      const { plantId, imageURL, content, date } = req.body;
+      const { plantId, imageURL, content} = req.body;
       const status = req.body.status || "test";
 
       const newDiary = await diaryService.addDiary({
@@ -23,7 +23,6 @@ diaryRouter.post(
         plantId,
         imageURL,
         content,
-        date,
         status,
       });
 
@@ -66,11 +65,11 @@ diaryRouter.get(
  * 다이어리 목록 조회
  */
 diaryRouter.get(
-  "/diaries", 
+  "/diarylist/:plantId", 
   login_required, 
   async (req, res, next) => {
     try{
-      const plantId = req.query.plantId || null;
+      const plantId = req.params.plantId;
       const diaries = await diaryService.getDiariesByPlantId(plantId);
 
       const body = {
