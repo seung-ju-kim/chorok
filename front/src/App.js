@@ -30,7 +30,9 @@ const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
 const DiagnosisPicture = lazy(() =>
   import("./components/diagnosis/DiagnosisPicture")
 );
-
+const DiagnosisResult = lazy(() =>
+  import("./components/diagnosis/DiagnosisResult")
+);
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
