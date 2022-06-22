@@ -13,8 +13,15 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
     const mlResponse = await axios.get(
       `http://localhost:8000/predict/${fileName}`
     );
-    const disease = await diagService.getDisease(mlResponse.data);
-    const result = { disease, fileName };
+    const diagList = mlResponse.data
+    const diseaseList = []
+    for (const [key, value] of Object.entries(diagList)){
+      let disease = await diagService.getDisease(key);
+      disease.percent = value*100;
+      diseaseList.push(disease);
+    };
+
+    const result = { diseaseList, fileName };
     res.status(200).json(result);
   } catch (error) {
     next(error);
