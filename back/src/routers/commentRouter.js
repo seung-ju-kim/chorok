@@ -9,21 +9,21 @@ const commentRouter = Router();
  * Community : 해당 포스트에 comment 생성
  */
 commentRouter.post(
-  "/comments/:postId",
+  "/comments",
   login_required,
   async (req, res, next) => {
     try{
       //post 식별 Id
-      const postId = req.params.postId;
+      const {postId,content} = req.body;
       //로그인한 유저 식별 Id
-      const userId = req.currentUserId
+      const userId = req.currentUserId;
       //로그인 유저의 정보 -> author이름 정보 필요
       const user = await userAuthService.getUserInfo({user_id : userId})
       const author = user.name;
       
-      const {content} = req.body;
 
       const newComment = await commentService.addComment({
+        userId,
         postId,
         author,
         content,
@@ -44,11 +44,11 @@ commentRouter.post(
  * Community : 해당 포스트에 속한 comments 조회
  */
 commentRouter.get(
-  "/comments/:postId",
+  "/comments",
   login_required,
   async (req, res, next) => {
     try {
-      const postId = req.params.postId;
+      const postId = req.query.postId;
       const page = +req.query.page || 1; // default 1페이지
       const perPage = +req.query.perPage || 10; //default 10개
 

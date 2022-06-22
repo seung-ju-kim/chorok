@@ -11,7 +11,7 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
     const fileName = String(key).split("diag_img/")[1];
 
     const mlResponse = await axios.get(
-      `http://localhost:8000/predict/${fileName}`
+      `${process.env.ML_BASE_URL}/predict/${fileName}`
     );
     const disease = await diagService.getDisease(mlResponse.data);
     const result = { disease, fileName };

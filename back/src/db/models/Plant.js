@@ -19,10 +19,10 @@ class Plant{
     if (today >= nextSchedule){
       //새로 생성한 plant 데이터에 다음 스케줄을 입력 
       await newPlant.schedule.push({date: today, isChecked:false})
-    }else{
-      await newPlant.schedule.push({date: nextSchedule, isChecked:false})
+      return newPlant.save();
     }
-
+    
+    await newPlant.schedule.push({date: nextSchedule, isChecked:false})
     await newPlant.save();
 
     return newPlant;
@@ -71,8 +71,7 @@ class Plant{
   }
 
   static async updateSchedule({plantId, scheduleId, isChecked }) {
-    const updatedSchedule = 
-    PlantModel.findOne({
+    const updatedSchedule = await PlantModel.findOne({
       _id: plantId
     }).then((plant) =>{
       plant.schedule.id(scheduleId).set({isChecked:isChecked});
