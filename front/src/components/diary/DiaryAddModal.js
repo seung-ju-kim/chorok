@@ -12,12 +12,11 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-import dayjs from "dayjs";
 
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
 
-const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
+const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
   // useParams, useNavigate
   const { id } = useParams();
   const navigate = useNavigate();
@@ -72,8 +71,6 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
           content,
         });
       }
-      const res = await Api.get(`diaries/${id}`);
-      setDiaries(res.data.diaries);
 
       setImage({
         imageURL: "",
@@ -168,8 +165,15 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
+            sx={{
+              mx: "auto",
+              bgcolor: "#64a68a",
+              color: "white",
+              ":hover": { bgcolor: "#64a68a", color: "white" },
+            }}
             type="submit"
+            variant="contained"
+            color="success"
           >
             작성
           </Button>

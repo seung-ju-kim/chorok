@@ -56,24 +56,20 @@ diaryRouter.get("/diaries/:id", login_required, async (req, res, next) => {
 /**
  * 다이어리 목록 조회
  */
-diaryRouter.get(
-  "/diarylist/:plantId",
-  login_required,
-  async (req, res, next) => {
-    try {
-      const plantId = req.params.plantId;
-      const diaries = await diaryService.getDiariesByPlantId(plantId);
+diaryRouter.get("/diaries", login_required, async (req, res, next) => {
+  try {
+    const plantId = req.query.plantId;
+    const diaries = await diaryService.getDiariesByPlantId(plantId);
 
-      const body = {
-        success: true,
-        diaries: diaries,
-      };
-      res.status(200).json(body);
-    } catch (error) {
-      next(error);
-    }
+    const body = {
+      success: true,
+      diaries: diaries,
+    };
+    res.status(200).json(body);
+  } catch (error) {
+    next(error);
   }
-);
+});
 /**
  * 다이어리 수정
  */

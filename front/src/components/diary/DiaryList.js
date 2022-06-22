@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
 import * as Api from "../../api";
-import df from "../../imgs/default_image.png";
 
 const DiaryList = () => {
   // 다이어리 상태 관리
@@ -18,8 +17,10 @@ const DiaryList = () => {
 
   // 다이어리 불러오기
   useEffect(() => {
-    const res = Api.get(`diarylist/${id}`);
-    console.log(res.data);
+    Api.get(`diaries?plantId=${id}`).then((res) => {
+      setDiaries(res.data.diaries);
+      console.log(res.data.diaries);
+    });
   }, [id]);
 
   // style
