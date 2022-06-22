@@ -10,7 +10,7 @@ const Diary = {
     return diary;
   },
   findDiariesByPlantId: async (plantId) => {
-    const diaries = await DiaryModel.find({ plantId });
+    const diaries = await DiaryModel.find({ plantId }).sort({createdAt: -1});
     return diaries;
   },
 
