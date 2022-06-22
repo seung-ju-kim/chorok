@@ -8,6 +8,7 @@ const diagRouter = Router();
 diagRouter.post("/", s3Upload(), async (req, res, next) => {
   try {
     const { key } = req.file;
+    const imageURL = req.file.location;
     const fileName = String(key).split("diag_img/")[1];
 
     const mlResponse = await axios.get(
@@ -21,7 +22,7 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
       diseaseList.push(disease);
     };
 
-    const result = { diseaseList, fileName };
+    const result = { diseaseList, imageURL };
     res.status(200).json(result);
   } catch (error) {
     next(error);
