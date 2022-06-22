@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, Blueprint,jsonify
 yolo = Blueprint('yolo', __name__)
 from dotenv import load_dotenv
 import os
@@ -46,7 +46,7 @@ classes= ['Cherry leaf',
  'Potato leaf',
  'Tomato two spotted spider mites leaf']
 class_map= ClassMap(classes)
-model=model_type.model(backbone=backbone(pretrained=True),num_classes=len(class_map),**extra_args)
+model=model_type.model(backbone=backbone(pretrained=False),num_classes=30,**extra_args)
 state_dict= torch.load('yolo_trained.pth',map_location=torch.device('cpu'))
 model.load_state_dict(state_dict)
 valid_tfms = tfms.A.Adapter(
@@ -55,10 +55,19 @@ def show_preds_gradio(input_image, detection_threshold):
     if detection_threshold==0:
        detection_threshold=0.5
     img = Image.fromarray(input_image, 'RGB')
-    pred_dict = model_type.end2end_detect(img, valid_tfms, model, class_map=class_map, detection_threshold=detection_threshold,
-                                          display_label=True, display_bbox=True, return_img=True,
-                                          font_size=16, label_color="#FF59D6")
-    return pred_dict['img']
+    infer_ds=Dataset.from_images([img],valid_tfms)
+    preds = model_type.predict(model, infer_ds, keep_images=False)
+    for pred in preds:
+      pred.add_component(FilepathRecordComponent())
+    img_files2='0'
+    for _ in range(len(preds)):
+        preds[_].set_filepath(img_files2[_]) 
+    conv = convert_preds_to_coco_style(preds)
+    return conv['annotations'][0]['id']
+    # pred_dict = model_type.end2end_detect(img, valid_tfms, model, class_map=class_map, detection_threshold=detection_threshold,
+    #                                       display_label=True, display_bbox=True, return_img=True,
+    #                                       font_size=16, label_color="#FF59D6")
+    # return pred_dict['img']
 def serve_pil_image(pil_img):
     img_io = BytesIO()
     pil_img.save(img_io, 'JPEG', quality=70)
@@ -91,4 +100,4 @@ def predict(name):
     #img=Image.fromarray(img)
     output=show_preds_gradio(img, 0.5)
     #print(type(output)) #<class 'PIL.Image.IMage'>
-    return serve_pil_image(output)
+    return jsonify(output)
