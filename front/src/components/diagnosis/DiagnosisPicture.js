@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import { Box, Typography, Button, TextField } from "@mui/material";
 import defaultImg from "../../imgs/default_image.png";
 import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
+import DiagnosisResult from "./DiagnosisResult";
+
 const DiagnosisPicture = () => {
+  const navigate = useNavigate();
+  const [openResult, setOpenResult] = useState(false);
+  const [result, setResult] = useState({
+    diseaseList: [],
+    imageURL: "",
+  });
   // 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
@@ -35,13 +44,21 @@ const DiagnosisPicture = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", image.imageFile);
+
     try {
-      const res = await Api.postForm("diags", formData);
-      console.log(res.data);
+      await Api.postForm("diags", formData).then((res) =>
+        setResult({
+          ...result,
+          diseaseList: res.data.diseaseList,
+          imageURL: res.data.imageURL,
+        })
+      );
+
       setImage({
         imageFile: "",
         previewURL: defaultImg,
       });
+      setOpenResult(true);
     } catch (e) {
       console.log(e);
     }
@@ -100,7 +117,7 @@ const DiagnosisPicture = () => {
         >
           삭제
         </Button>
-        <Box sx={{ textAlign: "center", mt: 5 }}>
+        <Box sx={{ textAlign: "center", mt: 5, px: 10 }}>
           <Button
             fullWidth
             variant="contained"
@@ -120,6 +137,11 @@ const DiagnosisPicture = () => {
           </Button>
         </Box>
       </Box>
+      <DiagnosisResult
+        openResult={openResult}
+        setOpenResult={setOpenResult}
+        result={result}
+      />
     </Box>
   );
 };
