@@ -1,8 +1,8 @@
 import { DiagModel } from "../schemas/diag";
 
 const Diag = {
-  findByName: async ({ name }) => {
-    const result = await DiagModel.findOne({ name });
+  findByName: async (key) => {
+    const result = await DiagModel.findOne({ name : key}).lean();
     return result;
   }
 };
