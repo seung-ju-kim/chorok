@@ -1,11 +1,13 @@
 import ssl
 from flask import Flask, render_template, request, jsonify, Blueprint
 from dotenv import load_dotenv
+from pymongo import DESCENDING
 from torchvision import transforms as T
 import torch
 import urllib.request
 import os
 import cv2
+import json
 from PIL import Image
 import numpy as np
 import ssl
@@ -52,21 +54,24 @@ def edge_and_cut(img):
 
 def work(imgs):
     imgs = imgs.unsqueeze(0)
-    model2 = torch.load('k_cross_CNN.pt', map_location=device)
+    model2=torch.load('k_cross_CNN_version4.pt', map_location=device)
     model2.eval()
     with torch.no_grad():
-        encode = model2(imgs)
-        # print(encode)
-        print(np.round(encode.numpy()[0], decimals=2))
-        for be in encode:  # 여기서 be는 encode 원소들 즉, 예측결과
-            # print(be)
-            count = count_frequency(np.round(be.numpy(), decimals=2))
-            if 1.0 in count.keys() and count[1.0] >= 2:
-                temp = np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
-                lbs = 4 if 0 in temp else temp[0]
-            else:
-                lbs = np.argmax(be.detach().numpy())
-    return lbs   
+            encode = model2(imgs)
+            #print(encode)
+            print(np.round(encode.numpy()[0], decimals=2))
+            temp=np.round(encode.numpy()[0], decimals=2)
+            for be in encode:#여기서 be는 encode 원소들 즉, 예측결과
+                #print(be)
+                #count= count_frequency(np.round(be.numpy(), decimals=2))
+                # if 1.0 in count.keys() and count[1.0]>=2 :
+                #         temp=np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
+                #lbs=0 if 0 in temp and 4 in temp else temp[0]
+                lbs=np.argpartition(be.cpu().detach().numpy(), -2)[-2:]
+                
+    return lbs,temp
+ 
+   
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
@@ -91,16 +96,22 @@ def predict(name):
         T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
         # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
     ])
-    img = VALID_TRANSFORM(img)
-    idx = work(img)
-    my_dict = {'cider apple rust': 0, 'frog eye leaf spot': 1,
-               'healthy': 2, 'powdery mildew': 3, 'rust': 4, 'scab': 5}
-
+    img=VALID_TRANSFORM(img)
+    idx,temp=work(img)
+    stat=[temp[i] for i in idx]
+    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
+    #print(idx)
     def get_key(val):
         for key, value in my_dict.items():
             if val == value:
                 return key
 
         return "There is no such Key"
-    #result_string="This pathology is %s"%(get_key(idx))
-    return jsonify(get_key(idx))
+    result_dict={}
+    for i in range(0,2):
+        if stat[i]>=0.5:
+            result_dict[get_key(idx[i])]=round(float(stat[i]),3)
+        if get_key(idx[i]=='healthy') and stat[i]==1.0:
+            result_dict={'healthy':1.0}
+    print(json.dumps(result_dict))
+    return json.dumps(result_dict)
