@@ -58,9 +58,9 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   // 새로운 식물을 등록하는 이벤트
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", image.imageFile);
     try {
+      const formData = new FormData();
+      formData.append("file", image.imageFile);
       const res = await Api.postForm("image", formData);
 
       await Api.post("plants", {

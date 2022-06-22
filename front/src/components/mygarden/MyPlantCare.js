@@ -66,8 +66,8 @@ const MyPlantCare = () => {
   };
 
   return (
-    <Box>
-      <Card>
+    <>
+      <Card sx={{ height: "70vh" }}>
         <CardHeader
           title={
             <IconButton
@@ -120,10 +120,9 @@ const MyPlantCare = () => {
         <CardContent>
           <Stack direction="row" spacing={1}>
             <Chip
-              label={`${dayjs(today).diff(
-                plants.createdAt?.split("T")[0],
-                "day"
-              )}일`}
+              label={`${
+                dayjs(today).diff(plants.createdAt?.split("T")[0], "day") + 1
+              }일`}
               icon={
                 <FavoriteIcon
                   fontSize="small"
@@ -161,7 +160,7 @@ const MyPlantCare = () => {
         title="식물 삭제"
         subTitle="식물과 작별하시겠습니까?"
       />
-    </Box>
+    </>
   );
 };
 

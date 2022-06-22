@@ -31,7 +31,7 @@ const MyPlantImageEditModal = ({
 
   // 이미지 미리보기 사진 연결
   useEffect(() => {
-    setImage({ ...image, previewURL: plants.imageURL });
+    setImage({ previewURL: plants.imageURL });
   }, [plants]);
 
   const { id } = useParams();
