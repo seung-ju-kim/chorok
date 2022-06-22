@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Button, Typography, Box } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import DiaryCard from "./DiaryCard";
 import DiaryAddModal from "./DiaryAddModal";
@@ -12,52 +12,50 @@ const DiaryList = () => {
   const [openWriteForm, setOpenWriteForm] = useState(false);
   const [diaries, setDiaries] = useState([]);
 
-  // useParams, useNavigate
+  // useParams
   const { id } = useParams();
 
   // 다이어리 불러오기
   useEffect(() => {
     Api.get(`diaries?plantId=${id}`).then((res) => {
       setDiaries(res.data.diaries);
-      console.log(res.data.diaries);
     });
   }, [id]);
 
-  // style
-  const writeButtonStyle = {
-    position: "fixed",
-    right: "5%",
-    bottom: "15%",
-    fontSize: "3rem",
-    color: "#64a68a",
-    borderRadius: "50%",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-    bgcolor: "white",
-    p: 1,
-    cursor: "pointer",
-  };
-
   return (
-    <Grid container rowSpacing={3}>
-      {diaries.map((diary, i) => {
-        return (
-          <Grid item sx={{ mx: "auto" }} key={i}>
-            <DiaryCard setDiaries={setDiaries} diary={diary} />
-          </Grid>
-        );
-      })}
-      <EditIcon
-        sx={writeButtonStyle}
-        onClick={() => {
-          setOpenWriteForm(true);
-        }}
-      />
-      <DiaryAddModal
-        openWriteForm={openWriteForm}
-        setOpenWriteForm={setOpenWriteForm}
-        setDiaries={setDiaries}
-      />
-    </Grid>
+    <>
+      <Grid container rowSpacing={3}>
+        <Grid item xs={12} sx={{ mt: 10 }}>
+          <Button
+            sx={{
+              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+              color: "#64a68a",
+              width: "100%",
+              py: 4,
+            }}
+            onClick={() => {
+              setOpenWriteForm(true);
+            }}
+          >
+            <EditIcon sx={{ mr: 2 }} />
+            <Typography>다이어리를 등록하세요.</Typography>
+          </Button>
+        </Grid>
+        {diaries.map((diary, i) => {
+          return (
+            <Grid item sx={{ mx: "auto" }} key={i}>
+              <DiaryCard setDiaries={setDiaries} diary={diary} />
+            </Grid>
+          );
+        })}
+
+        <DiaryAddModal
+          openWriteForm={openWriteForm}
+          setOpenWriteForm={setOpenWriteForm}
+          setDiaries={setDiaries}
+        />
+      </Grid>
+    </>
   );
 };
 

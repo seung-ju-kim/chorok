@@ -6,23 +6,25 @@ import {
   Typography,
   Menu,
   MenuItem,
+  IconButton,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import dayjs from "dayjs";
 
+import DiaryEditModal from "./DiaryEditModal";
 import ConfirmDialog from "../dialog/ConfirmDialog";
 import * as Api from "../../api";
 
 const DiaryCard = ({ diary, setDiaries }) => {
   // 모달창 상태관리
   const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const today = new Date();
 
+  const [content, setContent] = useState(diary.content);
   const { id } = useParams();
-  const navigate = useNavigate();
-
   // 카드 메뉴 관리
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,11 +32,35 @@ const DiaryCard = ({ diary, setDiaries }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const today = dayjs();
+  // 다이어리 수정
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.put(`diaries/${diary._id}`, {
+        content,
+      });
+
+      await Api.get(`diaries?plantId=${id}`).then((res) => {
+        setDiaries(res.data.diaries);
+      });
+      handleClose();
+      setOpenEditModal(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // 다이어리 삭제
   const handleDelete = async () => {
-    await Api.delete(`diary/${id}`);
-    const res = await Api.get("diary");
-    setDiaries(res.data);
+    await Api.delete(`diaries/${diary._id}`);
+
+    await Api.get(`diaries?plantId=${id}`).then((res) => {
+      setDiaries(res.data.diaries);
+    });
+
     setOpenModal(false);
+    handleClose();
   };
 
   // style
@@ -51,15 +77,30 @@ const DiaryCard = ({ diary, setDiaries }) => {
           component="img"
           image={diary.imageURL}
           alt="diary img"
-          sx={{ p: 2, height: "30vh" }}
+          sx={{
+            p: 2,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            maxHeight: "40vh",
+          }}
         />
       )}
       <CardContent sx={{ position: "relative" }}>
-        <MoreVertOutlinedIcon
+        <IconButton
           sx={{ position: "absolute", right: 10 }}
           onClick={handleClick}
-        />
+        >
+          <MoreVertOutlinedIcon />
+        </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem
+            onClick={() => {
+              setOpenEditModal(true);
+            }}
+          >
+            수정
+          </MenuItem>
           <MenuItem
             onClick={() => {
               setOpenModal(true);
@@ -69,13 +110,20 @@ const DiaryCard = ({ diary, setDiaries }) => {
           </MenuItem>
         </Menu>
         <Typography gutterBottom variant="h5">
-          {today.toISOString().split("T")[0]}
+          {today.format("YYYY-MM-DD")}
         </Typography>
 
         <Typography variant="body1" color="text.secondary">
           {diary.content}
         </Typography>
       </CardContent>
+      <DiaryEditModal
+        handleEvent={handleEdit}
+        content={content}
+        setContent={setContent}
+        openEditModal={openEditModal}
+        setOpenEditModal={setOpenEditModal}
+      />
       <ConfirmDialog
         openModal={openModal}
         setOpenModal={setOpenModal}

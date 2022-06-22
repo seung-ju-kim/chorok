@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   Stack,
   IconButton,
   Button,
@@ -67,7 +66,7 @@ const MyPlantCare = () => {
 
   return (
     <>
-      <Card sx={{ height: "70vh" }}>
+      <Card sx={{ mt: 10 }}>
         <CardHeader
           title={
             <IconButton
@@ -87,6 +86,7 @@ const MyPlantCare = () => {
                 <MenuItem
                   onClick={() => {
                     setOpenEditModal(true);
+                    handleClose();
                   }}
                 >
                   <Button fullWidth color="success">
@@ -96,6 +96,7 @@ const MyPlantCare = () => {
                 <MenuItem
                   onClick={() => {
                     setOpenModal(true);
+                    handleClose();
                   }}
                 >
                   <Button color="warning">삭제하기</Button>
@@ -135,6 +136,7 @@ const MyPlantCare = () => {
           </Stack>
           <Typography variant="h5" sx={{ mt: 2 }}>
             {plants.nickname}
+            {plants.termWater}일
           </Typography>
           <Typography variant="body1" sx={{ mt: 2 }}>
             {plants.description}

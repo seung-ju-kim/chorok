@@ -16,7 +16,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.png";
 
-const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
+const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
   // useParams, useNavigate
   const { id } = useParams();
   const navigate = useNavigate();
@@ -71,6 +71,11 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm }) => {
           content,
         });
       }
+
+      await Api.get(`diaries?plantId=${id}`).then((res) => {
+        setDiaries(res.data.diaries);
+        console.log(res.data.diaries);
+      });
 
       setImage({
         imageURL: "",
