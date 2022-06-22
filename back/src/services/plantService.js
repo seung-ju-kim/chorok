@@ -82,13 +82,13 @@ class plantService {
    */
   static async pushWaterSchedule(plant) {
     
-    const lastSchedule = plant.schedule[plant.schedule.length - 1].date;
+    const lastSchedule = plant.schedule.at(-1).date;
     const copiedLastSchedule = new Date(lastSchedule.getTime());
     const termWater = plant.termWater;
 
     const nextSchedule = copiedLastSchedule.setDate(copiedLastSchedule.getDate()+termWater);
 
-    if (lastSchedule.isChecked == true) {
+    if (lastSchedule.isChecked) {
       plant.schedule.push({date: nextSchedule, isChecked:false})
     } 
 
