@@ -111,8 +111,8 @@ const MyPlantCare = () => {
           src={plants.imageURL}
           sx={{
             width: "100%",
-            height: "30vh",
             cursor: "pointer",
+            objectFit: "contain",
           }}
           onClick={() => {
             setOpenImageEditModal(true);
@@ -136,7 +136,6 @@ const MyPlantCare = () => {
           </Stack>
           <Typography variant="h5" sx={{ mt: 2 }}>
             {plants.nickname}
-            {plants.termWater}일
           </Typography>
           <Typography variant="body1" sx={{ mt: 2 }}>
             {plants.description}

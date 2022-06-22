@@ -19,8 +19,7 @@ const MyGardenCard = ({ myplant }) => {
           <CardMedia
             component="img"
             image={myplant.imageURL}
-            height="150"
-            sx={{ objectFit: "fill" }}
+            sx={{ objectFit: "fill", height: "150px" }}
             onClick={() => {
               navigate(`/mygarden/${myplant._id}`);
             }}
