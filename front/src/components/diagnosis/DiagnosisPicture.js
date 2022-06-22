@@ -37,6 +37,7 @@ const DiagnosisPicture = () => {
     formData.append("file", image.imageFile);
     try {
       const res = await Api.postForm("diags", formData);
+      console.log(res.data);
       setImage({
         imageFile: "",
         previewURL: defaultImg,

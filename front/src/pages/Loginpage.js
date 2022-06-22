@@ -47,7 +47,7 @@ const Loginpage = () => {
         >
           Chorok
         </Typography>
-        <Typography align="center" fontSize="1.2rem" fontFamily="Hi Melody">
+        <Typography align="center" fontSize="1.5rem" fontFamily="Hi Melody">
           누구나 손 쉽게 홈 가드닝, 초록
         </Typography>
       </Box>

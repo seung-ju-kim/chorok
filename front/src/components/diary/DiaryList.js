@@ -38,7 +38,7 @@ const DiaryList = () => {
             }}
           >
             <EditIcon sx={{ mr: 2 }} />
-            <Typography>다이어리를 등록하세요.</Typography>
+            <Typography>오늘 식물과 어떤 일이 있었나요?</Typography>
           </Button>
         </Grid>
         {diaries.map((diary, i) => {

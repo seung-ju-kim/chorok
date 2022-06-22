@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Button,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
@@ -99,14 +100,16 @@ const DiaryCard = ({ diary, setDiaries }) => {
               setOpenEditModal(true);
             }}
           >
-            수정
+            <Button fullWidth color="success">
+              수정하기
+            </Button>
           </MenuItem>
           <MenuItem
             onClick={() => {
               setOpenModal(true);
             }}
           >
-            삭제
+            <Button color="warning">삭제하기</Button>
           </MenuItem>
         </Menu>
         <Typography gutterBottom variant="h5">
