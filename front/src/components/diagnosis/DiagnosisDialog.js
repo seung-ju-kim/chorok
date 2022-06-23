@@ -13,10 +13,10 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 
-import goodCase from "../../imgs/goodCase.png";
-import manySpecies from "../../imgs/manySpecies.png";
-import tooFar from "../../imgs/tooFar.jpg";
-import filtered from "../../imgs/filtered.png";
+import goodCase from "../../imgs/goodCase.webp";
+import manySpecies from "../../imgs/manySpecies.webp";
+import tooFar from "../../imgs/tooFar.webp";
+import filtered from "../../imgs/filtered.webp";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
@@ -61,7 +61,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <Box
                 component="img"
                 src={goodCase}
-                width="50%"
+                width="40%"
                 height="auto"
                 sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
               />
@@ -84,7 +84,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
-                  색 변조 X
+                  색 변조X
                 </Typography>
               </IconButton>
             </Grid>

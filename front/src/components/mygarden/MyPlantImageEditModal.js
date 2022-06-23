@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.png";
+import defaultImg from "../../imgs/default_image.webp";
 
 const MyPlantImageEditModal = ({
   plants,
