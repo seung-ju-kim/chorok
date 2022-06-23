@@ -3,6 +3,10 @@ const {Schema, model} = mongoose;
 
 const CommentSchema = new Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     postId : {
       type: String,
       required: true,
