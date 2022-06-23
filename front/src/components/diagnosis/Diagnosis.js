@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
-import diagnosis from "../../imgs/diagnosis.jpg";
+import diagnosis from "../../imgs/diagnosis.webp";
 import DiagnosisDialog from "./DiagnosisDialog";
 const Diagnosis = () => {
   const [openDiagnosisDialog, setOpenDiagnosisDialog] = useState(false);

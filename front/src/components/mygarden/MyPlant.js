@@ -28,6 +28,7 @@ const MyPlant = () => {
             bgcolor: "white",
             px: "3%",
             width: "100%",
+            zIndex: 2,
           }}
         >
           <TabList

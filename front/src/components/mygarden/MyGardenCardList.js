@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography, Button, Skeleton } from "@mui/material";
+import { Card, Grid, Typography, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
@@ -50,32 +50,34 @@ const MyGardenCardList = () => {
       </Grid>
 
       <Grid item xs={6}>
-        <Button
-          sx={{
-            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-            color: "#64a68a",
-            mx: "auto",
-            display: "flex",
-            height: "180px",
-            width: "100%",
-            maxWidth: "250px",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onClick={() => {
-            setOpenAddPlant(true);
-          }}
-        >
-          <AddIcon />
-        </Button>
+        <Card>
+          <Button
+            sx={{
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              color: "#64a68a",
+              mx: "auto",
+              display: "flex",
+              height: "180px",
+              width: "100%",
+              maxWidth: "250px",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={() => {
+              setOpenAddPlant(true);
+            }}
+          >
+            <AddIcon />
+          </Button>
+        </Card>
       </Grid>
       {isLoading ? (
         Array(5)
           .fill(1)
           .map((e, i) => {
             return (
-              <Grid item xs={6}>
+              <Grid item xs={6} key={i}>
                 <Skeleton variant="rectangular" height={150} />
                 <Skeleton variant="text" height={30} />
               </Grid>
@@ -85,7 +87,7 @@ const MyGardenCardList = () => {
         <>
           {myPlants.map((myplant, i) => {
             return (
-              <Grid item xs={6}>
+              <Grid item xs={6} key={i}>
                 <MyGardenCard myplant={myplant} />
               </Grid>
             );

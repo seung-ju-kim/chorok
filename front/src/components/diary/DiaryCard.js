@@ -35,7 +35,6 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
     setAnchorEl(null);
   };
 
-  const today = dayjs();
   // 다이어리 수정
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -69,7 +68,6 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
   const cardStyle = {
     width: "90vw",
     border: "1px solid white",
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   };
 
   return (
@@ -119,8 +117,8 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
             <Button color="warning">삭제하기</Button>
           </MenuItem>
         </Menu>
-        <Typography gutterBottom variant="h5">
-          {today.format("YYYY-MM-DD")}
+        <Typography gutterBottom variant="h6">
+          {diary.createdAt.split("T")[0]}
         </Typography>
 
         <Typography variant="body1" color="text.secondary">

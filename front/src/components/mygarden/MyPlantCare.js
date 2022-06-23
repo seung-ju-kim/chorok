@@ -23,7 +23,6 @@ import ConfirmDialog from "../dialog/ConfirmDialog";
 import MyPlantEditModal from "./MyPlantEditModal";
 import MyPlantImageEditModal from "./MyPlantImageEditModal";
 import dayjs from "dayjs";
-import { height } from "@mui/system";
 
 const MyPlantCare = () => {
   // 식물 정보와 모달창 상태 관리
@@ -69,7 +68,7 @@ const MyPlantCare = () => {
 
   return (
     <>
-      <Card sx={{ mt: 10 }}>
+      <Card sx={{ mt: 5 }}>
         <CardHeader
           title={
             <IconButton
@@ -116,7 +115,7 @@ const MyPlantCare = () => {
             src={plants.imageURL}
             sx={{
               width: "100%",
-              height: "300px",
+              height: "30vh",
               cursor: "pointer",
               objectFit: "cover",
             }}
@@ -152,10 +151,10 @@ const MyPlantCare = () => {
                 />
                 <Chip label={plants.species} variant="outlined" />
               </Stack>
-              <Typography variant="h5" sx={{ mt: 2 }}>
+              <Typography variant="h6" sx={{ mt: 1 }}>
                 {plants.nickname}
               </Typography>
-              <Typography variant="body1" sx={{ mt: 2 }}>
+              <Typography paragraph sx={{ mt: 1 }}>
                 {plants.description}
               </Typography>
             </>
