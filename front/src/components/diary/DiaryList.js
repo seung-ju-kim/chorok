@@ -11,13 +11,12 @@ const DiaryList = () => {
   // 다이어리 상태 관리
   const [openWriteForm, setOpenWriteForm] = useState(false);
   const [diaries, setDiaries] = useState([]);
-  const [isLoading, setIsLoading] = useState(Boolean);
+  const [isLoading, setIsLoading] = useState(true);
   // useParams
   const { id } = useParams();
 
   // 다이어리 불러오기
   useEffect(() => {
-    setIsLoading(true);
     Api.get(`diaries?plantId=${id}`).then((res) => {
       setDiaries(res.data.diaries);
       setIsLoading(false);
@@ -43,7 +42,7 @@ const DiaryList = () => {
             <Typography>오늘 식물과 어떤 일이 있었나요?</Typography>
           </Button>
         </Grid>
-        {diaries.length ? (
+        {!isLoading ? (
           <>
             {diaries.map((diary, i) => {
               return (
@@ -78,13 +77,7 @@ const DiaryList = () => {
                   <Skeleton
                     animation="wave"
                     variant="text"
-                    width="100%"
-                    height={30}
-                  />
-                  <Skeleton
-                    animation="wave"
-                    variant="text"
-                    width="100%"
+                    width="80%"
                     height={30}
                   />
                 </Grid>
