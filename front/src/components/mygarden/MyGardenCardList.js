@@ -1,41 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Card, Grid, Typography, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import MyGardenCard from "./MyGardenCard";
 import MyGardenAddModal from "./MyGardenAddModal";
 import * as Api from "../../api";
-import { useNavigate } from "react-router-dom";
 
 const MyGardenCardList = () => {
   // 나의 식물 상태관리
   const [myPlants, setMyPlants] = useState([]);
   const [openAddPlant, setOpenAddPlant] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
+
   // 나의 식물 리스트 받아오기
   useEffect(() => {
     Api.get("plants").then((res) => {
       setMyPlants(res.data.plants);
+      setIsLoading(false);
     });
   }, []);
-
-  // style
-  const addButtonStyle = {
-    position: "fixed",
-    right: "5%",
-    bottom: "12%",
-    color: "#64a68a",
-    borderRadius: "50%",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-    bgcolor: "white",
-    p: 2.5,
-    ":hover": {
-      bgcolor: "white",
-      color: "#64a68a",
-    },
-  };
 
   return (
     <>
@@ -51,20 +38,28 @@ const MyGardenCardList = () => {
       >
         스케줄
       </Button>
+
       <Grid item xs={12} sx={{ my: "auto" }}>
-        <Typography variant="body2">
-          현재 {myPlants.length}개의 식물을 키우고 있습니다.
-        </Typography>
+        {isLoading ? (
+          <Skeleton variant="text" width="60%" />
+        ) : (
+          <Typography variant="body2">
+            현재 {myPlants.length}개의 식물을 키우고 있습니다.
+          </Typography>
+        )}
       </Grid>
-      {myPlants.length === 0 ? (
-        <Grid item xs={12}>
+
+      <Grid item xs={6}>
+        <Card>
           <Button
             sx={{
-              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
               color: "#64a68a",
+              mx: "auto",
               display: "flex",
-              height: "60vh",
+              height: "180px",
               width: "100%",
+              maxWidth: "250px",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
@@ -73,29 +68,33 @@ const MyGardenCardList = () => {
               setOpenAddPlant(true);
             }}
           >
-            <AddIcon sx={{ mb: 3 }} />
-            <Box>
-              <Typography variant="h5">식물을 추가해주세요.</Typography>
-            </Box>
+            <AddIcon />
           </Button>
-        </Grid>
+        </Card>
+      </Grid>
+      {isLoading ? (
+        Array(5)
+          .fill(1)
+          .map((e, i) => {
+            return (
+              <Grid item xs={6} key={i}>
+                <Skeleton variant="rectangular" height={150} />
+                <Skeleton variant="text" height={30} />
+              </Grid>
+            );
+          })
       ) : (
         <>
           {myPlants.map((myplant, i) => {
-            return <MyGardenCard key={i} myplant={myplant} />;
+            return (
+              <Grid item xs={6} key={i}>
+                <MyGardenCard myplant={myplant} />
+              </Grid>
+            );
           })}
-          <Button
-            sx={addButtonStyle}
-            onClick={() => {
-              setOpenAddPlant(true);
-            }}
-            color="success"
-            variant="contained"
-          >
-            <AddIcon />
-          </Button>
         </>
       )}
+
       <MyGardenAddModal
         openAddPlant={openAddPlant}
         setOpenAddPlant={setOpenAddPlant}

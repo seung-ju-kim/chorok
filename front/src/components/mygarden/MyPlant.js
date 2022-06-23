@@ -22,14 +22,20 @@ const MyPlant = () => {
       }}
     >
       <TabContext value={value}>
-        <Box>
+        <Box
+          sx={{
+            position: "fixed",
+            bgcolor: "white",
+            px: "3%",
+            width: "100%",
+            zIndex: 2,
+          }}
+        >
           <TabList
             onChange={handleChange}
             aria-label="lab API tabs"
             textColor="inherit"
             sx={{
-              bgcolor: "white",
-              width: "90%",
               "& .MuiTabs-indicator": {
                 display: "flex",
                 justifyContent: "center",

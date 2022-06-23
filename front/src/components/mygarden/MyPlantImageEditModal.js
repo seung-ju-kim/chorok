@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.png";
+import defaultImg from "../../imgs/default_image.webp";
 
 const MyPlantImageEditModal = ({
   plants,
@@ -31,7 +31,7 @@ const MyPlantImageEditModal = ({
 
   // 이미지 미리보기 사진 연결
   useEffect(() => {
-    setImage({ ...image, previewURL: plants.imageURL });
+    setImage({ previewURL: plants.imageURL });
   }, [plants]);
 
   const { id } = useParams();

@@ -32,7 +32,7 @@ const MyPlantEditModal = ({
         species: plants.species,
         nickname: plants.nickname,
         description: plants.description,
-        termWater: Number(plants.term),
+        termWater: Number(plants.termWater),
       });
       setOpenEditModal(false);
     } catch (e) {
@@ -126,7 +126,7 @@ const MyPlantEditModal = ({
             color="success"
             value={plants.termWater}
             onChange={(e) => {
-              setPlants({ ...plants, term: e.target.value });
+              setPlants({ ...plants, termWater: e.target.value });
             }}
           />
         </DialogContent>

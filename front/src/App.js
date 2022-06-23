@@ -12,6 +12,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
@@ -26,10 +27,6 @@ const MyScheduleList = lazy(() =>
   import("./components/schedule/MyScheduleList")
 );
 const Communitypage = lazy(() => import("./pages/Communitypage"));
-const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
-const DiagnosisPicture = lazy(() =>
-  import("./components/diagnosis/DiagnosisPicture")
-);
 const CommunityInfoList = lazy(() =>
   import("./components/community/CommunityInfoList")
 );
@@ -44,6 +41,13 @@ const CommunityInfoCommentDummy = lazy(() =>
   import("./components/community/CommunityInfoCommentDummy")
 );
 
+const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
+const DiagnosisPicture = lazy(() =>
+  import("./components/diagnosis/DiagnosisPicture")
+);
+const DiagnosisResult = lazy(() =>
+  import("./components/diagnosis/DiagnosisResult")
+);
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
@@ -88,7 +92,7 @@ function App() {
   }, []);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
   return (
     <ThemeProvider theme={theme}>
@@ -98,7 +102,7 @@ function App() {
           <Router>
             <Header />
             <Footer />
-            <Suspense fallback={<div>Loading..</div>}>
+            <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" exact element={<Main />} />
                 <Route path="/login" element={<Loginpage />} />

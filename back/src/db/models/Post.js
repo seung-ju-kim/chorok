@@ -24,9 +24,8 @@ class Post {
    * 각 category(or 전체보기)의 마지막 페이지 번호 반환
    */
   static async findLastPage({category, perPage}) {
-    const totalPost = (category === null) 
-    ? await PostModel.countDocuments() //null 이면 전체count
-    : await PostModel.countDocuments({category}); //아니면 카테고리별
+    //category가 null 이면 전체count
+    const totalPost = await PostModel.countDocuments(category ? { category } : {}) 
     const finalPage = Math.ceil(totalPost / perPage);
     return finalPage;
   }
@@ -37,22 +36,15 @@ class Post {
    */
   static async findPosts({category, page, perPage}) {
 
-    if (category == null) {
-      return PostModel
-        .find({}) //모든 post 게시글을
-        .sort({createdAt: -1}) //createAt 기준으로 최신순 정렬
-        .limit(perPage) //한페이지에서 확인할 수 있는 post의 수
-        .skip((page - 1) * perPage) //페이지에 따른 skip 기준
-        .lean();
-    } else {
-      return PostModel
-        .find({category}) //category로 post 게시글을 구분하고
-        .sort({createdAt: -1}) //createAt 기준으로 최신순 정렬
-        .limit(perPage) //한페이지에서 확인할 수 있는 post의 수
-        .skip((page - 1) * perPage) //페이지에 따른 skip 기준
-        .lean();
-    }
+    const posts = 
+      await PostModel
+      .find(category ? { category } : {}) //category별 post 게시글을
+      .sort({createdAt: -1}) //createAt 기준으로 최신순 정렬
+      .limit(perPage) //한페이지에서 확인할 수 있는 post의 수
+      .skip((page - 1) * perPage) //페이지에 따른 skip 기준
+      .lean();
 
+    return posts;
   }
 
   /**
