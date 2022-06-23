@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import MyScheduleCard from "./MyScheduleCard";
 
 const MyScheduleList = () => {
   return (
@@ -11,6 +12,7 @@ const MyScheduleList = () => {
       >
         나의 스케줄
       </Typography>
+      <MyScheduleCard />
     </Box>
   );
 };
