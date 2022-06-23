@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Box, Button } from "@mui/material";
+import { Grid, Typography, Box, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
@@ -12,30 +12,14 @@ const MyGardenCardList = () => {
   // 나의 식물 상태관리
   const [myPlants, setMyPlants] = useState([]);
   const [openAddPlant, setOpenAddPlant] = useState(false);
-
   const navigate = useNavigate();
+
   // 나의 식물 리스트 받아오기
   useEffect(() => {
     Api.get("plants").then((res) => {
       setMyPlants(res.data.plants);
     });
   }, []);
-
-  // style
-  const addButtonStyle = {
-    position: "fixed",
-    right: "5%",
-    bottom: "12%",
-    color: "#64a68a",
-    borderRadius: "50%",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-    bgcolor: "white",
-    p: 2.5,
-    ":hover": {
-      bgcolor: "white",
-      color: "#64a68a",
-    },
-  };
 
   return (
     <>
@@ -56,46 +40,62 @@ const MyGardenCardList = () => {
           현재 {myPlants.length}개의 식물을 키우고 있습니다.
         </Typography>
       </Grid>
-      {myPlants.length === 0 ? (
-        <Grid item xs={12}>
-          <Button
-            sx={{
-              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-              color: "#64a68a",
-              display: "flex",
-              height: "60vh",
-              width: "100%",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={() => {
-              setOpenAddPlant(true);
-            }}
-          >
-            <AddIcon sx={{ mb: 3 }} />
-            <Box>
-              <Typography variant="h5">식물을 추가해주세요.</Typography>
-            </Box>
-          </Button>
-        </Grid>
-      ) : (
+
+      <Grid item xs={6}>
+        <Button
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            color: "#64a68a",
+            mx: "auto",
+            display: "flex",
+            height: "180px",
+            width: "100%",
+            maxWidth: "250px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() => {
+            setOpenAddPlant(true);
+          }}
+        >
+          <AddIcon />
+        </Button>
+      </Grid>
+
+      {myPlants.length ? (
         <>
           {myPlants.map((myplant, i) => {
-            return <MyGardenCard key={i} myplant={myplant} />;
+            return (
+              <Grid item xs={6}>
+                <MyGardenCard key={i} myplant={myplant} />
+              </Grid>
+            );
           })}
-          <Button
-            sx={addButtonStyle}
-            onClick={() => {
-              setOpenAddPlant(true);
-            }}
-            color="success"
-            variant="contained"
-          >
-            <AddIcon />
-          </Button>
         </>
+      ) : (
+        Array(5)
+          .fill(0)
+          .map((e) => {
+            return (
+              <Grid item xs={6}>
+                <Skeleton
+                  animation="wave"
+                  variant="rectangular"
+                  width="100%"
+                  height={150}
+                />
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  width="100%"
+                  height={30}
+                />
+              </Grid>
+            );
+          })
       )}
+
       <MyGardenAddModal
         openAddPlant={openAddPlant}
         setOpenAddPlant={setOpenAddPlant}

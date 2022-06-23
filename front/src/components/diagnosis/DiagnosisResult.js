@@ -41,7 +41,7 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
       </DialogTitle>
       <Box>
         <DialogContent>
-          <Box component="img" width="100%" src={result.imageURL}></Box>
+          <Box component="img" width="100%" src={result.imageURL} />
           {result.diseaseList[0]?.korean === "정상" ? (
             <Typography>{result.diseaseList[0]?.korean}</Typography>
           ) : (

@@ -8,6 +8,7 @@ import {
   MenuItem,
   IconButton,
   Button,
+  Skeleton,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
@@ -17,7 +18,7 @@ import DiaryEditModal from "./DiaryEditModal";
 import ConfirmDialog from "../dialog/ConfirmDialog";
 import * as Api from "../../api";
 
-const DiaryCard = ({ diary, setDiaries }) => {
+const DiaryCard = ({ diary, setDiaries, isLoading }) => {
   // 모달창 상태관리
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -74,18 +75,24 @@ const DiaryCard = ({ diary, setDiaries }) => {
   return (
     <Card sx={cardStyle}>
       {diary.imageURL && (
-        <CardMedia
-          component="img"
-          image={diary.imageURL}
-          alt="diary img"
-          sx={{
-            p: 2,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            maxHeight: "40vh",
-          }}
-        />
+        <>
+          {isLoading ? (
+            <Skeleton variant="rectangular" width="100%" height="300px" />
+          ) : (
+            <CardMedia
+              component="img"
+              image={diary.imageURL}
+              alt="diary img"
+              sx={{
+                p: 2,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                maxHeight: "40vh",
+              }}
+            />
+          )}
+        </>
       )}
       <CardContent sx={{ position: "relative" }}>
         <IconButton
