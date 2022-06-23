@@ -62,9 +62,7 @@ const CommunityInfoCommentAddModal = ({
   const getComment = useCallback(async () => {
     setLoad(true);
 
-    const res = await Api.getComment(
-      `comments/postId=${id}&page=${page}&perPage=${perPage}`
-    );
+    const res = await Api.getComment(`comments/postId=${id}&page=${page}`);
     if (res.data) {
       if (res.data.end) {
         setEndRef(true);
@@ -83,10 +81,9 @@ const CommunityInfoCommentAddModal = ({
         postId: id,
         content,
       });
-      const res = await Api.getComment(
-        `comments/postId=${id}&page=${page}&perPage=${perPage}`
-      );
+      const res = await Api.getComment(`comments?postId=${id}&page=${page}`);
       console.log(res);
+      setContentList(res.data.comment);
       setContent("");
       getComment();
     } catch (err) {

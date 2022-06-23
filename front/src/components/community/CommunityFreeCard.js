@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CommunityFreeCard = ({ data }) => {
   const navigate = useNavigate();
   return (
-    <Container item xs={6}>
+    <Container>
       <Box
         component="img"
         src={data.img}
@@ -24,5 +24,5 @@ const CommunityFreeCard = ({ data }) => {
     </Container>
   );
 };
-  
+
 export default CommunityFreeCard;

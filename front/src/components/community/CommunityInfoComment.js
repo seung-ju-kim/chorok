@@ -49,8 +49,6 @@ const CommunityInfoComment = () => {
         <CommunityInfoCommentAddModal
           openAddComment={openAddComment}
           setOpenAddComment={setOpenAddComment}
-          comment={comment}
-          setComment={setComment}
         />
       </>
     </Box>

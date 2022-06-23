@@ -4,27 +4,27 @@ import AddIcon from "@mui/icons-material/Add";
 import CommunityInfoCard from "./CommunityInfoCard";
 
 const dummyData = [
-    {
-      id: 1,
-      name: "쑥쑥이",
-      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-    },
-    {
-      id: 2,
-      name: "다육이",
-      img: "http://www.foodnmed.com/news/photo/201907/18729_4420_594.jpg",
-    },
-    {
-      id: 3,
-      name: "고무나무",
-      img: "https://img.marieclairekorea.com/2021/04/mck_60657bd4d3c01.jpg",
-    },
-    {
-      id: 4,
-      name: "쑥쑥이2",
-      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-    },
-  ];
+  {
+    id: 1,
+    name: "쑥쑥이",
+    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+  },
+  {
+    id: 2,
+    name: "다육이",
+    img: "http://www.foodnmed.com/news/photo/201907/18729_4420_594.jpg",
+  },
+  {
+    id: 3,
+    name: "고무나무",
+    img: "https://img.marieclairekorea.com/2021/04/mck_60657bd4d3c01.jpg",
+  },
+  {
+    id: 4,
+    name: "쑥쑥이2",
+    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+  },
+];
 
 const CommunityInfo = () => {
   const cardListStyle1 = {
@@ -56,11 +56,11 @@ const CommunityInfo = () => {
     <>
       <Container sx={cardListStyle1}>
         {dummyData.map((data, i) => {
-            return <CommunityInfoCard key={i} data={data} />;
+          return <CommunityInfoCard key={i} data={data} />;
         })}
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default CommunityInfo;

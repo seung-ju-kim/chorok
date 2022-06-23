@@ -3,10 +3,9 @@ import { Box, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const CommunityInfoCard = ({ data }) => {
-  const clientImg = data.img;
   const navigate = useNavigate();
   return (
-    <Container item xs={6}>
+    <Container>
       <Box
         component="img"
         src={data.img}
