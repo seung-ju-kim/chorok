@@ -12,6 +12,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
@@ -77,7 +78,7 @@ function App() {
   }, []);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
   return (
     <ThemeProvider theme={theme}>
@@ -87,7 +88,7 @@ function App() {
           <Router>
             <Header />
             <Footer />
-            <Suspense fallback={<div>Loading..</div>}>
+            <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" exact element={<Main />} />
                 <Route path="/login" element={<Loginpage />} />

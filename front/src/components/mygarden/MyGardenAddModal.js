@@ -17,7 +17,7 @@ import { ko } from "date-fns/esm/locale";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.png";
+import defaultImg from "../../imgs/default_image.webp";
 
 const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   // 식물 추가 상태 관리

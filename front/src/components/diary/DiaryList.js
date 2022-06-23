@@ -25,8 +25,8 @@ const DiaryList = () => {
 
   return (
     <>
-      <Grid container rowSpacing={3}>
-        <Grid item xs={12} sx={{ mt: 10 }}>
+      <Grid container rowSpacing={3} sx={{ mt: 5 }}>
+        <Grid item xs={12}>
           <Button
             sx={{
               boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -59,9 +59,9 @@ const DiaryList = () => {
         ) : (
           Array(5)
             .fill(0)
-            .map((e) => {
+            .map((e, i) => {
               return (
-                <Grid item xs={12}>
+                <Grid item xs={12} key={i}>
                   <Skeleton
                     animation="wave"
                     variant="rectangular"

@@ -8,7 +8,6 @@ const MyGardenCard = ({ myplant, isLoading }) => {
   return (
     <Card
       sx={{
-        boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         cursor: "pointer",
         maxWidth: "250px",
         height: "180px",
