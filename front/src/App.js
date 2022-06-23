@@ -36,6 +36,13 @@ const CommunityInfoList = lazy(() =>
 const CommunityFreeList = lazy(() =>
   import("./components/community/CommunityFreeList")
 );
+const CommunityInfoCommentAddModal = lazy(() =>
+  import("./components/community/CommunityInfoCommentAddModal")
+);
+
+const CommunityInfoCommentDummy = lazy(() =>
+  import("./components/community/CommunityInfoCommentDummy")
+);
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -112,6 +119,10 @@ function App() {
                 <Route
                   path="/community/CommunityInfoList"
                   element={<CommunityInfoList />}
+                />
+                <Route
+                  path="/community/:id"
+                  element={<CommunityInfoCommentDummy />}
                 />
                 <Route
                   path="/community/CommunityFreeList"
