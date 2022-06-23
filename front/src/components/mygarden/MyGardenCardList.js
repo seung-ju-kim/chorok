@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Box, Button, Skeleton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Grid, Typography, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import MyGardenCard from "./MyGardenCard";
 import MyGardenAddModal from "./MyGardenAddModal";
 import * as Api from "../../api";
-import { useNavigate } from "react-router-dom";
 
 const MyGardenCardList = () => {
   // 나의 식물 상태관리
   const [myPlants, setMyPlants] = useState([]);
   const [openAddPlant, setOpenAddPlant] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigate = useNavigate();
 
   // 나의 식물 리스트 받아오기
   useEffect(() => {
     Api.get("plants").then((res) => {
       setMyPlants(res.data.plants);
+      setIsLoading(false);
     });
   }, []);
 
@@ -35,10 +38,15 @@ const MyGardenCardList = () => {
       >
         스케줄
       </Button>
+
       <Grid item xs={12} sx={{ my: "auto" }}>
-        <Typography variant="body2">
-          현재 {myPlants.length}개의 식물을 키우고 있습니다.
-        </Typography>
+        {isLoading ? (
+          <Skeleton variant="text" width="60%" />
+        ) : (
+          <Typography variant="body2">
+            현재 {myPlants.length}개의 식물을 키우고 있습니다.
+          </Typography>
+        )}
       </Grid>
 
       <Grid item xs={6}>
@@ -62,38 +70,27 @@ const MyGardenCardList = () => {
           <AddIcon />
         </Button>
       </Grid>
-
-      {myPlants.length ? (
+      {isLoading ? (
+        Array(5)
+          .fill(1)
+          .map((e, i) => {
+            return (
+              <Grid item xs={6}>
+                <Skeleton variant="rectangular" height={150} />
+                <Skeleton variant="text" height={30} />
+              </Grid>
+            );
+          })
+      ) : (
         <>
           {myPlants.map((myplant, i) => {
             return (
               <Grid item xs={6}>
-                <MyGardenCard key={i} myplant={myplant} />
+                <MyGardenCard myplant={myplant} />
               </Grid>
             );
           })}
         </>
-      ) : (
-        Array(5)
-          .fill(0)
-          .map((e) => {
-            return (
-              <Grid item xs={6}>
-                <Skeleton
-                  animation="wave"
-                  variant="rectangular"
-                  width="100%"
-                  height={150}
-                />
-                <Skeleton
-                  animation="wave"
-                  variant="text"
-                  width="100%"
-                  height={30}
-                />
-              </Grid>
-            );
-          })
       )}
 
       <MyGardenAddModal
