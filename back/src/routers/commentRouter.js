@@ -49,8 +49,8 @@ commentRouter.get(
   async (req, res, next) => {
     try {
       const postId = req.query.postId;
-      const page = +req.query.page || 1; // default 1페이지
-      const perPage = +req.query.perPage || 10; //default 10개
+      const page = +req.query.page;
+      const perPage = +req.query.perPage;
 
       const comments = await commentService.getComments({
         postId, 

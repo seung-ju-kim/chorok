@@ -22,7 +22,7 @@ class Comment {
 
   static async findCommentsByPostId({postId, page, perPage}) {
     return CommentModel
-    .find({ postId })
+    .find(postId ? { postId } :{})
     .sort({createdAt: -1})
     .limit(perPage)
     .skip((page-1) * perPage)
