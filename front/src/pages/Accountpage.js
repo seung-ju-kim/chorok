@@ -1,37 +1,19 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Box } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import React from "react";
+import { Box, Typography, Grid } from "@mui/material";
 
 import AccountForm from "../components/user/AccountForm";
-import AccountEditModal from "../components/user/AccountEditModal";
-import AccountWithdrwalModal from "../components/user/AccountWithdrwalModal";
 
 const Accountpage = () => {
-  // modal 관리
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openWithdrawl, setOpenWithdrawl] = useState(false);
-  const navigate = useNavigate();
-
   return (
-    <Box sx={{ mt: 1 }}>
-      <Button
-        onClick={() => {
-          navigate(-1);
-        }}
-        sx={{ color: "black", mt: 2 }}
-      >
-        <ArrowBackIosNewIcon />
-      </Button>
-      <AccountForm
-        setOpenLogin={setOpenLogin}
-        setOpenWithdrawl={setOpenWithdrawl}
-      />
-      <AccountEditModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
-      <AccountWithdrwalModal
-        openWithdrawl={openWithdrawl}
-        setOpenWithdrawl={setOpenWithdrawl}
-      />
+    <Box sx={{ pt: 12, pb: 15, px: "5%" }}>
+      <Grid container>
+        <Grid item xs={12} sx={{ mb: 5 }}>
+          <Typography fontFamily="CookieRun-Regular" fontSize="1.5rem">
+            계정 관리
+          </Typography>
+        </Grid>
+        <AccountForm />
+      </Grid>
     </Box>
   );
 };

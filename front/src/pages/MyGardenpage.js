@@ -1,12 +1,21 @@
 import React from "react";
-import { Box } from "@mui/material";
-
-import MyGarden from "../components/mygarden/MyGarden";
+import { Box, Grid, Typography } from "@mui/material";
+import MyGardenCardList from "../components/mygarden/MyGardenCardList";
 
 const MyGardenpage = () => {
   return (
-    <Box sx={{ mb: 10 }}>
-      <MyGarden></MyGarden>
+    <Box sx={{ pt: 12, pb: 15, px: "5%" }}>
+      <Typography
+        fontFamily="CookieRun-Regular"
+        fontSize="1.5rem"
+        sx={{ mb: 3 }}
+      >
+        나의 정원
+      </Typography>
+
+      <Grid container rowSpacing={5} columnSpacing={3}>
+        <MyGardenCardList />
+      </Grid>
     </Box>
   );
 };

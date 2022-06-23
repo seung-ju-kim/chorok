@@ -1,40 +1,106 @@
-import React from "react";
-import { Grid, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Grid, Typography, Box, Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import MyGardenCard from "./MyGardenCard";
+import MyGardenAddModal from "./MyGardenAddModal";
+import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
 
-const dummyData = [
-  {
-    name: "쑥쑥이",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-  {
-    name: "다육이",
-    img: "http://www.foodnmed.com/news/photo/201907/18729_4420_594.jpg",
-  },
-  {
-    name: "고무나무",
-    img: "https://img.marieclairekorea.com/2021/04/mck_60657bd4d3c01.jpg",
-  },
-  {
-    name: "쑥쑥이2",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-];
 const MyGardenCardList = () => {
+  // 나의 식물 상태관리
+  const [myPlants, setMyPlants] = useState([]);
+  const [openAddPlant, setOpenAddPlant] = useState(false);
+
+  const navigate = useNavigate();
+  // 나의 식물 리스트 받아오기
+  useEffect(() => {
+    Api.get("plants").then((res) => {
+      setMyPlants(res.data.plants);
+    });
+  }, []);
+
+  // style
+  const addButtonStyle = {
+    position: "fixed",
+    right: "5%",
+    bottom: "12%",
+    color: "#64a68a",
+    borderRadius: "50%",
+    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
+    bgcolor: "white",
+    p: 2.5,
+    ":hover": {
+      bgcolor: "white",
+      color: "#64a68a",
+    },
+  };
+
   return (
     <>
-      {dummyData.map((data, i) => {
-        return <MyGardenCard data={data} />;
-      })}
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
-        <Button
-          variant="contained"
-          sx={{ zIndex: -1, p: 3, bgcolor: "white", color: "black" }}
-        >
-          +
-        </Button>
+      <Button
+        size="small"
+        variant="outlined"
+        color="success"
+        sx={{ position: "absolute", right: 20, top: 100 }}
+        startIcon={<CalendarMonthOutlinedIcon />}
+        onClick={() => {
+          navigate("/mygarden/myschedule");
+        }}
+      >
+        스케줄
+      </Button>
+      <Grid item xs={12} sx={{ my: "auto" }}>
+        <Typography variant="body2">
+          현재 {myPlants.length}개의 식물을 키우고 있습니다.
+        </Typography>
       </Grid>
+      {myPlants.length === 0 ? (
+        <Grid item xs={12}>
+          <Button
+            sx={{
+              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+              color: "#64a68a",
+              display: "flex",
+              height: "60vh",
+              width: "100%",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={() => {
+              setOpenAddPlant(true);
+            }}
+          >
+            <AddIcon sx={{ mb: 3 }} />
+            <Box>
+              <Typography variant="h5">식물을 추가해주세요.</Typography>
+            </Box>
+          </Button>
+        </Grid>
+      ) : (
+        <>
+          {myPlants.map((myplant, i) => {
+            return <MyGardenCard key={i} myplant={myplant} />;
+          })}
+          <Button
+            sx={addButtonStyle}
+            onClick={() => {
+              setOpenAddPlant(true);
+            }}
+            color="success"
+            variant="contained"
+          >
+            <AddIcon />
+          </Button>
+        </>
+      )}
+      <MyGardenAddModal
+        openAddPlant={openAddPlant}
+        setOpenAddPlant={setOpenAddPlant}
+        setMyPlants={setMyPlants}
+      />
     </>
   );
 };

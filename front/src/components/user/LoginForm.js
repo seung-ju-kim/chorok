@@ -106,7 +106,7 @@ const LoginForm = () => {
       />
       {!isPasswordValid && (
         <Typography sx={{ color: "white" }}>
-          비밀번호는 4글자 입니다.
+          비밀번호는 4글자 이상 입니다.
         </Typography>
       )}
       <Box textAlign="center" sx={{ mt: 3, width: "50vw", mx: "auto" }}>
@@ -142,7 +142,6 @@ const LoginForm = () => {
           onClick={() => {
             navigate("/register");
           }}
-          disabled={!isFormValid}
         >
           Register
         </Button>

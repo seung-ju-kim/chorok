@@ -4,16 +4,14 @@ class postService {
     /**
      * Community : post 생성
      */
-    static async addPost({category, userID, title, content, author, imageURL}) {
-  
-      //const createdAtKT = await PostService.getCurrentDate();
+    static async addPost({category, userId, title, content, author, imageURL}) {
+
       const view = 0;
-      const newPost = {category, userID, title, content, author, imageURL, view};
+      const newPost = {category, userId, title, content, author, imageURL, view};
   
       // db에 저장
       const createdNewPost = await Post.createPost(newPost);
-      createdNewPost.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
-  
+      
       return createdNewPost;
     }
   
@@ -29,16 +27,16 @@ class postService {
     /**
      * Community : category별 post 목록 읽기(페이징)
      */
-    static async getPostListPage({category, page, perPage}) {
-      const postList = await Post.findPostPage({category, page, perPage});
-      return postList;
+    static async getPosts({category, page, perPage}) {
+      const posts = await Post.findPosts({category, page, perPage});
+      return posts;
     }
     
     /**
      * Community : 페이징 처리한 post 리스트의 마지막 페이지 번호 구하기
      */
-    static async getFinalPage({category, perPage}) {
-      const finalPage = await Post.findFinalPage({category, perPage})
+    static async getLastPage({category, perPage}) {
+      const finalPage = await Post.findLastPage({category, perPage})
       return finalPage;
     }
   
@@ -46,29 +44,37 @@ class postService {
     /**
      * Community : post 수정
      */
-      static async setPost({ postId, toUpdate }) {
-          let post = await Post.findPostById(postId);
-      
-          if (!post) {
-              const error = new Error(
-                "수정할 게시글을 찾을 수 없습니다."
-              );
-              error.status = 404;
-              throw error;
-          }
-      
-          const myKeys = Object.keys(toUpdate);
-      
-          for (let i = 0; i < myKeys.length; i++) {
-            if (toUpdate[myKeys[i]]!==null) {
-              const fieldToUpdate = myKeys[i];
-              const newValue = toUpdate[myKeys[i]];
-              post = await Post.update({ postId, fieldToUpdate, newValue });
-            }
-          }
-      
-          return post;
+
+    // async cleanObject(obj) {
+    //   const initialObj = {};
+    //   return Object.entries(obj)
+    //     .filter(([, value]) => !!value)
+    //     .reduce((prev, [key, value]) => ({ ...prev, [key]: value }), initialObj);    
+    // }
+    
+    static async setPost({ postId, toUpdate }) {
+        let post = await Post.findPostById(postId);
+    
+        if (!post) {
+            const error = new Error(
+              "수정할 게시글을 찾을 수 없습니다."
+            );
+            error.status = 404;
+            throw error;
         }
+    
+        const myKeys = Object.keys(toUpdate);
+    
+        for (let i = 0; i < myKeys.length; i++) {
+          if (toUpdate[myKeys[i]]!==null) {
+            const fieldToUpdate = myKeys[i];
+            const newValue = toUpdate[myKeys[i]];
+            post = await Post.update({ postId, fieldToUpdate, newValue });
+          }
+        }
+    
+        return post;
+      }
   
     /**
      * Community : post 삭제

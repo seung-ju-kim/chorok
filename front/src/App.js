@@ -1,27 +1,44 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  createContext,
+  lazy,
+  Suspense,
+} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import * as Api from "./api";
-import { loginReducer } from "./reducer";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Loginpage from "./pages/Loginpage";
-import Registerpage from "./pages/Registerpage";
-import Accountpage from "./pages/Accountpage";
-import Main from "./components/Main";
-import MyGardenpage from "./pages/MyGardenpage";
-import Diagnosis from "./pages/Diagnosis";
-import Community from "./pages/Community";
+import * as Api from "./api";
+import { loginReducer } from "./reducer";
 import "./App.css";
 
+const Loginpage = lazy(() => import("./pages/Loginpage"));
+const Registerpage = lazy(() => import("./pages/Registerpage"));
+const Accountpage = lazy(() => import("./pages/Accountpage"));
+const Main = lazy(() => import("./components/Main"));
+const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
+const MyPlant = lazy(() => import("./components/mygarden/MyPlant"));
+const MyScheduleList = lazy(() =>
+  import("./components/schedule/MyScheduleList")
+);
+const Communitypage = lazy(() => import("./pages/Communitypage"));
+const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
+const DiagnosisPicture = lazy(() =>
+  import("./components/diagnosis/DiagnosisPicture")
+);
+const DiagnosisResult = lazy(() =>
+  import("./components/diagnosis/DiagnosisResult")
+);
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
 const theme = createTheme({
   typography: {
-    fontFamily: "IBM Plex Sans KR, sans-serif",
+    fontFamily: "EF_Diary",
   },
 });
 
@@ -70,16 +87,27 @@ function App() {
           <Router>
             <Header />
             <Footer />
-            <Routes>
-              <Route path="/" exact element={<Main />} />
-              <Route path="/login" element={<Loginpage />} />
-              <Route path="/register" element={<Registerpage />} />
-              <Route path="/account" element={<Accountpage />} />
-              <Route path="/mygarden" element={<MyGardenpage />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/diagnosis" element={<Diagnosis />} />
-              <Route path="*" element={<Main />} />
-            </Routes>
+            <Suspense fallback={<div>Loading..</div>}>
+              <Routes>
+                <Route path="/" exact element={<Main />} />
+                <Route path="/login" element={<Loginpage />} />
+                <Route path="/register" element={<Registerpage />} />
+                <Route path="/account" element={<Accountpage />} />
+                <Route path="/mygarden" element={<MyGardenpage />} />
+                <Route path="/mygarden/:id" element={<MyPlant />} />
+                <Route
+                  path="/mygarden/myschedule"
+                  element={<MyScheduleList />}
+                />
+                <Route path="/community" element={<Communitypage />} />
+                <Route path="/diagnosis" element={<Diagnosispage />} />
+                <Route
+                  path="/diagnosis/picture"
+                  element={<DiagnosisPicture />}
+                />
+                <Route path="*" element={<Main />} />
+              </Routes>
+            </Suspense>
           </Router>
         </UserStateContext.Provider>
       </DispatchContext.Provider>

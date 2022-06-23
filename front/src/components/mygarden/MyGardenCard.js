@@ -1,21 +1,36 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Card, CardMedia, Typography, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const MyGardenCard = ({ data }) => {
+const MyGardenCard = ({ myplant }) => {
+  const navigate = useNavigate();
+
   return (
-    <Grid item xs={6}>
-      <Box
-        component="img"
-        src={data.img}
-        sx={{
-          width: "100%",
-          height: "80%",
-          borderRadius: "10px",
-          boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-        }}
-      />
-      <Typography textAlign="center">{data.name}</Typography>
-    </Grid>
+    <>
+      <Grid item xs={6}>
+        <Card
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            cursor: "pointer",
+            maxWidth: "250px",
+            mx: "auto",
+          }}
+        >
+          <CardMedia
+            component="img"
+            image={myplant.imageURL}
+            sx={{ objectFit: "fill", height: "150px" }}
+            onClick={() => {
+              navigate(`/mygarden/${myplant._id}`);
+            }}
+          />
+
+          <Typography variant="h6" textAlign="center">
+            {myplant.nickname}
+          </Typography>
+        </Card>
+      </Grid>
+    </>
   );
 };
 
