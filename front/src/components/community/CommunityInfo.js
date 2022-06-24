@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Container } from "@mui/material";
+import { Grid, Typography, Container } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CommunityInfoCard from "./CommunityInfoCard";
 
@@ -54,11 +54,11 @@ const CommunityInfo = () => {
 
   return (
     <>
-      <Container sx={cardListStyle1}>
-        {dummyData.map((data, i) => {
-            return <CommunityInfoCard key={i} data={data} />;
-        })}
-      </Container>
+      <Grid container rowSpacing={0} columnSpacing={0}>
+          {dummyData.map((data, i) => {
+              return <CommunityInfoCard key={i} data={data} />;
+          })}
+      </Grid>
     </>
   )
 }
