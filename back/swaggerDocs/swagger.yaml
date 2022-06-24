@@ -1,0 +1,21 @@
+openapi: "3.0.0"
+info:
+  title: "[3팀 version3.0] chorok"
+  version: "1.0.0"
+  description: "3팀 version 3.0의 API 문서입니다. "
+components:
+  securitySchemes: 
+    Authorization: 
+      type: "http"
+      schema: "Bearer"
+      name: "Authorization"
+      bearerFormat: "JWT"
+      in: "header"
+host: http://localhost:3000
+servers:
+  - url: http://localhost:5001
+paths:
+  /posts:
+    $ref: "./post/posts.yaml"
+  /posts/{id}:
+    $ref: "./post/posts-id.yaml"
