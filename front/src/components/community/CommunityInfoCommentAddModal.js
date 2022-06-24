@@ -23,6 +23,7 @@ import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import useHover from "./../../element/useHover";
+import CommunityComment from "./CommunityComment";
 
 const CommunityInfoCommentAddModal = ({
   openAddComment,
@@ -40,7 +41,6 @@ const CommunityInfoCommentAddModal = ({
   const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
 
   const [ref, hover] = useHover();
-  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
@@ -74,7 +74,7 @@ const CommunityInfoCommentAddModal = ({
       if (res.data.end) {
         setEndRef(true);
       }
-      setContentList((prev) => [...prev, ...res.data.comments]);
+      setContentList((prev) => [...res.data.comments]);
       setPreventRef(true);
     } else {
       console.log(res);
@@ -99,11 +99,18 @@ const CommunityInfoCommentAddModal = ({
   };
 
   const deleteComment = async () => {
-    await Api.delete(`comments/${id}`);
-    const res = await Api.get(`post/${id}`);
+    await Api.delete(`comments/62b54d1180876e1aeebd8dd0`);
+    const res = await Api.get(`comments/${id}`);
     setContentList(res.data.comment);
     getComment();
   };
+
+  const editComment = async (id, inputText) => {
+    await Api.put(`comments/62b54db180876e1aeebd8ddd`, {
+      content,
+    });
+  };
+
   return (
     <Dialog
       open={openAddComment}
@@ -137,12 +144,13 @@ const CommunityInfoCommentAddModal = ({
       <Box>
         {contentList.map((content, i) => {
           return (
-            <Box key={i} sx={{ display: "flex", px: 3 }}>
-              <>
-                <Box>{content.author}</Box>
-                <Box>{content.content}</Box>
-              </>
-            </Box>
+            <CommunityComment
+              key={i}
+              content={content}
+              setContent={setContent}
+              deleteComment={deleteComment}
+              editComment={editComment}
+            />
           );
         })}
         {load && <CircularProgress color="success" />}
