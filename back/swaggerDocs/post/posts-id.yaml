@@ -1,0 +1,75 @@
+get:
+  tags:
+    - posts
+  summary: 게시글(post)을 상세 조회합니다.
+  description: 게시글(post)을 상세 조회합니다. 조회할 post의 id를 입력합니다.
+  parameters:
+  - name: _id
+    in: path
+    description: post objectId
+    required: true
+    type: string
+  responses:
+    '200':
+      description: 입력한 id의 게시물이 정상적으로 조회됩니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                $ref: "./postSchema.yaml"
+
+put:
+  tags:
+    - posts
+  summary: 게시글(post)을 수정합니다.
+  description: 수정할 post의 id와 수정할 제목, 본문을 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: post objectId
+    required: true
+    type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 수정할 제목을 입력합니다.
+            content:
+              type: string
+              description: 수정할 본문을 입력합니다.
+  responses:
+    '200':
+      description: 게시물이 정상적으로 수정되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                $ref: "./postSchema.yaml"
+
+delete:
+  tags:
+    - posts
+  summary: 게시글(post)을 삭제합니다.
+  description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: post objectId
+    required: true
+    responses:
+    '200':
+      description: 게시물이 정상적으로 삭제되었습니다.

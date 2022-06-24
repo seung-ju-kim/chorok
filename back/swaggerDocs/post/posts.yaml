@@ -1,0 +1,72 @@
+post:
+  tags:
+    - posts
+  summary: 게시글(post)을 생성합니다.
+  description: 게시글(post)을 생성합니다.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          required:
+          - category
+          - userId
+          - title
+          - content
+          $ref: "./postSchema.yaml"
+
+  responses:
+    '201':
+      description: 게시물이 정상적으로 생성되었습니다.
+      content: 
+        application/json:
+          schema: 
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                $ref: "./postSchema.yaml"
+get:
+  tags:
+    - posts
+  summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
+  description: Query String으로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.
+  parameters:
+  - name: category
+    in: query
+    description: 게시물이 속한 카테고리
+    required: true
+    type: string
+  - name: page
+    in: query
+    description: 페이지 번호
+    required: true
+    type: string
+  - name: perPost
+    in: query
+    description: 페이지당 게시글 수
+    required: true
+    type: string
+  responses:
+    '200':
+      description: n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              page: 
+                type: number
+                description: 요청한 페이지 번호
+              lastPage:
+                type: number
+                description: 요청한 게시글 목록의 최대 페이지 번호
+              posts:
+                type: array
+                description: 요청한 게시글 목록
+                $ref: "./postSchema.yaml"

@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: '[3팀 version3.0] chorok'
+  version: 1.0.0
+  description: '3팀 version 3.0의 API 문서입니다. '
+components:
+  securitySchemes:
+    Authorization:
+      type: http
+      schema: Bearer
+      name: Authorization
+      bearerFormat: JWT
+      in: header
+host: 'http://localhost:3000'
+servers:
+  - url: 'http://localhost:5001'
+paths:
+  /posts:
+    post:
+      tags:
+        - posts
+      summary: 게시글(post)을 생성합니다.
+      description: 게시글(post)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - category
+                - userId
+                - title
+                - content
+              $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+      responses:
+        '201':
+          description: 게시물이 정상적으로 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: post를 구분하는 id
+                      userId:
+                        type: string
+                        format: uuid
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+    get:
+      tags:
+        - posts
+      summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
+      description: 'Query String으로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.'
+      parameters:
+        - name: category
+          in: query
+          description: 게시물이 속한 카테고리
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: 페이지 번호
+          required: true
+          type: string
+        - name: perPost
+          in: query
+          description: 페이지당 게시글 수
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 'n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  page:
+                    type: number
+                    description: 요청한 페이지 번호
+                  lastPage:
+                    type: number
+                    description: 요청한 게시글 목록의 최대 페이지 번호
+                  posts:
+                    type: array
+                    description: 요청한 게시글 목록
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+  '/posts/{id}':
+    get:
+      tags:
+        - posts
+      summary: 게시글(post)을 상세 조회합니다.
+      description: 게시글(post)을 상세 조회합니다. 조회할 post의 id를 입력합니다.
+      parameters:
+        - name: _id
+          in: path
+          description: post objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 입력한 id의 게시물이 정상적으로 조회됩니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+    put:
+      tags:
+        - posts
+      summary: 게시글(post)을 수정합니다.
+      description: '수정할 post의 id와 수정할 제목, 본문을 입력합니다.'
+      parameters:
+        - name: id
+          in: path
+          description: post objectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 수정할 제목을 입력합니다.
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+      responses:
+        '200':
+          description: 게시물이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+    delete:
+      tags:
+        - posts
+      summary: 게시글(post)을 삭제합니다.
+      description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 게시물이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: post objectId
+          required: true
+          responses: null
