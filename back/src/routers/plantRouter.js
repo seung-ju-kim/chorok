@@ -157,6 +157,25 @@ plantRouter.delete(
 });
 
 /**
+ *  스케줄 객체에 식물정보를 담아 리턴
+ */
+plantRouter.get(
+  "/schedules",
+  login_required, 
+  async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const schedules = await plantService.getSchedulesByUserId({userId});
+
+      res.status(200).json(schedules);
+  } catch (error) {
+    next(error);
+  }
+  }
+
+)
+
+/**
  * plant 스케줄 이행 여부 체크 및 스케줄 추가
  */
 plantRouter.post(
