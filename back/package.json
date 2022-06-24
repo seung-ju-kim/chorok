@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
+    "api-docs": "swagger-cli bundle ./swaggerDocs/swagger.yaml --outfile ./swaggerDocs/build/bundle.yaml --type yaml",
     "test": "jest --setupFiles dotenv/config"
   },
   "repository": {
@@ -33,6 +34,7 @@
     "node-cron": "^3.0.1",
     "request": "^2.0.2",
     "supertest": "^6.1.6",
+    "swagger-cli": "^4.0.4",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0",
     "uuid": "^8.3.2"
