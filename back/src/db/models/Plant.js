@@ -50,6 +50,13 @@ class Plant{
     .lean();
   }
 
+  static async findPlantsByUserId2({userId}) {
+    return await PlantModel
+    .find({userId})
+    .sort({date: -1})
+    .lean();
+  }
+
 
   static async update({plantId, fieldToUpdate, newValue}) {
     const filter = {_id: plantId};
