@@ -159,7 +159,7 @@ plantRouter.delete(
 /**
  * plant 스케줄 이행 여부 체크 및 스케줄 추가
  */
-plantRouter.get(
+plantRouter.post(
   "/plants/:id/:scheduleId",
   login_required,
   async (req, res, next) => {
