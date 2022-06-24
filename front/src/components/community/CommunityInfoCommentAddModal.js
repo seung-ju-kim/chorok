@@ -15,28 +15,32 @@ import {
   Typography,
   Grid,
   Input,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import useHover from "./../../element/useHover";
 
 const CommunityInfoCommentAddModal = ({
   openAddComment,
   setOpenAddComment,
 }) => {
   const { id } = useParams();
-  console.log(id);
   const [content, setContent] = useState("");
   const [contentList, setContentList] = useState([]);
 
   const obsRef = useRef(null); //observer Element
-
   const [page, setPage] = useState(1); // 현재 페이지
   const [perPage, setPerPage] = useState(10);
   const [load, setLoad] = useState(false); //로딩스피너
   const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
   const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
+
+  const [ref, hover] = useHover();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
@@ -62,7 +66,10 @@ const CommunityInfoCommentAddModal = ({
   const getComment = useCallback(async () => {
     setLoad(true);
 
-    const res = await Api.getComment(`comments/postId=${id}&page=${page}`);
+    const res = await Api.getComment(
+      `comments?postId=62a82550a1ffb34422f47271&page=&perPage=`
+    );
+    console.log(res.data.comments);
     if (res.data) {
       if (res.data.end) {
         setEndRef(true);
@@ -78,10 +85,10 @@ const CommunityInfoCommentAddModal = ({
   const postComment = async () => {
     try {
       await Api.post(`comments`, {
-        postId: id,
+        postId: "62a82550a1ffb34422f47271",
         content,
       });
-      const res = await Api.getComment(`comments?postId=${id}&page=${page}`);
+      const res = await Api.getComment(`comments?postId=${id}&page=${id}`);
       console.log(res);
       setContentList(res.data.comment);
       setContent("");
@@ -91,6 +98,12 @@ const CommunityInfoCommentAddModal = ({
     }
   };
 
+  const deleteComment = async () => {
+    await Api.delete(`comments/${id}`);
+    const res = await Api.get(`post/${id}`);
+    setContentList(res.data.comment);
+    getComment();
+  };
   return (
     <Dialog
       open={openAddComment}
@@ -124,8 +137,11 @@ const CommunityInfoCommentAddModal = ({
       <Box>
         {contentList.map((content, i) => {
           return (
-            <Box sx={{ px: 3 }}>
-              <Box key={i}>{content}</Box>
+            <Box key={i} sx={{ display: "flex", px: 3 }}>
+              <>
+                <Box>{content.author}</Box>
+                <Box>{content.content}</Box>
+              </>
             </Box>
           );
         })}
@@ -139,7 +155,7 @@ const CommunityInfoCommentAddModal = ({
           </InputLabel>
           <Input
             id="standard-adornment-comment"
-            onChange={null}
+            onChange={(e) => setContent(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <Button onClick={postComment}>게시</Button>
