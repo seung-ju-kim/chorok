@@ -109,6 +109,7 @@ const DiagnosisPicture = () => {
               alt="previewImg"
               width="100%"
               height="100%"
+              maxWidth={700}
             />
           </Box>
           <Box
@@ -152,6 +153,7 @@ const DiagnosisPicture = () => {
                 variant="contained"
                 color="success"
                 sx={{
+                  maxWidth: "700px",
                   mx: "auto",
                   bgcolor: "#64a68a",
                   color: "white",
