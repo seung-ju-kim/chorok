@@ -16,11 +16,13 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MenuIcon from "@mui/icons-material/Menu";
 import { UserStateContext } from "../../App";
+import CommunityCommentModal from "./CommunityCommentModal";
 const CommunityCardDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
 
+  const [openAddComment, setOpenAddComment] = useState(false);
   const [board, setBoard] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   // 식물 카드 메뉴 상태 관리
@@ -112,7 +114,16 @@ const CommunityCardDetail = () => {
           <Box sx={{ width: "100%", mt: 3, mb: 1 }}>
             <Divider />
           </Box>
-          <IconButton size="small">
+          <CommunityCommentModal
+            openAddComment={openAddComment}
+            setOpenAddComment={setOpenAddComment}
+          />
+          <IconButton
+            size="small"
+            onClick={() => {
+              setOpenAddComment(true);
+            }}
+          >
             <ChatBubbleOutlineIcon sx={{ mr: 1 }} />
             댓글
           </IconButton>

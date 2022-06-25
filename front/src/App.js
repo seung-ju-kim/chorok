@@ -132,7 +132,6 @@ function App() {
                   path="/community/posting"
                   element={<CommunityPosting />}
                 />
-
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>
