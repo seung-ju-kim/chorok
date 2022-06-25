@@ -50,7 +50,7 @@ const MyGardenCardList = ({ initMyPlants = [] }) => {
       </Grid>
 
       <Grid item xs={6} md={3} lg={2}>
-        <Card sx={{ height: "25vh", mx: "auto", minWidth: "150px" }}>
+        <Card sx={{ height: "182px", mx: "auto", minWidth: "150px" }}>
           <Button
             sx={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
@@ -76,7 +76,7 @@ const MyGardenCardList = ({ initMyPlants = [] }) => {
           .map((e, i) => {
             return (
               <Grid item xs={6} md={3} lg={2} key={i}>
-                <Skeleton variant="rectangular" height={180} />
+                <Skeleton variant="rectangular" height={182} />
               </Grid>
             );
           })

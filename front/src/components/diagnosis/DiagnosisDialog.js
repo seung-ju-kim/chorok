@@ -13,7 +13,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 
-import goodCase from "../../imgs/goodCase.webp";
+import correct from "../../imgs/correct.webp";
 import manySpecies from "../../imgs/manySpecies.webp";
 import tooFar from "../../imgs/tooFar.webp";
 import filtered from "../../imgs/filtered.webp";
@@ -53,16 +53,16 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
       </DialogTitle>
       <Box>
         <DialogContent sx={{ pb: 15 }}>
-          <Box textAlign="center" sx={{ mb: 5 }}>
+          <Box textAlign="center" sx={{ mb: 3 }}>
             <Typography variant="h4">촬영 팁</Typography>
           </Box>
           <Grid container columnSpacing={1} rowSpacing={3}>
-            <Grid item xs={12} sx={{ mx: "auto", textAlign: "center" }}>
+            <Grid item xs={10} sx={{ mx: "auto", textAlign: "center", mb: 4 }}>
               <Box
                 component="img"
-                src={goodCase}
-                width="40%"
-                height="auto"
+                src={correct}
+                width="80%"
+                height="100%"
                 sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
               />
               <IconButton>

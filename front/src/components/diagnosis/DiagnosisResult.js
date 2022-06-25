@@ -82,7 +82,7 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography>
-                  <Typography> 관리법</Typography> :{" "}
+                  <Typography component="span"> 관리법</Typography> :{" "}
                   {result.diseaseList[0]?.solution}
                 </Typography>
               </Grid>

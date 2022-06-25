@@ -25,23 +25,23 @@ const DiaryList = () => {
 
   return (
     <>
-      <Grid container rowSpacing={5} columnSpacing={3} sx={{ my: 5 }}>
-        <Grid item xs={12}>
-          <Button
-            sx={{
-              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-              color: "#64a68a",
-              width: "100%",
-              py: 4,
-            }}
-            onClick={() => {
-              setOpenWriteForm(true);
-            }}
-          >
-            <EditIcon sx={{ mr: 2 }} />
-            <Typography>오늘 식물과 어떤 일이 있었나요?</Typography>
-          </Button>
-        </Grid>
+      <Grid container rowSpacing={5} columnSpacing={3} sx={{ my: 7 }}>
+        <Button
+          fullWidth
+          sx={{
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            color: "#64a68a",
+            width: "100%",
+            py: 4,
+          }}
+          onClick={() => {
+            setOpenWriteForm(true);
+          }}
+        >
+          <EditIcon sx={{ mr: 2 }} />
+          <Typography>오늘 식물과 어떤 일이 있었나요?</Typography>
+        </Button>
+
         {!isLoading ? (
           <>
             {diaries.map((diary, i) => {
