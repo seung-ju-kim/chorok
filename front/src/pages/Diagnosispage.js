@@ -1,20 +1,31 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import Diagnosis from "../components/diagnosis/Diagnosis";
+import diagnosis from "../imgs/diagnosis.webp";
 const Diagnosispage = () => {
   return (
-    <Box sx={{ pt: 12, pb: 15 }}>
-      <Typography
-        fontFamily="CookieRun-Regular"
-        fontSize="1.5rem"
-        sx={{ mx: "5%", mb: 5 }}
+    <>
+      <Box sx={{ pt: 12 }}>
+        <Typography
+          fontFamily="CookieRun-Regular"
+          fontSize="1.5rem"
+          sx={{ mx: "5%", mb: 3 }}
+        >
+          식물 병해 진단
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          background: `url(${diagnosis})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
       >
-        식물 병해 진단
-      </Typography>
-      <Grid container>
-        <Diagnosis />
-      </Grid>
-    </Box>
+        <Grid container>
+          <Diagnosis />
+        </Grid>
+      </Box>
+    </>
   );
 };
 

@@ -75,6 +75,13 @@ const CommunityPosting = () => {
       onSubmit={handleSubmit}
       sx={{ pt: 12, pb: 15, px: "5%" }}
     >
+      <Button
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        뒤로가기
+      </Button>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ mb: 5 }}>
           <Typography
