@@ -61,7 +61,7 @@ const Footer = () => {
           label="Community"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
-            navigate("/community");
+            navigate("/community/infoBoard");
           }}
         />
         <BottomNavigationAction

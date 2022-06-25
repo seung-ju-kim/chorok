@@ -15,8 +15,7 @@ const MyPlant = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
-        py: 8,
+        my: 8,
         color: "black",
         overflow: "auto",
       }}
@@ -33,7 +32,6 @@ const MyPlant = () => {
         >
           <TabList
             onChange={handleChange}
-            aria-label="lab API tabs"
             textColor="inherit"
             sx={{
               "& .MuiTabs-indicator": {

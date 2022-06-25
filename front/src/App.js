@@ -27,6 +27,12 @@ const MyScheduleList = lazy(() =>
   import("./components/schedule/MyScheduleList")
 );
 const Communitypage = lazy(() => import("./pages/Communitypage"));
+const CommunityPosting = lazy(() =>
+  import("./components/community/CommunityPosting")
+);
+const CommunityCardDetail = lazy(() =>
+  import("./components/community/CommunityCardDetail")
+);
 const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
 const DiagnosisPicture = lazy(() =>
   import("./components/diagnosis/DiagnosisPicture")
@@ -100,12 +106,33 @@ function App() {
                   path="/mygarden/myschedule"
                   element={<MyScheduleList />}
                 />
-                <Route path="/community" element={<Communitypage />} />
+
                 <Route path="/diagnosis" element={<Diagnosispage />} />
                 <Route
                   path="/diagnosis/picture"
                   element={<DiagnosisPicture />}
                 />
+                <Route
+                  path="/community/infoBoard"
+                  element={<Communitypage />}
+                />
+                <Route
+                  path="/community/infoBoard/:id"
+                  element={<CommunityCardDetail />}
+                />
+                <Route
+                  path="/community/freeBoard"
+                  element={<Communitypage />}
+                />
+                <Route
+                  path="/community/freeBoard/:id"
+                  element={<CommunityCardDetail />}
+                />
+                <Route
+                  path="/community/posting"
+                  element={<CommunityPosting />}
+                />
+
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>

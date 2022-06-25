@@ -8,9 +8,9 @@ import MyGardenCard from "./MyGardenCard";
 import MyGardenAddModal from "./MyGardenAddModal";
 import * as Api from "../../api";
 
-const MyGardenCardList = () => {
+const MyGardenCardList = ({ initMyPlants = [] }) => {
   // 나의 식물 상태관리
-  const [myPlants, setMyPlants] = useState([]);
+  const [myPlants, setMyPlants] = useState(initMyPlants);
   const [openAddPlant, setOpenAddPlant] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,7 +50,7 @@ const MyGardenCardList = () => {
       </Grid>
 
       <Grid item xs={6}>
-        <Card>
+        <Card sx={{ maxWidth: "250px" }}>
           <Button
             sx={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
@@ -59,7 +59,6 @@ const MyGardenCardList = () => {
               display: "flex",
               height: "180px",
               width: "100%",
-              maxWidth: "250px",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",

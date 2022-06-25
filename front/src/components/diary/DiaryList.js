@@ -25,7 +25,7 @@ const DiaryList = () => {
 
   return (
     <>
-      <Grid container rowSpacing={3} sx={{ mt: 5 }}>
+      <Grid container rowSpacing={3} sx={{ my: 5 }}>
         <Grid item xs={12}>
           <Button
             sx={{
