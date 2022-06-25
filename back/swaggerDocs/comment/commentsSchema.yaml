@@ -1,0 +1,25 @@
+type: object
+properties:
+  _id: 
+    type: string
+    description: comment를 구분하는 object_id
+  postId: 
+    type: string
+    description: comment가 속한 post의 id
+  userId: 
+    type: string
+    description: comment를 작성한 유저의 id
+  author: 
+    type: string
+    description: comment를 작성한 유저의 이름
+  content : 
+    type: string
+    description: 댓글 내용
+  createdAt: 
+    type: string
+    format: date-time
+    description: 작성 시각
+  updatedAt: 
+    type: string
+    format: date-time
+    description: 업데이트 시각
