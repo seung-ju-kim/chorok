@@ -1,6 +1,5 @@
 import React from "react";
-import { Grid, Typography, Container } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Grid } from "@mui/material";
 import CommunityInfoCard from "./CommunityInfoCard";
 
 const dummyData = [
@@ -23,6 +22,26 @@ const dummyData = [
       id: 4,
       name: "쑥쑥이2",
       img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+    },
+    {
+      id: 5,
+      name: "쑥쑥이2",
+      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+    },
+    {
+      id: 6,
+      name: "쑥쑥이2",
+      img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
+    },
+    {
+      id: 7,
+      name: "쑥쑥이2",
+      img: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/house-plants-1629187361.jpg?crop=0.288xw:0.577xh;0.0465xw,0.205xh&resize=640:*",
+    },
+    {
+      id: 8,
+      name: "쑥쑥이2",
+      img: "https://www.thespruce.com/thmb/2l_J80LOjYAWF-l5ke_QOU767Gw=/3000x1687/smart/filters:no_upscale()/spider-plants-chlorophytum-definition-1902773-01b-353dd3aab6e9465497dc0b82d6377124.jpg",
     },
   ];
 
@@ -54,7 +73,7 @@ const CommunityInfo = () => {
 
   return (
     <>
-      <Grid container rowSpacing={0} columnSpacing={0}>
+      <Grid container rowSpacing={2} columnSpacing={2}>
           {dummyData.map((data, i) => {
               return <CommunityInfoCard key={i} data={data} />;
           })}

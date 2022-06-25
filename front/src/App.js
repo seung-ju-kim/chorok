@@ -31,6 +31,12 @@ const CommunityInfoList = lazy(() =>
 const CommunityFreeList = lazy(() => 
   import("./components/community/CommunityFreeList")
 );
+const CommunityWrite = lazy(() => 
+  import("./components/community/CommunityWrite")
+);
+const CommunityWriteDetail = lazy(() => 
+  import("./components/community/CommunityWriteDetail")
+);
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -97,6 +103,8 @@ function App() {
                 <Route path="/community" element={<Communitypage />} />
                 <Route path="/community/CommunityInfoList" element={<CommunityInfoList />} />
                 <Route path="/community/CommunityFreeList" element={<CommunityFreeList />} />
+                <Route path="/community/CommunityWrite" element={<CommunityWrite />} />
+                <Route path="/community/CommunityWriteDetail" element={<CommunityWriteDetail />} />
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>

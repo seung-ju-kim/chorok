@@ -1,6 +1,5 @@
 import React from "react";
-import { Typography, Container } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Grid } from "@mui/material";
 import CommunityFreeCard from "./CommunityFreeCard";
 
 const dummyData = [
@@ -64,11 +63,11 @@ const CommunityFree = () => {
 
   return (
     <>
-      <Container sx={cardListStyle1}>
-        {dummyData.map((data, i) => {
-            return <CommunityFreeCard key={i} data={data} />;
-        })}
-      </Container>
+      <Grid container rowSpacing={2} columnSpacing={2}>
+          {dummyData.map((data, i) => {
+              return <CommunityFreeCard key={i} data={data} />;
+          })}
+      </Grid>
     </>
   )
 }
