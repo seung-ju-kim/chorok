@@ -19,7 +19,7 @@ const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
     }
   };
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mx: "auto" }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sx={{ mb: 5 }}>
           <Typography
