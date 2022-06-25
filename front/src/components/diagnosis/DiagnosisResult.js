@@ -13,7 +13,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
-  console.log(result.diseaseList[0]);
   return (
     <Dialog
       fullScreen
@@ -43,25 +42,48 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
         <DialogContent>
           <Box component="img" width="100%" src={result.imageURL} />
           {result.diseaseList[0]?.korean === "정상" ? (
-            <Typography>{result.diseaseList[0]?.korean}</Typography>
+            <Typography variant="h6">
+              AI 의사가 당신의 식물을 진단하였습니다. 당신의 식물은 정상입니다.
+            </Typography>
           ) : (
             <Grid container rowSpacing={3}>
               <Grid item xs={12}>
                 <Typography>
                   AI 의사가 당신의 식물을 진단하였습니다. 당신의 식물은{" "}
-                  {result.diseaseList[0]?.percent}% 확률로{" "}
-                  {result.diseaseList[0]?.korean}입니다.
+                  <Typography
+                    component="span"
+                    fontWeight="bold"
+                    fontFamily="CookieRun-Regular"
+                  >
+                    {result.diseaseList[0]?.percent}%
+                  </Typography>{" "}
+                  확률로{" "}
+                  <Typography
+                    component="span"
+                    fontWeight="bold"
+                    fontFamily="CookieRun-Regular"
+                  >
+                    {result.diseaseList[0]?.korean}
+                  </Typography>
+                  입니다.
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography>
-                  {result.diseaseList[0]?.korean}이란?{" "}
-                  {result.diseaseList[0]?.symptom}
+                  <Typography
+                    component="span"
+                    fontWeight="bold"
+                    fontFamily="CookieRun-Regular"
+                  >
+                    {result.diseaseList[0]?.korean}
+                  </Typography>
+                  이란? {result.diseaseList[0]?.symptom}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography>
-                  해결책은 {result.diseaseList[0]?.solution}
+                  <Typography> 관리법</Typography> :{" "}
+                  {result.diseaseList[0]?.solution}
                 </Typography>
               </Grid>
             </Grid>
