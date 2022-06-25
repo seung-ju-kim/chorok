@@ -10,6 +10,7 @@ import { commentRouter } from "./routers/commentRouter";
 import { plantRouter } from "./routers/plantRouter";
 import { diaryRouter } from "./routers/diaryRouter";
 import { diagRouter } from "./routers/diagRouter";
+import { scheduleRouter } from "./routers/scheduleRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 const app = express();
@@ -50,6 +51,7 @@ app.use(postRouter);
 app.use(commentRouter);
 app.use(plantRouter);
 app.use(diaryRouter);
+app.use(scheduleRouter);
 app.use("/diags", diagRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
