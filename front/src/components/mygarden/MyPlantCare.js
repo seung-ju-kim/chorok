@@ -12,6 +12,8 @@ import {
   Menu,
   MenuItem,
   Skeleton,
+  Grid,
+  Box,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -68,15 +70,16 @@ const MyPlantCare = () => {
 
   return (
     <>
-      <Card sx={{ mt: 5 }}>
+      <Card sx={{ mt: 5, width: "80vw", mx: "auto", maxWidth: "800px" }}>
         <CardHeader
           title={
             <IconButton
               onClick={() => {
                 navigate(-1);
               }}
+              sx={{ color: "black" }}
             >
-              <ArrowBackIosNewIcon fontSize="small" />
+              <ArrowBackIosNewIcon />
             </IconButton>
           }
           action={
@@ -115,7 +118,7 @@ const MyPlantCare = () => {
             src={plants.imageURL}
             sx={{
               width: "100%",
-              height: "30vh",
+              height: "40vh",
               cursor: "pointer",
               objectFit: "cover",
             }}

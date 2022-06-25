@@ -2,16 +2,16 @@ import React from "react";
 import { Card, CardMedia, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const MyGardenCard = ({ myplant, isLoading }) => {
+const MyGardenCard = ({ myplant }) => {
   const navigate = useNavigate();
 
   return (
     <Card
       sx={{
         cursor: "pointer",
-        maxWidth: "250px",
         height: "180px",
         mx: "auto",
+        minWidth: "150px",
       }}
     >
       <CardMedia
