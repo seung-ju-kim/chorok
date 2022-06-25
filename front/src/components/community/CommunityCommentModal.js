@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Button,
-  TextField,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -12,35 +10,25 @@ import {
   InputLabel,
   InputAdornment,
   Box,
-  Typography,
-  Grid,
   Input,
-  Menu,
-  MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import useHover from "../../element/useHover";
 import CommunityComment from "./CommunityComment";
 
-const CommunityCommentModal = ({
-  openAddComment,
-  setOpenAddComment,
-  postId,
-}) => {
-  console.log(postId);
+const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [content, setContent] = useState("");
   const [contentList, setContentList] = useState([]);
-
+  const { id } = useParams();
   const obsRef = useRef(null); //observer Element
   const [page, setPage] = useState(1); // 현재 페이지
   const [perPage, setPerPage] = useState(10);
   const [load, setLoad] = useState(false); //로딩스피너
   const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
   const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
-  const [ref, hover] = useHover();
+
   useEffect(() => {
     // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
     const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
@@ -65,13 +53,14 @@ const CommunityCommentModal = ({
   const getComment = useCallback(async () => {
     setLoad(true);
 
-    const res = await Api.get(`comments?postId=${postId}&page=&perPage=`);
+    const res = await Api.get(`comments?postId=${id}&page=&perPage=`);
+
     if (res.data) {
       if (res.data.end) {
         setEndRef(true);
       }
-      console.log(res.data);
-      setContentList((prev) => [...res.data.comments]);
+
+      setContentList(res.data.comments);
       setPreventRef(true);
     } else {
       console.log(res);
@@ -82,11 +71,11 @@ const CommunityCommentModal = ({
   const postComment = async () => {
     try {
       await Api.post(`comments`, {
-        postId,
+        postId: id,
         content,
       });
 
-      const res = await Api.get(`comments?postId=${postId}&page=`);
+      const res = await Api.get(`comments?postId=${id}&page=`);
       console.log(res);
       setContentList(res.data.comment);
       setContent("");

@@ -117,7 +117,6 @@ const CommunityCardDetail = () => {
           <CommunityCommentModal
             openAddComment={openAddComment}
             setOpenAddComment={setOpenAddComment}
-            postId={board._id}
           />
           <IconButton
             size="small"

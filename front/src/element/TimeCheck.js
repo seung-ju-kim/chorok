@@ -1,7 +1,6 @@
 const TimeCheck = ({ commentedTime }) => {
   const now = new Date();
-  console.log(now.getTime());
-  console.log(Date.parse(commentedTime));
+
   const minute = Math.floor(
     (now.getTime() - Date.parse(commentedTime)) / 1000 / 60
   );

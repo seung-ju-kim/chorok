@@ -1,21 +1,10 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   TextField,
   List,
-  ListItemText,
   Box,
   Typography,
-  Grid,
-  Input,
-  Menu,
-  MenuItem,
   IconButton,
 } from "@mui/material";
 import * as Api from "../../api";
@@ -39,7 +28,7 @@ const CommunityComment = ({
   const userState = useContext(UserStateContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const commentedTime = content.createdAt;
-  console.log(commentedTime);
+
   const open = Boolean(anchorEl);
   const anchorClick = (e) => {
     setAnchorEl(e.currentTarget);
