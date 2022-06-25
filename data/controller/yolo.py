@@ -8,7 +8,7 @@ import numpy as np
 import ssl
 import torch
 from PIL import Image
-from torchvision import transforms as T
+import faiss
 from icevision.all import models,ClassMap,tfms,Dataset,FilepathRecordComponent,convert_preds_to_coco_style
 #Model
 extra_args={}
@@ -105,7 +105,7 @@ def predict(name):
     print(output)
     if type(output) == str:
         return jsonify(output)
-    elif sorted(list(output.values()),reverse=True)[0] <0.39:
+    elif sorted(list(output.values()),reverse=True)[0] <=0.2:
         return "객체를 탐지하지 못하였습니다. 촬영 예시를 잘 보고 다시 찍어주세요"
     
     else : return jsonify(output)

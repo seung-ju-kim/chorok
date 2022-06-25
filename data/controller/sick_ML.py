@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, request, jsonify, Blueprint,abort
 from dotenv import load_dotenv
-from pymongo import DESCENDING
 from torchvision import transforms as T
 import torch
 import urllib.request
@@ -10,6 +9,7 @@ import json
 from PIL import Image
 import numpy as np
 import ssl
+import faiss
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -22,15 +22,6 @@ aws_region = os.environ.get("AWS_REGION")
 @ml.route('/')
 def main():
     return render_template('home.html')
-
-def count_frequency(my_list):
-    
-    count = {}
-    
-    for item in my_list:
-        count[item] = count.get(item, 0) + 1
-        
-    return count
 
 def edge_and_cut(img):
     emb_img = img.copy()
@@ -71,14 +62,14 @@ def work(imgs):
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    try:
-        def s3_get_image_url( name):
+    def s3_get_image_url( name):
                     # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
             return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-        context = ssl._create_unverified_context()
+    context = ssl._create_unverified_context()
+    try:
         req = urllib.request.urlopen(s3_get_image_url(name), context=context)
     except:
-        print('s3에 해당파일이 없습니다!')
+        abort(403)
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -92,9 +83,17 @@ def predict(name):
     # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
     ])
     img=VALID_TRANSFORM(img)
+    #img retreival
+    new=np.ravel(img, order='K')
+    index=faiss.read_index('test2.index')
+    my_array=np.vstack((index.reconstruct(0),index.reconstruct(1),index.reconstruct(2),index.reconstruct(3),index.reconstruct(4),index.reconstruct(5),new))
+    vector_sample=my_array.astype('float32')
+    distance,_=index.search(vector_sample[6].reshape(1,-1),2)
+    if distance[0][1]>=130000:
+        return "식물이 아닌 객체는 인식하지 못합니다."
     idx,temp=work(img)
     stat=[temp[i] for i in idx]
-    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 5,'rust':4}
+    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
     #print(idx)
     def get_key(val):
         for key, value in my_dict.items():
