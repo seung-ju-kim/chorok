@@ -5,12 +5,12 @@ info:
   description: '3팀 version 3.0의 API 문서입니다. '
 components:
   securitySchemes:
-    Authorization:
+    bearerAuth:
       type: http
-      schema: Bearer
-      name: Authorization
+      scheme: bearer
       bearerFormat: JWT
-      in: header
+security:
+  - bearerAuth: []
 host: 'http://localhost:3000'
 servers:
   - url: 'http://localhost:5001'
@@ -46,9 +46,9 @@ paths:
                   post:
                     type: object
                     properties:
-                      id:
+                      _id:
                         type: string
-                        description: post를 구분하는 id
+                        description: post를 구분하는 ObjectId
                       userId:
                         type: string
                         format: uuid
@@ -87,12 +87,10 @@ paths:
         - name: page
           in: query
           description: 페이지 번호
-          required: true
           type: string
-        - name: perPost
+        - name: perPage
           in: query
           description: 페이지당 게시글 수
-          required: true
           type: string
       responses:
         '200':
@@ -187,5 +185,155 @@ paths:
           name: id
           in: path
           description: post objectId
+          required: true
+          responses: null
+  /comments:
+    post:
+      tags:
+        - comments
+      summary: 댓글(comment)을 생성합니다.
+      description: 댓글(comment)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: 댓글을 작성할 게시글의 postId
+                content:
+                  type: string
+                  description: 댓글 내용
+            example:
+              postId: 62a8255fa1ffb34422f4727a
+              content: 댓글 테스트
+      responses:
+        '201':
+          description: 댓글이 정상적으로 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    $ref: '#/paths/~1comments/get/responses/200/content/application~1json/schema/properties/comment'
+    get:
+      tags:
+        - comments
+      summary: 댓글(comment)목록을 조회합니다.
+      description: 각 게시물(post)에 속한 댓글(comment)을 조회합니다.
+      parameters:
+        - name: postId
+          in: query
+          description: 댓글이 속한 게시물의 ObjectId
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: 페이지 번호
+          type: string
+        - name: perPage
+          in: query
+          description: 페이지당 댓글 수
+          type: string
+      responses:
+        '200':
+          description: 댓글 목록이 정상적으로 조회되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: comment를 구분하는 ObjectId
+                      postId:
+                        type: string
+                        description: comment가 속한 post의 id
+                      userId:
+                        type: string
+                        description: comment를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: comment를 작성한 유저의 이름
+                      content:
+                        type: string
+                        description: 댓글 내용
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+  '/comments/{id}':
+    put:
+      tags:
+        - comments
+      summary: 댓글(comment)을 수정합니다.
+      description: 수정할 comments의 id와 수정할 본문을 입력합니다.
+      parameters:
+        - name: id
+          in: path
+          description: comment ObjectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+            example:
+              content: 테스트 댓글입니다
+      responses:
+        '200':
+          description: 댓글이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    $ref: '#/paths/~1comments/get/responses/200/content/application~1json/schema/properties/comment'
+              example:
+                success: true
+                comment:
+                  _id: 62b4803e76999dfda189480e
+                  userId: 964db7ed-64f6-4bab-863d-3d44d2b1389a
+                  postId: 62a8254da1ffb34422f4726e
+                  author: 정민2
+                  content: 테스트 댓글입니다
+                  createdAt: 2022-06-23T15:01:18.154Z
+                  updatedAt: 2022-06-23T15:01:18.154Z
+    delete:
+      tags:
+        - comments
+      summary: 댓글(comment)을 삭제합니다.
+      description: 삭제할 comments의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 댓글이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: comment ObjectId
           required: true
           responses: null
