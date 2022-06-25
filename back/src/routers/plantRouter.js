@@ -2,6 +2,9 @@ import { Router } from "express";
 import { plantService } from "../services/plantService";
 import { Plant } from "../db";
 import { login_required } from "../middlewares/login_required";
+import dayjs from "dayjs";
+
+
 
 const plantRouter = Router();
 
@@ -157,7 +160,7 @@ plantRouter.delete(
 });
 
 /**
- *  스케줄 객체에 식물정보를 담아 리턴
+ *  스케줄 객체에 식물정보를 담아 오늘 날짜만 리턴
  */
 plantRouter.get(
   "/schedules",
@@ -166,13 +169,58 @@ plantRouter.get(
     try {
       const userId = req.currentUserId;
       const schedules = await plantService.getSchedulesByUserId({userId});
-
-      res.status(200).json(schedules);
+      schedules.filter((schedule)=>{
+        let now = dayjs();
+        return dayjs(schedule.date).format("YYYY-MM-DD").isSame(dayjs().format("YYYY-MM-DD"));
+      })
+      console.log(schedules);
+      console.log(todaySchedules);
+      res.status(200).json(todaySchedules);
   } catch (error) {
     next(error);
   }
   }
+)
 
+/**
+ *  스케줄 객체에 식물정보를 담아 이미 완료한 스케줄만 리턴
+ */
+ plantRouter.get(
+  "/fulfillschedules",
+  login_required, 
+  async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const schedules = await plantService.getSchedulesByUserId({userId});
+      const fulfillSchedules = schedules.filter((schedule)=>{
+        return schedule.isChecked;
+      })
+      res.status(200).json(fulfillSchedules);
+  } catch (error) {
+    next(error);
+  }
+  }
+)
+
+
+/**
+ *  스케줄 객체에 식물정보를 담아 오늘 날짜 이후 스케줄 리턴
+ */
+ plantRouter.get(
+  "/pendingschedules",
+  login_required, 
+  async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const schedules = await plantService.getSchedulesByUserId({userId});
+      const pendingSchedules = schedules.filter((schedule)=>{
+        return dayjs().format("YY-MM-DD").isAfter(dayjs(schedule.date, "YY-MM-DD"));
+      })
+      res.status(200).json(pendingSchedules);
+  } catch (error) {
+    next(error);
+  }
+  }
 )
 
 /**
