@@ -19,7 +19,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import CommunityComment from "./CommunityComment";
 
 const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
-  const [content, setContent] = useState("");
+  const [comment, setComment] = useState("");
   const [contentList, setContentList] = useState([]);
   const { id } = useParams();
   const obsRef = useRef(null); //observer Element
@@ -72,13 +72,13 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     try {
       await Api.post(`comments`, {
         postId: id,
-        content,
+        content: comment,
       });
 
       const res = await Api.get(`comments?postId=${id}&page=`);
       console.log(res);
       setContentList(res.data.comment);
-      setContent("");
+      setComment("");
       getComment();
     } catch (err) {
       console.log(err);
@@ -116,12 +116,13 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
         <hr />
       </DialogTitle>
       <Box>
-        {contentList.map((content, i) => {
+        {contentList?.map((content, i) => {
           return (
             <CommunityComment
               key={i}
               content={content}
-              setContent={setContent}
+              comment={comment}
+              setComment={setComment}
               setContentList={setContentList}
               getComment={getComment}
             />
@@ -137,7 +138,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
           </InputLabel>
           <Input
             id="standard-adornment-comment"
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => setComment(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <Button onClick={postComment}>게시</Button>

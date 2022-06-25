@@ -19,7 +19,8 @@ import { useParams } from "react-router-dom";
 
 const CommunityComment = ({
   content,
-  setContent,
+  comment,
+  setComment,
   setContentList,
   getComment,
 }) => {
@@ -38,15 +39,15 @@ const CommunityComment = ({
   };
   const deleteComment = async () => {
     await Api.delete(`comments/${content._id}`);
-    const res = await Api.get(`comments/${id}`);
-    setContentList(res.data.comment);
+
     getComment();
   };
 
-  const editComment = async (id, inputText) => {
+  const editComment = async () => {
     await Api.put(`comments/${content._id}`, {
-      content,
+      content: comment,
     });
+    getComment();
   };
 
   return (
@@ -109,7 +110,7 @@ const CommunityComment = ({
         </>
       ) : (
         <>
-          <TextField onChange={(e) => setContent(e.target.value)}></TextField>
+          <TextField onChange={(e) => setComment(e.target.value)}></TextField>
           <Button
             onClick={() => {
               editComment();
