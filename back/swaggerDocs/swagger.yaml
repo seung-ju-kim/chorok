@@ -4,13 +4,13 @@ info:
   version: "1.0.0"
   description: "3팀 version 3.0의 API 문서입니다. "
 components:
-  securitySchemes: 
-    Authorization: 
-      type: "http"
-      schema: "Bearer"
-      name: "Authorization"
-      bearerFormat: "JWT"
-      in: "header"
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []    
 host: http://localhost:3000
 servers:
   - url: http://localhost:5001
@@ -19,3 +19,7 @@ paths:
     $ref: "./post/posts.yaml"
   /posts/{id}:
     $ref: "./post/posts-id.yaml"
+  /comments:
+    $ref: "./comment/comments.yaml"
+  /comments/{id}:
+    $ref: "./comment/comments-id.yaml"
