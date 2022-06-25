@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, TextField } from "@mui/material";
+import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import defaultImg from "../../imgs/default_image.webp";
 import * as Api from "../../api";
 import { useNavigate } from "react-router-dom";
@@ -67,7 +67,14 @@ const DiagnosisPicture = () => {
     }
   };
   return (
-    <Box sx={{ py: 12, px: "5%" }}>
+    <Box sx={{ pt: 12, pb: 15, px: "5%" }}>
+      <Grid container columnSpacing={2}>
+        <Grid item xs={12} sx={{ mb: 5 }}>
+          <Typography fontFamily="CookieRun-Regular" fontSize="1.5rem">
+            식물 병해 진단
+          </Typography>
+        </Grid>
+      </Grid>
       {isLoading ? (
         <Box textAlign="center">
           <Typography
@@ -91,12 +98,11 @@ const DiagnosisPicture = () => {
           <Typography
             fontFamily="CookieRun-Regular"
             variant="h6"
-            sx={{ mb: 3 }}
             textAlign="center"
           >
             진단 받을 아이의 사진을 등록해주세요
           </Typography>
-          <Box sx={{ textAlign: "center", px: 5 }}>
+          <Box sx={{ textAlign: "center", my: 3 }}>
             <Box
               component="img"
               src={image.previewURL}

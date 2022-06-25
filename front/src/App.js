@@ -27,20 +27,12 @@ const MyScheduleList = lazy(() =>
   import("./components/schedule/MyScheduleList")
 );
 const Communitypage = lazy(() => import("./pages/Communitypage"));
-const CommunityInfoList = lazy(() =>
-  import("./components/community/CommunityInfoList")
+const CommunityPosting = lazy(() =>
+  import("./components/community/CommunityPosting")
 );
-const CommunityFreeList = lazy(() =>
-  import("./components/community/CommunityFreeList")
+const CommunityCardDetail = lazy(() =>
+  import("./components/community/CommunityCardDetail")
 );
-const CommunityInfoCommentAddModal = lazy(() =>
-  import("./components/community/CommunityInfoCommentAddModal")
-);
-
-const CommunityInfoCommentDummy = lazy(() =>
-  import("./components/community/CommunityInfoCommentDummy")
-);
-
 const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
 const DiagnosisPicture = lazy(() =>
   import("./components/diagnosis/DiagnosisPicture")
@@ -114,23 +106,31 @@ function App() {
                   path="/mygarden/myschedule"
                   element={<MyScheduleList />}
                 />
-                <Route path="/community" element={<Communitypage />} />
+
                 <Route path="/diagnosis" element={<Diagnosispage />} />
                 <Route
                   path="/diagnosis/picture"
                   element={<DiagnosisPicture />}
                 />
                 <Route
-                  path="/community/CommunityInfoList"
-                  element={<CommunityInfoList />}
+                  path="/community/infoBoard"
+                  element={<Communitypage />}
                 />
                 <Route
-                  path="/community/:id"
-                  element={<CommunityInfoCommentDummy />}
+                  path="/community/infoBoard/:id"
+                  element={<CommunityCardDetail />}
                 />
                 <Route
-                  path="/community/CommunityFreeList"
-                  element={<CommunityFreeList />}
+                  path="/community/freeBoard"
+                  element={<Communitypage />}
+                />
+                <Route
+                  path="/community/freeBoard/:id"
+                  element={<CommunityCardDetail />}
+                />
+                <Route
+                  path="/community/posting"
+                  element={<CommunityPosting />}
                 />
                 <Route path="*" element={<Main />} />
               </Routes>

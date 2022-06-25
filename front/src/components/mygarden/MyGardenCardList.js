@@ -8,9 +8,9 @@ import MyGardenCard from "./MyGardenCard";
 import MyGardenAddModal from "./MyGardenAddModal";
 import * as Api from "../../api";
 
-const MyGardenCardList = () => {
+const MyGardenCardList = ({ initMyPlants = [] }) => {
   // 나의 식물 상태관리
-  const [myPlants, setMyPlants] = useState([]);
+  const [myPlants, setMyPlants] = useState(initMyPlants);
   const [openAddPlant, setOpenAddPlant] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,17 +49,15 @@ const MyGardenCardList = () => {
         )}
       </Grid>
 
-      <Grid item xs={6}>
-        <Card>
+      <Grid item xs={6} md={3} lg={2}>
+        <Card sx={{ height: "25vh", mx: "auto", minWidth: "150px" }}>
           <Button
             sx={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
               color: "#64a68a",
-              mx: "auto",
               display: "flex",
-              height: "180px",
+              height: "100%",
               width: "100%",
-              maxWidth: "250px",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
@@ -73,13 +71,12 @@ const MyGardenCardList = () => {
         </Card>
       </Grid>
       {isLoading ? (
-        Array(5)
+        Array(20)
           .fill(1)
           .map((e, i) => {
             return (
-              <Grid item xs={6} key={i}>
-                <Skeleton variant="rectangular" height={150} />
-                <Skeleton variant="text" height={30} />
+              <Grid item xs={6} md={3} lg={2} key={i}>
+                <Skeleton variant="rectangular" height={180} />
               </Grid>
             );
           })
@@ -87,7 +84,7 @@ const MyGardenCardList = () => {
         <>
           {myPlants.map((myplant, i) => {
             return (
-              <Grid item xs={6} key={i}>
+              <Grid item xs={6} md={3} lg={2} key={i}>
                 <MyGardenCard myplant={myplant} />
               </Grid>
             );

@@ -13,7 +13,7 @@ const MyGardenpage = () => {
         나의 정원
       </Typography>
 
-      <Grid container rowSpacing={5} columnSpacing={3}>
+      <Grid container spacing={2}>
         <MyGardenCardList />
       </Grid>
     </Box>

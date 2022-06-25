@@ -25,7 +25,7 @@ const DiaryList = () => {
 
   return (
     <>
-      <Grid container rowSpacing={3} sx={{ mt: 5 }}>
+      <Grid container rowSpacing={5} columnSpacing={3} sx={{ my: 5 }}>
         <Grid item xs={12}>
           <Button
             sx={{
@@ -46,7 +46,7 @@ const DiaryList = () => {
           <>
             {diaries.map((diary, i) => {
               return (
-                <Grid item sx={{ mx: "auto" }} key={i}>
+                <Grid item xs={12} sm={6} lg={4} key={i}>
                   <DiaryCard
                     setDiaries={setDiaries}
                     isLoading={isLoading}
@@ -57,16 +57,16 @@ const DiaryList = () => {
             })}
           </>
         ) : (
-          Array(5)
+          Array(10)
             .fill(0)
             .map((e, i) => {
               return (
-                <Grid item xs={12} key={i}>
+                <Grid item xs={12} sm={6} lg={4} key={i}>
                   <Skeleton
                     animation="wave"
                     variant="rectangular"
                     width="100%"
-                    height={150}
+                    height={300}
                   />
                   <Skeleton
                     animation="wave"

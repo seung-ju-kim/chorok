@@ -22,14 +22,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import useHover from "./../../element/useHover";
+import useHover from "../../element/useHover";
 import CommunityComment from "./CommunityComment";
 
-const CommunityInfoCommentAddModal = ({
+const CommunityCommentModal = ({
   openAddComment,
   setOpenAddComment,
+  postId,
 }) => {
-  const { id } = useParams();
+  console.log(postId);
   const [content, setContent] = useState("");
   const [contentList, setContentList] = useState([]);
 
@@ -39,9 +40,7 @@ const CommunityInfoCommentAddModal = ({
   const [load, setLoad] = useState(false); //로딩스피너
   const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
   const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
-
   const [ref, hover] = useHover();
-
   useEffect(() => {
     // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
     const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
@@ -66,14 +65,12 @@ const CommunityInfoCommentAddModal = ({
   const getComment = useCallback(async () => {
     setLoad(true);
 
-    const res = await Api.getComment(
-      `comments?postId=62a82550a1ffb34422f47271&page=&perPage=`
-    );
-    console.log(res.data.comments);
+    const res = await Api.get(`comments?postId=${postId}&page=&perPage=`);
     if (res.data) {
       if (res.data.end) {
         setEndRef(true);
       }
+      console.log(res.data);
       setContentList((prev) => [...res.data.comments]);
       setPreventRef(true);
     } else {
@@ -85,10 +82,11 @@ const CommunityInfoCommentAddModal = ({
   const postComment = async () => {
     try {
       await Api.post(`comments`, {
-        postId: "62a82550a1ffb34422f47271",
+        postId,
         content,
       });
-      const res = await Api.getComment(`comments?postId=${id}&page=${id}`);
+
+      const res = await Api.get(`comments?postId=${postId}&page=`);
       console.log(res);
       setContentList(res.data.comment);
       setContent("");
@@ -96,19 +94,6 @@ const CommunityInfoCommentAddModal = ({
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const deleteComment = async () => {
-    await Api.delete(`comments/62b54d1180876e1aeebd8dd0`);
-    const res = await Api.get(`comments/${id}`);
-    setContentList(res.data.comment);
-    getComment();
-  };
-
-  const editComment = async (id, inputText) => {
-    await Api.put(`comments/62b54db180876e1aeebd8ddd`, {
-      content,
-    });
   };
 
   return (
@@ -148,8 +133,8 @@ const CommunityInfoCommentAddModal = ({
               key={i}
               content={content}
               setContent={setContent}
-              deleteComment={deleteComment}
-              editComment={editComment}
+              setContentList={setContentList}
+              getComment={getComment}
             />
           );
         })}
@@ -176,4 +161,4 @@ const CommunityInfoCommentAddModal = ({
   );
 };
 
-export default CommunityInfoCommentAddModal;
+export default CommunityCommentModal;

@@ -1,0 +1,67 @@
+post:
+  tags:
+    - comments
+  summary: 댓글(comment)을 생성합니다.
+  description: 댓글(comment)을 생성합니다.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            postId:
+              type: string
+              description: 댓글을 작성할 게시글의 postId
+            content:
+              type: string
+              description: 댓글 내용
+        example:
+          postId: 62a8255fa1ffb34422f4727a
+          content : 댓글 테스트
+  responses:
+    '201':
+      description: 댓글이 정상적으로 생성되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              comment:
+                $ref: "./commentsSchema.yaml"
+get:
+  tags:
+    - comments
+  summary: 댓글(comment)목록을 조회합니다.
+  description: 각 게시물(post)에 속한 댓글(comment)을 조회합니다.
+  parameters:
+  - name: postId
+    in: query
+    description: 댓글이 속한 게시물의 ObjectId
+    required: true
+    type: string
+  - name: page
+    in: query
+    description: 페이지 번호
+    type: string
+  - name: perPage
+    in: query
+    description: 페이지당 댓글 수
+    type: string
+  responses:
+    '200':
+      description: 댓글 목록이 정상적으로 조회되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              comment:
+                $ref: "./commentsSchema.yaml"
+            

@@ -8,49 +8,114 @@ import React, {
 import {
   Button,
   TextField,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  FormControl,
-  InputLabel,
-  InputAdornment,
+  List,
+  ListItemText,
   Box,
   Typography,
   Grid,
   Input,
   Menu,
   MenuItem,
+  IconButton,
 } from "@mui/material";
+import * as Api from "../../api";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserStateContext } from "../../App";
+import TimeCheck from "./../../element/TimeCheck";
+import { textAlign } from "@mui/system";
+import { useParams } from "react-router-dom";
 
 const CommunityComment = ({
   content,
   setContent,
-  deleteComment,
-  editComment,
+  setContentList,
+  getComment,
 }) => {
+  const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const userState = useContext(UserStateContext);
-  console.log(userState);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const commentedTime = content.createdAt;
+  console.log(commentedTime);
+  const open = Boolean(anchorEl);
+  const anchorClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const anchorClose = () => {
+    setAnchorEl(null);
+  };
+  const deleteComment = async () => {
+    await Api.delete(`comments/${content._id}`);
+    const res = await Api.get(`comments/${id}`);
+    setContentList(res.data.comment);
+    getComment();
+  };
+
+  const editComment = async (id, inputText) => {
+    await Api.put(`comments/${content._id}`, {
+      content,
+    });
+  };
+
   return (
-    <Box sx={{ display: "flex", px: 3 }}>
+    <List
+      sx={{
+        px: 3,
+        display: "flex",
+      }}
+    >
       {!isEditing ? (
         <>
-          <Box>{content.author}</Box>
-          <Box>{content.content}</Box>
-          {!useState.user && (
-            <>
-              <Button variant="text" onClick={deleteComment}>
-                삭제
-              </Button>
-              <Button variant="text" onClick={() => setIsEditing(true)}>
-                수정
-              </Button>
-            </>
+          <Box sx={{ display: "flex", mr: 5 }}>
+            <Box>
+              <Typography sx={{ fontWeight: "bold" }}>
+                {content.author}
+              </Typography>
+              <Typography sx={{ fontWeight: "light", fontSize: "small" }}>
+                <TimeCheck commentedTime={commentedTime} />
+              </Typography>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography sx={{ mr: 5 }}>{content.content}</Typography>
+          </Box>
+          {userState.user.id === content.userId && (
+            <Box>
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={deleteComment}
+              >
+                <DeleteIcon
+                  sx={{
+                    fontSize: 15,
+                    mr: 2,
+                    color: (theme) => theme.palette.grey[500],
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="edit"
+                onClick={() => setIsEditing(true)}
+              >
+                <EditIcon
+                  sx={{
+                    fontSize: 15,
+                    color: (theme) => theme.palette.grey[500],
+                  }}
+                />
+              </IconButton>
+            </Box>
           )}
         </>
       ) : (
@@ -66,7 +131,7 @@ const CommunityComment = ({
           </Button>
         </>
       )}
-    </Box>
+    </List>
   );
 };
 

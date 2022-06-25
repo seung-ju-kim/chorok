@@ -5,11 +5,15 @@ import CommunityMain from "../components/community/CommunityMain";
 
 const Community = () => {
   return (
-    <>
-      <Box sx={{ mt: 12 }}>
-        <CommunityMain />
-      </Box>
-    </>
+    <Box
+      sx={{
+        my: 8,
+        color: "black",
+        overflow: "auto",
+      }}
+    >
+      <CommunityMain />
+    </Box>
   );
 };
 

@@ -64,14 +64,8 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
     handleClose();
   };
 
-  // style
-  const cardStyle = {
-    width: "90vw",
-    border: "1px solid white",
-  };
-
   return (
-    <Card sx={cardStyle}>
+    <Card sx={{ height: "400px", mx: "auto", minWidth: "300px" }}>
       {diary.imageURL && (
         <>
           {isLoading ? (
@@ -82,11 +76,8 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
               image={diary.imageURL}
               alt="diary img"
               sx={{
-                p: 2,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                maxHeight: "40vh",
+                objectFit: "fill",
+                height: "300px",
               }}
             />
           )}

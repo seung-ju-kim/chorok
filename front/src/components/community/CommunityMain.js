@@ -1,38 +1,93 @@
-import React, { Component } from "react";
-import { Grid, Typography, Button, Box, Tab } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Tab, Tabs } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import ListIcon from "@mui/icons-material/List";
 import { useNavigate } from "react-router-dom";
-import CommunityInfo from "./CommunityInfo";
-import CommunityFree from "./CommunityFree";
+
+import CommunityList from "./CommunityList";
+import * as Api from "../../api";
 
 const CommunityMain = () => {
-  const navigate = useNavigate();
-  const [value, setValue] = React.useState("1");
-
+  // 탭 상태 관리
+  const [value, setValue] = useState("1");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const navigate = useNavigate();
+  const [boards, setBoards] = useState([]);
+  const getInfoList = () => {
+    Api.get(`posts?category=정보공유&page=1&perPage=10`).then((res) =>
+      setBoards(res.data.posts)
+    );
+  };
+  const getFreeList = () => {
+    Api.get(`posts?category=자유&page=1&perPage=10`).then((res) =>
+      setBoards(res.data.posts)
+    );
+  };
+
   return (
-    <>
-      <Box sx={{ width: "100%", typography: "body1" }}>
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="정보공유" value="1" />
-              <Tab label="자유" value="2" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">
-            <CommunityInfo />
-          </TabPanel>
-          <TabPanel value="2">
-            <CommunityFree />
-          </TabPanel>
-        </TabContext>
+    <TabContext value={value}>
+      <Box
+        sx={{
+          position: "fixed",
+          bgcolor: "white",
+          px: "3%",
+          width: "100%",
+          zIndex: 2,
+        }}
+      >
+        <TabList
+          onChange={handleChange}
+          textColor="inherit"
+          sx={{
+            "& .MuiTabs-indicator": {
+              display: "flex",
+              justifyContent: "center",
+              bgcolor: "#64a68a",
+            },
+            px: "3%",
+          }}
+        >
+          <Tab
+            label="정보공유"
+            sx={{
+              fontFamily: "CookieRun-Regular",
+              fontSize: "1.2rem",
+            }}
+            value="1"
+            onClick={() => {
+              navigate("/community/infoBoard");
+            }}
+          />
+          <Tab
+            label="자유게시판"
+            sx={{
+              fontFamily: "CookieRun-Regular",
+              fontSize: "1.2rem",
+            }}
+            value="2"
+            onClick={() => {
+              navigate("/community/freeBoard");
+            }}
+          />
+        </TabList>
       </Box>
-    </>
+      <TabPanel value="1" sx={{ p: 0 }}>
+        <CommunityList
+          getList={getInfoList}
+          boards={boards}
+          setBoards={setBoards}
+        />
+      </TabPanel>
+      <TabPanel value="2" sx={{ p: 0 }}>
+        <CommunityList
+          getList={getFreeList}
+          boards={boards}
+          setBoards={setBoards}
+        />
+      </TabPanel>
+    </TabContext>
   );
 };
 

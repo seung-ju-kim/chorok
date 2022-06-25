@@ -42,12 +42,10 @@ get:
   - name: page
     in: query
     description: 페이지 번호
-    required: true
     type: string
-  - name: perPost
+  - name: perPage
     in: query
     description: 페이지당 게시글 수
-    required: true
     type: string
   responses:
     '200':
