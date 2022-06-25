@@ -9,7 +9,7 @@ const MyGardenCard = ({ myplant }) => {
     <Card
       sx={{
         cursor: "pointer",
-        height: "180px",
+        height: "25vh",
         mx: "auto",
         minWidth: "150px",
       }}
@@ -17,7 +17,7 @@ const MyGardenCard = ({ myplant }) => {
       <CardMedia
         component="img"
         image={myplant.imageURL}
-        sx={{ objectFit: "fill", height: "150px" }}
+        sx={{ objectFit: "fill", height: "20vh" }}
         onClick={() => {
           navigate(`/mygarden/${myplant._id}`);
         }}

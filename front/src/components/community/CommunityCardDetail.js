@@ -44,7 +44,7 @@ const CommunityCardDetail = () => {
     navigate(-1);
   };
   return (
-    <Grid container sx={{ py: 12, px: "5%" }}>
+    <Grid container sx={{ py: 12, px: "5%", mx: "auto", maxWidth: "800px" }}>
       <Grid item xs={3}>
         <IconButton
           onClick={() => {
