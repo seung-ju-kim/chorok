@@ -46,7 +46,6 @@ const CommunityMain = () => {
               justifyContent: "center",
               bgcolor: "#64a68a",
             },
-            px: "3%",
           }}
         >
           <Tab

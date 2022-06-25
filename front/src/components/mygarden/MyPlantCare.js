@@ -12,7 +12,7 @@ import {
   Menu,
   MenuItem,
   Skeleton,
-  Grid,
+  Container,
   Box,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
@@ -69,8 +69,8 @@ const MyPlantCare = () => {
   };
 
   return (
-    <>
-      <Card sx={{ mt: 5, width: "80vw", mx: "auto", maxWidth: "800px" }}>
+    <Container sx={{ my: 7 }}>
+      <Card sx={{ width: "100%", mx: "auto", maxWidth: "800px" }}>
         <CardHeader
           title={
             <IconButton
@@ -183,7 +183,7 @@ const MyPlantCare = () => {
         title="식물 삭제"
         subTitle="식물과 작별하시겠습니까?"
       />
-    </>
+    </Container>
   );
 };
 

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import defaultImage from "../../imgs/default_image.webp";
 const CommunityCard = ({ board }) => {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -26,11 +26,20 @@ const CommunityCard = ({ board }) => {
           title={<Typography textAlign="center">{board.title}</Typography>}
           sx={{ height: "50px" }}
         />
-        <CardMedia
-          component="img"
-          image={board.imageURL}
-          sx={{ objectFit: "contain", height: "300px" }}
-        />
+        {board.imageURL ? (
+          <CardMedia
+            component="img"
+            image={board.imageURL}
+            sx={{ objectFit: "contain", height: "300px" }}
+          />
+        ) : (
+          <CardMedia
+            component="img"
+            image={defaultImage}
+            sx={{ objectFit: "contain", height: "300px" }}
+          />
+        )}
+
         <CardContent sx={{ px: 2 }}>
           <Typography component="span" variant="body2">
             {board.author}
