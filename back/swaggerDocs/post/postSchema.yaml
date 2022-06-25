@@ -1,8 +1,8 @@
 type: object
 properties:
-  id: 
+  _id: 
     type: string
-    description: post를 구분하는 id
+    description: post를 구분하는 ObjectId
   userId: 
     type: string
     format: uuid
