@@ -97,9 +97,12 @@ const CommunityCardDetail = () => {
               {board.createdAt?.split("T")[1].split(".")[0]}
             </Typography>
           </Grid>
-          <Grid item xs={12} sx={{ mx: "auto", mt: 2 }}>
-            <Box component="img" width="100%" src={board.imageURL} />
-          </Grid>
+          {board.imageURL && (
+            <Grid item xs={12} sx={{ mx: "auto", mt: 2 }}>
+              <Box component="img" width="100%" src={board.imageURL} />
+            </Grid>
+          )}
+
           <Box sx={{ width: "100%", my: 3 }}>
             <Divider />
           </Box>

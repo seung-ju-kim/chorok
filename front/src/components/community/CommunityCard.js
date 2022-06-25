@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import * as Api from "../../api";
+
 const CommunityCard = ({ board }) => {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -20,16 +20,17 @@ const CommunityCard = ({ board }) => {
   };
 
   return (
-    <Card sx={{ mx: 2 }}>
+    <Card sx={{ height: "400px", mx: "auto", minWidth: "300px" }}>
       <CardActionArea onClick={handleClick}>
         <CardHeader
-          title={
-            <Typography variant="h6" textAlign="center">
-              {board.title}
-            </Typography>
-          }
+          title={<Typography textAlign="center">{board.title}</Typography>}
+          sx={{ height: "50px" }}
         />
-        <CardMedia component="img" image={board.imageURL} />
+        <CardMedia
+          component="img"
+          image={board.imageURL}
+          sx={{ objectFit: "contain", height: "300px" }}
+        />
         <CardContent sx={{ px: 2 }}>
           <Typography component="span" variant="body2">
             {board.author}

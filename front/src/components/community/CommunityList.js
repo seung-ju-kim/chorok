@@ -1,24 +1,42 @@
-import React, { useEffect } from "react";
-import { Grid, IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, IconButton, Skeleton } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
 
 const CommunityList = ({ getList, boards, setBoards }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getList();
+    setIsLoading(false);
   }, []);
 
   return (
-    <Grid container rowSpacing={1} sx={{ mt: 8, mb: 2 }}>
-      {boards.map((board, i) => {
-        return (
-          <Grid item xs={12} key={i}>
-            <CommunityCard board={board} />
-          </Grid>
-        );
-      })}
+    <Grid container rowSpacing={5} columnSpacing={3} sx={{ mt: 8, mb: 2 }}>
+      {isLoading ? (
+        Array(10)
+          .fill(1)
+          .map((e, i) => {
+            return (
+              <Grid item xs={12} sm={6} lg={4} key={i}>
+                <Skeleton variant="rectangular" height={400} />
+              </Grid>
+            );
+          })
+      ) : (
+        <>
+          {boards.map((board, i) => {
+            return (
+              <Grid item xs={12} sm={6} lg={4} key={i}>
+                <CommunityCard board={board} />
+              </Grid>
+            );
+          })}
+        </>
+      )}
+
       <IconButton
         sx={{
           position: "fixed",
