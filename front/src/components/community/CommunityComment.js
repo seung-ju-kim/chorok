@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Button,
   TextField,
@@ -6,6 +6,7 @@ import {
   Box,
   Typography,
   IconButton,
+  Grid,
 } from "@mui/material";
 import * as Api from "../../api";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -17,13 +18,8 @@ import TimeCheck from "./../../element/TimeCheck";
 import { textAlign } from "@mui/system";
 import { useParams } from "react-router-dom";
 
-const CommunityComment = ({
-  content,
-  comment,
-  setComment,
-  setContentList,
-  getComment,
-}) => {
+const CommunityComment = ({ content, setContentList, getComment }) => {
+  const [comment, setComment] = useState("");
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const userState = useContext(UserStateContext);
@@ -50,67 +46,61 @@ const CommunityComment = ({
     getComment();
   };
 
+  useEffect(() => {
+    setComment(content.content);
+  }, []);
   return (
-    <List
-      sx={{
-        px: 3,
-        display: "flex",
-      }}
-    >
+    <>
       {!isEditing ? (
-        <>
-          <Box sx={{ display: "flex", mr: 5 }}>
-            <Box>
-              <Typography sx={{ fontWeight: "bold" }}>
-                {content.author}
-              </Typography>
-              <Typography sx={{ fontWeight: "light", fontSize: "small" }}>
-                <TimeCheck commentedTime={commentedTime} />
-              </Typography>
+        <Box sx={{ px: 3 }}>
+          <Box display="flex">
+            <Box sx={{ fontWeight: "bold", pr: 2 }}>
+              <Box>{content.author}</Box>
+            </Box>
+            <Box sx={{ fontSize: 13, pt: 0.5 }}>
+              <Box>{content.content}</Box>
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography sx={{ mr: 5 }}>{content.content}</Typography>
-          </Box>
-          {userState.user.id === content.userId && (
-            <Box>
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                onClick={deleteComment}
-              >
-                <DeleteIcon
-                  sx={{
-                    fontSize: 15,
-                    mr: 2,
-                    color: (theme) => theme.palette.grey[500],
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="edit"
-                onClick={() => setIsEditing(true)}
-              >
-                <EditIcon
-                  sx={{
-                    fontSize: 15,
-                    color: (theme) => theme.palette.grey[500],
-                  }}
-                />
-              </IconButton>
+          <Box display="flex">
+            <Box sx={{ fontSize: "small", my: 1, mr: 0.5 }}>
+              <TimeCheck commentedTime={commentedTime} />
             </Box>
-          )}
-        </>
+            {userState.user.id === content.userId && (
+              <Box sx={{ pt: 0.2 }}>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={deleteComment}
+                >
+                  <DeleteIcon
+                    sx={{
+                      fontSize: 15,
+                      color: (theme) => theme.palette.grey[500],
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => setIsEditing(true)}
+                >
+                  <EditIcon
+                    sx={{
+                      fontSize: 15,
+                      color: (theme) => theme.palette.grey[500],
+                    }}
+                  />
+                </IconButton>
+              </Box>
+            )}
+          </Box>
+        </Box>
       ) : (
         <>
-          <TextField onChange={(e) => setComment(e.target.value)}></TextField>
+          <TextField
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          ></TextField>
           <Button
             onClick={() => {
               editComment();
@@ -121,7 +111,7 @@ const CommunityComment = ({
           </Button>
         </>
       )}
-    </List>
+    </>
   );
 };
 

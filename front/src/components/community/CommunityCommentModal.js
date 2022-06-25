@@ -53,7 +53,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const getComment = useCallback(async () => {
     setLoad(true);
 
-    const res = await Api.get(`comments?postId=${id}&page=&perPage=`);
+    const res = await Api.get(`comments?postId=${id}&page=1&perPage=20`);
 
     if (res.data) {
       if (res.data.end) {
@@ -137,6 +137,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             댓글 달기...
           </InputLabel>
           <Input
+            value={comment}
             id="standard-adornment-comment"
             onChange={(e) => setComment(e.target.value)}
             endAdornment={

@@ -22,7 +22,7 @@ const CommunityCardDetail = () => {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
 
-  const [openAddComment, setOpenAddComment] = useState(true);
+  const [openAddComment, setOpenAddComment] = useState(false);
   const [board, setBoard] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   // 식물 카드 메뉴 상태 관리
