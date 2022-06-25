@@ -2,7 +2,7 @@ type: object
 properties:
   _id: 
     type: string
-    description: comment를 구분하는 object_id
+    description: comment를 구분하는 ObjectId
   postId: 
     type: string
     description: comment가 속한 post의 id
