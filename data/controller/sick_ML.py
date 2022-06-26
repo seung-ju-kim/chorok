@@ -83,14 +83,6 @@ def predict(name):
     # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
     ])
     img=VALID_TRANSFORM(img)
-    #img retreival
-    new=np.ravel(img, order='K')
-    index=faiss.read_index('test2.index')
-    my_array=np.vstack((index.reconstruct(0),index.reconstruct(1),index.reconstruct(2),index.reconstruct(3),index.reconstruct(4),index.reconstruct(5),new))
-    vector_sample=my_array.astype('float32')
-    distance,_=index.search(vector_sample[6].reshape(1,-1),2)
-    if distance[0][1]>=130000:
-        return "식물이 아닌 객체는 인식하지 못합니다."
     idx,temp=work(img)
     stat=[temp[i] for i in idx]
     my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
@@ -103,6 +95,6 @@ def predict(name):
         return "There is no such Key"
     result_dict={}
     for i in range(0,2):
-        if stat[i]>=0.5:
+        if stat[i]>=0.6:
             result_dict[get_key(idx[i])]=round(float(stat[i]),3)
     return json.dumps(result_dict)

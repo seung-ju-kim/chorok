@@ -8,7 +8,6 @@ import numpy as np
 import ssl
 import torch
 from PIL import Image
-import faiss
 from icevision.all import models,ClassMap,tfms,Dataset,FilepathRecordComponent,convert_preds_to_coco_style
 #Model
 extra_args={}
@@ -64,6 +63,7 @@ def show_preds_gradio(input_image):
     if len(conv['annotations'])==0:
         return "객체를 탐지하지 못하였습니다. 촬영 예시를 잘 보고 다시 찍어주세요"
     uh=[3,4,5,7,8,9,10,12,14,16,17,19,20,21,22,25,27,29]
+    print(conv['annotations'])
     label= 'unhealthy' if conv['annotations'][0]['category_id'] in uh else 'healthy'
     my_dict[label]=float(conv['annotations'][0]['score'])
     return my_dict
