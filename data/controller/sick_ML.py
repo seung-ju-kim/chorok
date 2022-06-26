@@ -9,7 +9,6 @@ import json
 from PIL import Image
 import numpy as np
 import ssl
-import faiss
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -85,7 +84,7 @@ def predict(name):
     img=VALID_TRANSFORM(img)
     idx,temp=work(img)
     stat=[temp[i] for i in idx]
-    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
+    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 5,'rust':4}
     #print(idx)
     def get_key(val):
         for key, value in my_dict.items():
