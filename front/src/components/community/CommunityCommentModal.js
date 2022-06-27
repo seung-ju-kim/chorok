@@ -15,22 +15,21 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
 import CommunityComment from "./CommunityComment";
+import Loader from "../../element/Loader";
 
 const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [comment, setComment] = useState("");
   const [contentList, setContentList] = useState([]);
-  const { id } = useParams();
-  const obsRef = useRef(null); //observer Element
-  const [page, setPage] = useState(1); // 현재 페이지
-  const [perPage, setPerPage] = useState(10);
-  const [load, setLoad] = useState(false); //로딩스피너
+  const [page, setPage] = useState(1);
   const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
+  const obsRef = useRef(null); // observer Element
   const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
+  const { id } = useParams();
+  const [load, setLoad] = useState(false); //로딩스피너
 
   useEffect(() => {
-    // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
+    // 감시할 타겟 요소가 뷰포트의 50%만큼 들어왔을 때 요청
     const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
     if (obsRef.current) observer.observe(obsRef.current);
     return () => {
@@ -38,28 +37,29 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     };
   }, []);
 
-  useEffect(() => {
-    getComment();
-  }, [page]);
-
   const obsHandler = (entries) => {
     const target = entries[0];
-    if (!endRef.current && target.isIntersecting && preventRef.current) {
-      preventRef.current = false; // 옵저버 중복 실행 방지
+    if (!endRef && target.isIntersecting && preventRef) {
+      setPreventRef(false);
       setPage((prev) => prev + 1);
     }
   };
 
+  useEffect(() => {
+    if (page >= 0) {
+      getComment();
+    }
+  }, [page]);
+
   const getComment = useCallback(async () => {
+    //글 불러오기
     setLoad(true);
-
-    const res = await Api.get(`comments?postId=${id}&page=1&perPage=20`);
-
+    // Get Data Code
+    const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
     if (res.data) {
       if (res.data.end) {
         setEndRef(true);
       }
-
       setContentList(res.data.comments);
       setPreventRef(true);
     } else {
@@ -75,13 +75,21 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
         content: comment,
       });
 
-      const res = await Api.get(`comments?postId=${id}&page=`);
-      console.log(res);
+      const res = await Api.get(
+        `comments?postId=${id}&page=${page}&perPage=20`
+      );
       setContentList(res.data.comment);
       setComment("");
       getComment();
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      postComment();
     }
   };
 
@@ -115,6 +123,24 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
         </DialogContent>
         <hr />
       </DialogTitle>
+      <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-comment">
+            댓글 달기...
+          </InputLabel>
+          <Input
+            onKeyPress={handleOnKeyPress}
+            value={comment}
+            id="standard-adornment-comment"
+            onChange={(e) => setComment(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <Button onClick={postComment}>게시</Button>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      </Box>
       <Box>
         {contentList?.map((content, i) => {
           return (
@@ -128,26 +154,9 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             />
           );
         })}
-        {load && <CircularProgress color="success" />}
-        <div ref={obsRef}></div>
       </Box>
-      <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
-        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-comment">
-            댓글 달기...
-          </InputLabel>
-          <Input
-            value={comment}
-            id="standard-adornment-comment"
-            onChange={(e) => setComment(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <Button onClick={postComment}>게시</Button>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </Box>
+      <div ref={obsRef}></div>
+      {load && <div>로딩스피너</div>}
     </Dialog>
   );
 };
