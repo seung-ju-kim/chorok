@@ -73,6 +73,32 @@ class plantService {
     }
     return {status: "삭제 ok"};
   }
+  
+  /**
+   * 내 식물의 스케줄을 찾아서 식물정보를 포함해 리턴
+   */
+  static async getSchedulesByUserId({userId}) {
+
+    const plants =await Plant.findPlantsByUserId2({userId});
+    const schedules = [];
+    plants.map((plant)=>{
+      plant.schedule.map((obj)=>{
+        obj["nickname"]=plant.nickname;
+        obj["userId"]=plant.userId;
+        obj["species"]=plant.species;
+        obj["plantId"]=plant._id;
+        schedules.push(obj);
+      })
+      //scheduleObj["nickname"] = plant.nickname;
+      //schedules.push(scheduleObj);
+    })
+    const scheduleSortByDate = schedules.sort(function(a, b){
+      return a.date - b.date
+    })
+    return scheduleSortByDate;
+  };
+
+
 
   /**
    * case 1 마지막 스케줄을 완료하면 다음 스케줄이 발생하도록 하는 메소드

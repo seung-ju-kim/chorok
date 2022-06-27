@@ -32,7 +32,7 @@ const AccountEditModal = ({ openLogin, setOpenLogin }) => {
       });
       const updatedUser = res.data;
       setUser(updatedUser);
-      window.location.reload();
+      setOpenLogin(false);
     } catch (e) {
       console.log(e);
     }

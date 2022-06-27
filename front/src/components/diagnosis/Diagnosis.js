@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
-import diagnosis from "../../imgs/diagnosis.jpg";
+import diagnosis from "../../imgs/diagnosis.webp";
 import DiagnosisDialog from "./DiagnosisDialog";
 const Diagnosis = () => {
   const [openDiagnosisDialog, setOpenDiagnosisDialog] = useState(false);
   return (
     <>
-      <Grid item xs={12}>
-        <Box
-          component="img"
-          src={diagnosis}
-          sx={{
-            width: "100%",
-            height: "30vh",
-          }}
-        ></Box>
-      </Grid>
-      <Grid item xs={12} textAlign="center" sx={{ mt: 5, mx: "5%" }}>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+      <Grid item xs={12} textAlign="center" sx={{ py: 10, mt: 20 }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
           아이가 아픈가요?
         </Typography>
         <Typography>식물 잎을 촬영하고 진단 결과를 받아보세요.</Typography>

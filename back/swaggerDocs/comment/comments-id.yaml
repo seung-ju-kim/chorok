@@ -1,0 +1,59 @@
+put:
+  tags:
+    - comments
+  summary: 댓글(comment)을 수정합니다.
+  description: 수정할 comments의 id와 수정할 본문을 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: comment ObjectId
+    required: true
+    type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            content:
+              type: string
+              description: 수정할 본문을 입력합니다.
+        example:
+          content : 테스트 댓글입니다
+  responses:
+    '200':
+      description: 댓글이 정상적으로 수정되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              comment:
+                $ref: "./commentsSchema.yaml"
+          example:
+            success: true
+            comment:
+              _id: 62b4803e76999dfda189480e
+              userId: "964db7ed-64f6-4bab-863d-3d44d2b1389a"
+              postId: "62a8254da1ffb34422f4726e"
+              author: "정민2"
+              content: "테스트 댓글입니다"
+              createdAt: 2022-06-23T15:01:18.154+00:00
+              updatedAt: 2022-06-23T15:01:18.154+00:00
+
+delete:
+  tags:
+    - comments
+  summary: 댓글(comment)을 삭제합니다.
+  description: 삭제할 comments의 id를 입력합니다.
+  parameters:
+  - name: id
+    in: path
+    description: comment ObjectId
+    required: true
+    responses:
+    '200':
+      description: 댓글이 정상적으로 삭제되었습니다.

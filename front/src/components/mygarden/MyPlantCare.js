@@ -11,6 +11,9 @@ import {
   Chip,
   Menu,
   MenuItem,
+  Skeleton,
+  Container,
+  Box,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -28,15 +31,14 @@ const MyPlantCare = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openImageEditModal, setOpenImageEditModal] = useState(false);
+  const [plants, setPlants] = useState({});
+  const [isLoading, setIsLoading] = useState(Boolean);
+
+  // 식물 카드 메뉴 상태 관리
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const [plants, setPlants] = useState({
-    imageURL: "",
-    description: "",
-    nickname: "",
-    termWater: "",
-    createdAt: "",
-  });
+
+  // 오늘 날짜
   const today = dayjs();
 
   // useParams, useNavigate
@@ -45,8 +47,10 @@ const MyPlantCare = () => {
 
   // params를 통해 식물 정보 불러오기
   useEffect(() => {
+    setIsLoading(true);
     Api.get(`plants/${id}`).then((res) => {
       setPlants(res.data.plant);
+      setIsLoading(false);
     });
   }, [id]);
 
@@ -65,16 +69,17 @@ const MyPlantCare = () => {
   };
 
   return (
-    <>
-      <Card sx={{ mt: 10 }}>
+    <Container sx={{ my: 7 }}>
+      <Card sx={{ width: "100%", mx: "auto", maxWidth: "800px" }}>
         <CardHeader
           title={
             <IconButton
               onClick={() => {
                 navigate(-1);
               }}
+              sx={{ color: "black" }}
             >
-              <ArrowBackIosNewIcon fontSize="small" />
+              <ArrowBackIosNewIcon />
             </IconButton>
           }
           action={
@@ -105,41 +110,58 @@ const MyPlantCare = () => {
             </>
           }
         />
+        {isLoading ? (
+          <Skeleton variant="rectangular" width="100%" height="300px" />
+        ) : (
+          <CardMedia
+            component="img"
+            src={plants.imageURL}
+            sx={{
+              width: "100%",
+              height: "40vh",
+              cursor: "pointer",
+              objectFit: "cover",
+            }}
+            onClick={() => {
+              setOpenImageEditModal(true);
+            }}
+          />
+        )}
 
-        <CardMedia
-          component="img"
-          src={plants.imageURL}
-          sx={{
-            width: "100%",
-            cursor: "pointer",
-            objectFit: "contain",
-          }}
-          onClick={() => {
-            setOpenImageEditModal(true);
-          }}
-        />
         <CardContent>
-          <Stack direction="row" spacing={1}>
-            <Chip
-              label={`${
-                dayjs(today).diff(plants.createdAt?.split("T")[0], "day") + 1
-              }일`}
-              icon={
-                <FavoriteIcon
-                  fontSize="small"
-                  sx={{ "&&": { color: "red" } }}
+          {isLoading ? (
+            <>
+              <Skeleton variant="text" width="30%" />
+              <Skeleton variant="text" width="20%" />
+              <Skeleton variant="text" width="100%" />
+              <Skeleton variant="text" width="100%" />
+            </>
+          ) : (
+            <>
+              <Stack direction="row" spacing={1}>
+                <Chip
+                  label={`${
+                    dayjs(today).diff(plants.createdAt?.split("T")[0], "day") +
+                    1
+                  }일`}
+                  icon={
+                    <FavoriteIcon
+                      fontSize="small"
+                      sx={{ "&&": { color: "red" } }}
+                    />
+                  }
+                  variant="outlined"
                 />
-              }
-              variant="outlined"
-            />
-            <Chip label={plants.species} variant="outlined" />
-          </Stack>
-          <Typography variant="h5" sx={{ mt: 2 }}>
-            {plants.nickname}
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 2 }}>
-            {plants.description}
-          </Typography>
+                <Chip label={plants.species} variant="outlined" />
+              </Stack>
+              <Typography variant="h6" sx={{ mt: 1 }}>
+                {plants.nickname}
+              </Typography>
+              <Typography paragraph sx={{ mt: 1 }}>
+                {plants.description}
+              </Typography>
+            </>
+          )}
         </CardContent>
       </Card>
       <MyPlantImageEditModal
@@ -161,7 +183,7 @@ const MyPlantCare = () => {
         title="식물 삭제"
         subTitle="식물과 작별하시겠습니까?"
       />
-    </>
+    </Container>
   );
 };
 

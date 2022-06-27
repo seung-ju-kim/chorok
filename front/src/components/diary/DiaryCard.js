@@ -8,6 +8,7 @@ import {
   MenuItem,
   IconButton,
   Button,
+  Skeleton,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
@@ -17,7 +18,7 @@ import DiaryEditModal from "./DiaryEditModal";
 import ConfirmDialog from "../dialog/ConfirmDialog";
 import * as Api from "../../api";
 
-const DiaryCard = ({ diary, setDiaries }) => {
+const DiaryCard = ({ diary, setDiaries, isLoading }) => {
   // 모달창 상태관리
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -34,7 +35,6 @@ const DiaryCard = ({ diary, setDiaries }) => {
     setAnchorEl(null);
   };
 
-  const today = dayjs();
   // 다이어리 수정
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -64,28 +64,24 @@ const DiaryCard = ({ diary, setDiaries }) => {
     handleClose();
   };
 
-  // style
-  const cardStyle = {
-    width: "90vw",
-    border: "1px solid white",
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-  };
-
   return (
-    <Card sx={cardStyle}>
+    <Card sx={{ height: "400px", mx: "auto", minWidth: "300px" }}>
       {diary.imageURL && (
-        <CardMedia
-          component="img"
-          image={diary.imageURL}
-          alt="diary img"
-          sx={{
-            p: 2,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            maxHeight: "40vh",
-          }}
-        />
+        <>
+          {isLoading ? (
+            <Skeleton variant="rectangular" width="100%" height="300px" />
+          ) : (
+            <CardMedia
+              component="img"
+              image={diary.imageURL}
+              alt="diary img"
+              sx={{
+                objectFit: "fill",
+                height: "300px",
+              }}
+            />
+          )}
+        </>
       )}
       <CardContent sx={{ position: "relative" }}>
         <IconButton
@@ -112,8 +108,8 @@ const DiaryCard = ({ diary, setDiaries }) => {
             <Button color="warning">삭제하기</Button>
           </MenuItem>
         </Menu>
-        <Typography gutterBottom variant="h5">
-          {today.format("YYYY-MM-DD")}
+        <Typography gutterBottom variant="h6">
+          {diary.createdAt.split("T")[0]}
         </Typography>
 
         <Typography variant="body1" color="text.secondary">

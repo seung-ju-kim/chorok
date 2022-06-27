@@ -29,6 +29,7 @@ const DiaryEditModal = ({
         setOpenEditModal(false);
       }}
       fullWidth
+      sx={{ mx: "auto" }}
     >
       <DialogTitle sx={{ pt: 2, bgcolor: "white" }}>
         <IconButton

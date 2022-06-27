@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.png";
+import defaultImg from "../../imgs/default_image.webp";
 
 const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
   // useParams, useNavigate

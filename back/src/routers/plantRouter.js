@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { plantService } from "../services/plantService";
-import { Plant } from "../db";
 import { login_required } from "../middlewares/login_required";
+
+
+
 
 const plantRouter = Router();
 
@@ -155,38 +157,5 @@ plantRouter.delete(
     next(error);
   }
 });
-
-/**
- * plant 스케줄 이행 여부 체크 및 스케줄 추가
- */
-plantRouter.get(
-  "/plants/:id/:scheduleId",
-  login_required,
-  async (req, res, next) => {
-    try {
-      const plantId = req.params.id;
-      const scheduleId = req.params.scheduleId;
-      const isChecked = req.body.isChecked ?? false;
-
-      const updatedSchedulePlant = 
-      await Plant.updateSchedule({plantId, scheduleId, isChecked})
-      .then((plant)=>{
-        const lastSchedule = plant.schedule[plant.schedule.length - 1];
-        const copiedLastSchedule = new Date(lastSchedule.date.getTime());
-        const termWater = plant.termWater;
-        const nextSchedule = copiedLastSchedule.setDate(copiedLastSchedule.getDate()+termWater);
-        if (lastSchedule.isChecked == true) {
-          plant.schedule.push({date: nextSchedule, isChecked:false})
-        }
-        return plant;
-      })
-
-      res.status(200).json(updatedSchedulePlant);
-
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 export { plantRouter };

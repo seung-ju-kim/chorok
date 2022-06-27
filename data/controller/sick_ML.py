@@ -109,9 +109,9 @@ def predict(name):
         return "There is no such Key"
     result_dict={}
     for i in range(0,2):
-        if stat[i]>=0.5:
+        if stat[i]>=0.6:
             result_dict[get_key(idx[i])]=round(float(stat[i]),3)
-        if get_key(idx[i]=='healthy') and stat[i]==1.0:
-            result_dict={'healthy':1.0}
+        # if get_key(idx[i]=='healthy') and stat[i]==1.0:
+        #     result_dict={'healthy':1.0}
     print(json.dumps(result_dict))
     return json.dumps(result_dict)
