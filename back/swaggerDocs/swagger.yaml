@@ -35,4 +35,5 @@ paths:
     $ref: "./comment/comments.yaml"
   /comments/{id}:
     $ref: "./comment/comments-id.yaml"
-
+  /image:
+    $ref: "./upload/image.yaml"
