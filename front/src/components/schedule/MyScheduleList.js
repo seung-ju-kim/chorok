@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
+import dayjs from "dayjs";
+
 import MyScheduleCard from "./MyScheduleCard";
 import * as Api from "../../api";
-import dayjs from "dayjs";
-import InvertColorsIcon from "@mui/icons-material/InvertColors";
+
 const MyScheduleList = () => {
   const [myPlants, setMyPlants] = useState([]);
   const today = dayjs().format("YYYY-MM-DD");
 
+  // 스케줄 목록 받아오기
   useEffect(() => {
     Api.get("schedules").then((res) => {
       setMyPlants(res.data);

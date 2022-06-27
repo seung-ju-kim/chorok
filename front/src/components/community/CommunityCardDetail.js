@@ -10,15 +10,18 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+
+import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import CommunityEditForm from "./CommunityEditForm";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MenuIcon from "@mui/icons-material/Menu";
-import { UserStateContext } from "../../App";
+
 const CommunityCardDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  // Login user 정보
   const userState = useContext(UserStateContext);
 
   const [board, setBoard] = useState({});
@@ -39,10 +42,13 @@ const CommunityCardDetail = () => {
       setBoard(res.data.post);
     });
   }, []);
+
+  // 게시물 삭제
   const deleteBoard = async () => {
     await Api.delete(`posts/${board._id}`);
     navigate(-1);
   };
+
   return (
     <Grid container sx={{ py: 12, px: "5%", mx: "auto", maxWidth: "800px" }}>
       <Grid item xs={3}>

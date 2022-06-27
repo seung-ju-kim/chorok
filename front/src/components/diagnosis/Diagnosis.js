@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
-import diagnosis from "../../imgs/diagnosis.webp";
+
 import DiagnosisDialog from "./DiagnosisDialog";
+
 const Diagnosis = () => {
+  // 진단 팁 상태관리
   const [openDiagnosisDialog, setOpenDiagnosisDialog] = useState(false);
+
   return (
     <>
       <Grid item xs={12} textAlign="center" sx={{ py: 10, mt: 20 }}>

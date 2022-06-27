@@ -22,10 +22,13 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
   const navigate = useNavigate();
+
+  // 진단 페이지로 이동
   const handleClick = () => {
     setOpenDiagnosisDialog(false);
     navigate("/diagnosis/picture");
   };
+
   return (
     <Dialog
       fullScreen

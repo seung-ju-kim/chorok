@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography, Box, Button, TextField } from "@mui/material";
+
 import * as Api from "../../api";
 
 const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
   const navigate = useNavigate();
 
+  // 커뮤니티 게시물 수정
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -18,6 +20,7 @@ const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
       console.log(e);
     }
   };
+
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mx: "auto" }}>
       <Grid container spacing={2}>

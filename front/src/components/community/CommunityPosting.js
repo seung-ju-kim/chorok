@@ -17,6 +17,8 @@ import * as Api from "../../api";
 
 const CommunityPosting = () => {
   const navigate = useNavigate();
+  // 상태관리
+
   const [image, setImage] = useState({
     imageURL: "",
     upload: false,
@@ -27,6 +29,8 @@ const CommunityPosting = () => {
     content: "",
     category: "",
   });
+
+  // 카테고리 선택
   const handleChange = (e) => {
     setPost({ ...post, category: e.target.value });
   };

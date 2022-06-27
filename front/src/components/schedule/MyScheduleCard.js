@@ -1,3 +1,5 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   CardActions,
@@ -5,11 +7,13 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+
 import * as Api from "../../api";
+
 const MyScheduleCard = ({ myPlant, setMyPlants }) => {
   const navigate = useNavigate();
+
+  // 물주기
   const watering = async () => {
     await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
       isChecked: true,
@@ -18,6 +22,7 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
       setMyPlants(res.data);
     });
   };
+
   return (
     <Card
       sx={{
