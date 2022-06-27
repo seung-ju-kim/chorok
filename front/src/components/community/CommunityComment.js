@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { TextField, Box, IconButton } from "@mui/material";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-import TimeCheck from "./../../element/TimeCheck";
+import TimeCheck from "../element/TimeCheck";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -49,7 +49,7 @@ const CommunityComment = ({ content, getComment }) => {
   return (
     <>
       {!isEditing ? (
-        <Box sx={{ px: 3 }}>
+        <Box sx={{ px: 3, pb: 1 }}>
           <Box display="flex">
             <Box sx={{ fontWeight: "bold", pr: 2 }}>
               <Box>{content.author}</Box>
@@ -68,11 +68,17 @@ const CommunityComment = ({ content, getComment }) => {
                   edge="end"
                   aria-label="delete"
                   onClick={deleteComment}
+                  sx={{
+                    color: (theme) => theme.palette.grey[500],
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      color: "#212121",
+                    },
+                  }}
                 >
                   <DeleteIcon
                     sx={{
                       fontSize: 15,
-                      color: (theme) => theme.palette.grey[500],
                     }}
                   />
                 </IconButton>
@@ -80,11 +86,17 @@ const CommunityComment = ({ content, getComment }) => {
                   edge="end"
                   aria-label="edit"
                   onClick={() => setIsEditing(true)}
+                  sx={{
+                    color: (theme) => theme.palette.grey[500],
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      color: "#212121",
+                    },
+                  }}
                 >
                   <EditIcon
                     sx={{
                       fontSize: 15,
-                      color: (theme) => theme.palette.grey[500],
                     }}
                   />
                 </IconButton>
@@ -112,7 +124,7 @@ const CommunityComment = ({ content, getComment }) => {
             sx={{
               "&:hover": {
                 backgroundColor: "transparent",
-                color: "green",
+                color: "#212121",
               },
             }}
           >
@@ -126,7 +138,7 @@ const CommunityComment = ({ content, getComment }) => {
             sx={{
               "&:hover": {
                 backgroundColor: "transparent",
-                color: "green",
+                color: "#212121",
               },
             }}
           >

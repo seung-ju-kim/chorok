@@ -16,34 +16,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CommunityComment from "./CommunityComment";
-import Loader from "../../element/Loader";
+import Loader from "../element/Loader";
 
 const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [comment, setComment] = useState("");
   const [contentList, setContentList] = useState([]);
   const [page, setPage] = useState(1);
-  const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
-  const obsRef = useRef(null); // observer Element
-  const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
   const { id } = useParams();
   const [load, setLoad] = useState(false); //로딩스피너
-
-  useEffect(() => {
-    // 감시할 타겟 요소가 뷰포트의 50%만큼 들어왔을 때 요청
-    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
-    if (obsRef.current) observer.observe(obsRef.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  const obsHandler = (entries) => {
-    const target = entries[0];
-    if (!endRef && target.isIntersecting && preventRef) {
-      setPreventRef(false);
-      setPage((prev) => prev + 1);
-    }
-  };
+  const [lastPage, setLastPage] = useState(0);
 
   useEffect(() => {
     if (page >= 0) {
@@ -56,12 +37,9 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     setLoad(true);
     // Get Data Code
     const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
-    if (res.data) {
-      if (res.data.end) {
-        setEndRef(true);
-      }
-      setContentList(res.data.comments);
-      setPreventRef(true);
+    if (res.data.comments) {
+      setContentList((prev) => [...prev, ...res.data.comments]);
+      setLastPage(res.data.lastPage);
     } else {
       console.log(res);
     }
@@ -78,9 +56,8 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
       const res = await Api.get(
         `comments?postId=${id}&page=${page}&perPage=20`
       );
-      setContentList(res.data.comment);
+      setContentList(res.data.comments);
       setComment("");
-      getComment();
     } catch (err) {
       console.log(err);
     }
@@ -91,6 +68,11 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
       e.preventDefault();
       postComment();
     }
+  };
+
+  const handleClick = async () => {
+    console.log(page);
+    setPage((prev) => prev + 1);
   };
 
   return (
@@ -117,11 +99,14 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
           <CloseIcon />
         </IconButton>
         <DialogContent sx={{ bgcolor: "white" }}>
-          <DialogContentText align="center" sx={{ mt: 3, fontSize: "1rem" }}>
+          <DialogContentText
+            align="center"
+            sx={{ mt: 3, fontSize: "1rem", fontWeight: "bold" }}
+          >
             댓글 목록
           </DialogContentText>
         </DialogContent>
-        <hr />
+        {/* <hr /> */}
       </DialogTitle>
       <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -141,7 +126,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
           />
         </FormControl>
       </Box>
-      <Box>
+      <Box sx={{ pt: 2 }}>
         {contentList?.map((content, i) => {
           return (
             <CommunityComment
@@ -155,8 +140,8 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
           );
         })}
       </Box>
-      <div ref={obsRef}></div>
-      {load && <div>로딩스피너</div>}
+
+      {page < lastPage && <Button onClick={handleClick}>더보기</Button>}
     </Dialog>
   );
 };
