@@ -44,7 +44,6 @@ paths:
     $ref: "./diary/diaries-plantId.yaml"
   /diaries/{id}:
     $ref: "./diary/diaries-id.yaml"
-
   /posts:
     $ref: "./post/posts.yaml"
   /posts/{id}:
