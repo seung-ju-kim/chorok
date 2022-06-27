@@ -26,6 +26,24 @@ paths:
   #   $ref: "./user/current.yaml"
   /users/{id}:
     $ref: "./user/users-id.yaml"
+  /plants:
+    $ref: "./plant/plants.yaml"
+  /plants/{id}:
+    $ref: "./plant/plants-id.yaml"
+  # /schedules:
+  #   $ref: 
+  # /fulfillschedules:
+  #   $ref: 
+  # /pendingschedules:
+  #   $ref: 
+  # /plants/{id}/{scheduleId}:
+  #   $ref:
+  /diaries:
+    $ref: "./diary/diaries.yaml"
+  /diaries/{plantId}:
+    $ref: "./diary/diaries-plantId.yaml"
+  /diaries/{id}:
+    $ref: "./diary/diaries-id.yaml"
 
   /posts:
     $ref: "./post/posts.yaml"
