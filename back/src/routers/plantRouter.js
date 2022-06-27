@@ -115,7 +115,6 @@ plantRouter.put(
       const nickname = req.body.nickname ?? null;
       const imageURL = req.body.imageURL ?? null;
       const description = req.body.description ?? null;
-      const lastWater = req.body.lastWater ?? null;
       const termWater = req.body.termWater ?? null;
 
       const toUpdate = {
@@ -123,7 +122,6 @@ plantRouter.put(
         nickname,
         imageURL,
         description,
-        lastWater,
         termWater,
       };
 
