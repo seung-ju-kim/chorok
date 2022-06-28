@@ -85,6 +85,7 @@ diaryRouter.put(
   diaryValidate.updateDiary,
   async (req, res, next) => {
   try {
+    const userId = req.currentUserId;
     const diaryId = req.params.id;
     
     const diary = await diaryService.getDiaryById(diaryId);
@@ -122,6 +123,7 @@ diaryRouter.put(
  */
 diaryRouter.delete("/diaries/:id", login_required, async (req, res, next) => {
   try {
+    const userId = req.currentUserId;
     const diaryId = req.params.id;
 
     const diary = await diaryService.getDiaryById(diaryId);
