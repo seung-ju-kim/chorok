@@ -90,6 +90,10 @@ commentRouter.put(
       const commentId = req.params.id;
       const comment = await commentService.getCommentById({commentId});
 
+      if(userId !== comment.userId) {
+        const error = new Error("수정 권한이 없습니다.")
+        throw error;
+      }
       
       const content = req.body.content ?? null;
       
@@ -119,6 +123,10 @@ commentRouter.delete(
       const commentId = req.params.id;
       const comment = await commentService.getCommentById({commentId});
 
+      if(userId !== comment.userId) {
+        const error = new Error("삭제 권한이 없습니다.")
+        throw error;
+      }
 
 
       const isDeleted = await commentService.deleteComment(commentId);
