@@ -4,14 +4,14 @@ const userValidate = {
   registerUser : async(req,res,next) => {
     const registerUserJoi = Joi.object().keys({
         email: Joi.string().email().required(),
-        name: Joi.string().required().trim(),
+        name: Joi.string().required().min(1).max(20).trim(),
         password: Joi.string().required().trim(),
     })
     try {
         await registerUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ statusCode: 400, message: error.message });
+        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
     }
   },
 
@@ -24,7 +24,7 @@ const userValidate = {
         await loginUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ statusCode: 400, message: error.message });
+        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
     }
   },
 
@@ -37,7 +37,7 @@ const userValidate = {
         await updateUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ statusCode: 400, message: error.message });
+        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
     }
   },
 
