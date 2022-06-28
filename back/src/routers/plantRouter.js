@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { plantService } from "../services/plantService";
+import { plantValidate } from "../middlewares/plantValidation";
 import { login_required } from "../middlewares/login_required";
 
 
@@ -10,7 +11,11 @@ const plantRouter = Router();
 /**
  * plant(plant) 생성
  */
-plantRouter.post("/plants", login_required, async (req, res, next) => {
+plantRouter.post(
+  "/plants", 
+  login_required, 
+  plantValidate.createPlant,
+  async (req, res, next) => {
   try {
     //로그인한 유저의 고유id
     const userId = req.currentUserId;
@@ -106,7 +111,8 @@ plantRouter.get(
  */
 plantRouter.put(
   "/plants/:id", 
-  login_required, 
+  login_required,
+  plantValidate.updatePlant, 
   async (req, res, next) => {
     try {
       const plantId = req.params.id;
