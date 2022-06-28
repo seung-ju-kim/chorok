@@ -63,9 +63,6 @@ const CommunityMain = () => {
               fontSize: "1.2rem",
             }}
             value="1"
-            onClick={() => {
-              navigate("/community/infoBoard");
-            }}
           />
           <Tab
             label="자유게시판"
@@ -74,9 +71,6 @@ const CommunityMain = () => {
               fontSize: "1.2rem",
             }}
             value="2"
-            onClick={() => {
-              navigate("/community/freeBoard");
-            }}
           />
         </TabList>
       </Box>

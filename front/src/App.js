@@ -113,18 +113,19 @@ function App() {
                     path="/diagnosis/picture"
                     element={<DiagnosisPicture />}
                   />
-                  <Route
+                  <Route path="/community" element={<Communitypage />} />
+                  {/* <Route
                     path="/community/infoBoard"
                     element={<Communitypage />}
-                  />
+                  /> */}
                   <Route
                     path="/community/infoBoard/:id"
                     element={<CommunityCardDetail />}
                   />
-                  <Route
+                  {/* <Route
                     path="/community/freeBoard"
                     element={<Communitypage />}
-                  />
+                  /> */}
                   <Route
                     path="/community/freeBoard/:id"
                     element={<CommunityCardDetail />}

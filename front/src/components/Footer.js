@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import {
+  Box,
+  BottomNavigation,
+  BottomNavigationAction,
+  SliderValueLabel,
+} from "@mui/material";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
@@ -8,8 +13,21 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const Footer = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState(null);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/diagnosis") {
+      setValue("2");
+    } else if (pathname === "/community") {
+      setValue("3");
+    } else if (pathname == "/account") {
+      setValue("4");
+    } else {
+      setValue("1");
+    }
+  }, [pathname]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -61,7 +79,7 @@ const Footer = () => {
           label="Community"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
-            navigate("/community/infoBoard");
+            navigate("/community");
           }}
         />
         <BottomNavigationAction
