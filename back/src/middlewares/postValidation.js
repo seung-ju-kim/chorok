@@ -12,7 +12,7 @@ const postValidate = {
         await createPostJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
@@ -25,7 +25,9 @@ const postValidate = {
         await updatePostJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        // throw new Error(error.message);
+        // throw error.message;
+        return res.status(400).send(error.message);
     }
   },
 
