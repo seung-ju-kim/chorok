@@ -54,7 +54,7 @@ commentRouter.get(
       const page = +req.query.page;
       const perPage = +req.query.perPage;
 
-      const comments = await commentService.getComments({
+      const comments = await commentService.getCommentByPostId({
         postId, 
         page, 
         perPage,
@@ -86,14 +86,16 @@ commentRouter.put(
   commentValidate.updateComment,
   async (req, res, next) => {
     try {
-      //const userId = req.currentUserId;
+      const userId = req.currentUserId;
       const commentId = req.params.id;
+      const comment = await commentService.getCommentById({commentId});
+
+      
       const content = req.body.content ?? null;
       
       const toUpdate = { content };
-
       const updateComment = await commentService.setComment({ commentId, toUpdate });
-
+      
       const body = {
         success: true,
         comment: updateComment
@@ -115,6 +117,10 @@ commentRouter.delete(
   async (req, res, next) => {
     try {
       const commentId = req.params.id;
+      const comment = await commentService.getCommentById({commentId});
+
+
+
       const isDeleted = await commentService.deleteComment(commentId);
 
       res.status(200).json(isDeleted);
