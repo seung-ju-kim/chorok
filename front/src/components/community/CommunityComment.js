@@ -8,20 +8,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { useParams } from "react-router-dom";
 
-const CommunityComment = ({ content, getComment }) => {
+const CommunityComment = ({ content, setContentList, setPage }) => {
+  const { id } = useParams();
   const [comment, setComment] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const userState = useContext(UserStateContext);
-  const [anchorEl, setAnchorEl] = useState(null);
   const commentedTime = content.createdAt;
-  const open = Boolean(anchorEl);
-  const anchorClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const anchorClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -32,15 +26,18 @@ const CommunityComment = ({ content, getComment }) => {
 
   const deleteComment = async () => {
     await Api.delete(`comments/${content._id}`);
-
-    getComment();
+    const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
+    setPage(1);
+    setContentList(res.data.comments);
   };
 
   const editComment = async () => {
     await Api.put(`comments/${content._id}`, {
       content: comment,
     });
-    getComment();
+    const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
+    setPage(1);
+    setContentList(res.data.comments);
   };
 
   useEffect(() => {

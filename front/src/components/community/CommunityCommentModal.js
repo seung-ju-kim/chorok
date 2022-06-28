@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Button,
   Dialog,
@@ -12,18 +12,21 @@ import {
   Box,
   Input,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CommunityComment from "./CommunityComment";
-import Loader from "../element/Loader";
+
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import CircularProgress from "@mui/material/CircularProgress";
+import CloseIcon from "@mui/icons-material/Close";
 
 const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [comment, setComment] = useState("");
   const [contentList, setContentList] = useState([]);
   const [page, setPage] = useState(1);
   const { id } = useParams();
-  const [load, setLoad] = useState(false); //로딩스피너
+  const [isLoading, setIsLoading] = useState(false); //로딩 스피너
   const [lastPage, setLastPage] = useState(0);
 
   useEffect(() => {
@@ -33,8 +36,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   }, [page]);
 
   const getComment = useCallback(async () => {
-    //글 불러오기
-    setLoad(true);
+    setIsLoading(true);
     // Get Data Code
     const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
     if (res.data.comments) {
@@ -43,7 +45,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     } else {
       console.log(res);
     }
-    setLoad(false);
+    setIsLoading(false);
   }, [page]);
 
   const postComment = async () => {
@@ -53,9 +55,8 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
         content: comment,
       });
 
-      const res = await Api.get(
-        `comments?postId=${id}&page=${page}&perPage=20`
-      );
+      const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
+      setPage(1);
       setContentList(res.data.comments);
       setComment("");
     } catch (err) {
@@ -71,14 +72,13 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   };
 
   const handleClick = async () => {
-    console.log(page);
     setPage((prev) => prev + 1);
   };
 
   return (
     <Dialog
       open={openAddComment}
-      fullScreen
+      fullWidth={true}
       onClose={() => {
         setOpenAddComment(false);
       }}
@@ -132,16 +132,32 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             <CommunityComment
               key={i}
               content={content}
-              comment={comment}
-              setComment={setComment}
               setContentList={setContentList}
-              getComment={getComment}
+              setPage={setPage}
             />
           );
         })}
       </Box>
-
-      {page < lastPage && <Button onClick={handleClick}>더보기</Button>}
+      <Box display="flex" sx={{ justifyContent: "center", pb: 1 }}>
+        {isLoading ? (
+          <Box>
+            <CircularProgress color="success" />
+          </Box>
+        ) : (
+          <IconButton
+            onClick={handleClick}
+            sx={{
+              color: "#212121",
+              "&:hover": {
+                backgroundColor: "transparent",
+                color: "#212121",
+              },
+            }}
+          >
+            <AddCircleOutlineIcon />
+          </IconButton>
+        )}
+      </Box>
     </Dialog>
   );
 };
