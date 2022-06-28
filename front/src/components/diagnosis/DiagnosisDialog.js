@@ -38,7 +38,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
       }}
       fullWidth
     >
-      <DialogTitle sx={{ pt: 5, bgcolor: "white" }}>
+      <DialogTitle sx={{ bgcolor: "white" }}>
         <IconButton
           aria-label="close"
           onClick={() => {
@@ -48,14 +48,14 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: (theme) => theme.palette.grey[1000],
           }}
         >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <Box>
-        <DialogContent sx={{ pb: 15 }}>
+        <DialogContent sx={{ pb: 10 }}>
           <Box textAlign="center" sx={{ mb: 3 }}>
             <Typography variant="h4">촬영 팁</Typography>
           </Box>
@@ -64,7 +64,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <Box
                 component="img"
                 src={correct}
-                width="80%"
+                width="50%"
                 height="100%"
                 sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
               />
@@ -123,7 +123,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ px: 10, mb: 10 }}>
+        <DialogActions sx={{ px: 10 }}>
           <Button
             color="success"
             variant="contained"

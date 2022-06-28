@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+
   // 상태관리
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -43,14 +52,23 @@ const RegisterForm = () => {
         password,
         name,
       });
-
+      styleSnackbar("회원가입 완료", "success");
       // 로그인 페이지로 이동함.
       navigate("/login");
-    } catch (err) {
-      if (err.response.status === 400) {
-      }
-      console.log("회원가입에 실패하였습니다.", err);
+    } catch (e) {
+      styleSnackbar(e.message, "warning");
     }
+  };
+
+  // style
+  const buttonStyle = {
+    bgcolor: "#64a68a",
+    color: "white",
+    mt: 20,
+    ":hover": {
+      color: "#64a68a",
+      bgcolor: "white",
+    },
   };
 
   return (
@@ -112,15 +130,7 @@ const RegisterForm = () => {
       />
       <Button
         fullWidth
-        sx={{
-          bgcolor: "#64a68a",
-          color: "white",
-          mt: 20,
-          ":hover": {
-            color: "#64a68a",
-            bgcolor: "white",
-          },
-        }}
+        sx={buttonStyle}
         size="large"
         disabled={!isFormValid}
         type="submit"

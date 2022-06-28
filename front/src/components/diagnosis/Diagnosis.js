@@ -7,6 +7,17 @@ const Diagnosis = () => {
   // 진단 팁 상태관리
   const [openDiagnosisDialog, setOpenDiagnosisDialog] = useState(false);
 
+  // style
+  const buttonStyle = {
+    mt: 3,
+    border: "0",
+    bgcolor: "#64a68a",
+    color: "white",
+    ":hover": {
+      bgcolor: "#64a68a",
+      color: "white",
+    },
+  };
   return (
     <>
       <Grid item xs={12} textAlign="center" sx={{ py: 10, mt: 20 }}>
@@ -18,16 +29,7 @@ const Diagnosis = () => {
           color="success"
           variant="outlined"
           size="large"
-          sx={{
-            mt: 3,
-            border: "0",
-            bgcolor: "#64a68a",
-            color: "white",
-            ":hover": {
-              bgcolor: "#64a68a",
-              color: "white",
-            },
-          }}
+          sx={buttonStyle}
           onClick={() => {
             setOpenDiagnosisDialog(true);
           }}

@@ -18,9 +18,8 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
     await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
       isChecked: true,
     });
-    await Api.get("schedules").then((res) => {
-      setMyPlants(res.data);
-    });
+    const res = await Api.get("schedules");
+    setMyPlants(res.data);
   };
 
   return (
@@ -38,13 +37,16 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
         }}
       >
         <Typography>
-          오늘은{" "}
+          오늘은
           <Typography component="span" sx={{ fontWeight: "bold" }}>
             {myPlant.nickname}
-          </Typography>{" "}
+          </Typography>
           물 주는 날입니다.
         </Typography>
         <Typography variant="subtitle1">{myPlant.species}</Typography>
+        <Typography variant="subtitle1">
+          {myPlant.date.split("T")[0]}
+        </Typography>
       </CardContent>
 
       <CardActions>

@@ -14,19 +14,20 @@ const Footer = () => {
     setValue(newValue);
   };
 
+  // style
+  const footerStlye = {
+    position: "fixed",
+    bottom: 0,
+    bgcolor: "white",
+    width: "100%",
+    py: 1,
+    zIndex: 1,
+    borderTop: "2px solid #f1f3f5",
+  };
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        bottom: 0,
-        bgcolor: "white",
-        width: "100%",
-        py: 1,
-        zIndex: 1,
-        borderTop: "2px solid #f1f3f5",
-      }}
-    >
+    <Box sx={footerStlye}>
       <BottomNavigation
         value={value}
         onChange={handleChange}

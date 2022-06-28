@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, IconButton, Skeleton } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
-import Loader from "./Loader.js";
+import Loading from "../Loading";
 import CommunityCard from "./CommunityCard";
 
 const CommunityList = ({ getList, boards, setBoards }) => {
@@ -104,9 +104,9 @@ const CommunityList = ({ getList, boards, setBoards }) => {
         }}
       >
         <CreateIcon />
-      </IconButton>{" "}
+      </IconButton>
       <div ref={obsRef}></div>
-      {load && <Loader />}
+      {load && <Loading />}
     </Grid>
   );
 };

@@ -16,13 +16,16 @@ const MyGardenCardList = ({ initMyPlants = [] }) => {
 
   const navigate = useNavigate();
 
-  // 나의 식물 리스트 받아오기
   useEffect(() => {
-    Api.get("plants").then((res) => {
-      setMyPlants(res.data.plants);
-      setIsLoading(false);
-    });
+    getMyPlant();
   }, []);
+
+  // 나의 식물 리스트 받아오기
+  const getMyPlant = async () => {
+    const res = await Api.get("plants");
+    setMyPlants(res.data.plants);
+    setIsLoading(false);
+  };
 
   return (
     <>

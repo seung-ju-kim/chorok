@@ -26,9 +26,11 @@ const CommunityCardDetail = () => {
 
   const [board, setBoard] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+
   // 식물 카드 메뉴 상태 관리
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   // 카드 메뉴 관리
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -38,10 +40,14 @@ const CommunityCardDetail = () => {
   };
 
   useEffect(() => {
-    Api.get(`posts/${id}`).then((res) => {
-      setBoard(res.data.post);
-    });
+    getBoard();
   }, []);
+
+  // 게시물 정보 불러오기
+  const getBoard = async () => {
+    const res = await Api.get(`posts/${id}`);
+    setBoard(res.data.post);
+  };
 
   // 게시물 삭제
   const deleteBoard = async () => {

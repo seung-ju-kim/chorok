@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import { Oval } from "react-loader-spinner";
+import { useSnackbar } from "notistack";
 
 import defaultImg from "../../imgs/default_image.webp";
 import * as Api from "../../api";
@@ -21,6 +22,13 @@ const DiagnosisPicture = () => {
     imageFile: "",
     previewURL: defaultImg,
   });
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   // 이미지 미리보기 저장
   const saveImage = (e) => {
@@ -53,13 +61,12 @@ const DiagnosisPicture = () => {
     formData.append("file", image.imageFile);
 
     try {
-      await Api.postForm("diags", formData).then((res) =>
-        setResult({
-          ...result,
-          diseaseList: res.data.diseaseList,
-          imageURL: res.data.imageURL,
-        })
-      );
+      const res = await Api.postForm("diags", formData);
+      setResult({
+        ...result,
+        diseaseList: res.data.diseaseList,
+        imageURL: res.data.imageURL,
+      });
 
       setImage({
         imageFile: "",
@@ -68,7 +75,7 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.message, "success");
     }
   };
   return (

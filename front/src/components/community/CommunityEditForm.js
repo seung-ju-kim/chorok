@@ -1,11 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Typography, Box, Button, TextField } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
 
 const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
   const navigate = useNavigate();
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   // 커뮤니티 게시물 수정
   const handleSubmit = async (e) => {
@@ -17,10 +25,19 @@ const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
       });
       setIsEditing(false);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.message, "warning");
     }
   };
 
+  // style
+  const buttonStyle = {
+    mx: "auto",
+    bgcolor: "#64a68a",
+    color: "white",
+    ":hover": { bgcolor: "#64a68a", color: "white" },
+    mr: 1,
+    mt: 5,
+  };
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mx: "auto" }}>
       <Grid container spacing={2}>
@@ -57,8 +74,11 @@ const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
         </Grid>
       </Grid>
       <Grid item xs={12} textAlign="center">
-        <Button type="submit">작성</Button>
+        <Button type="submit" sx={buttonStyle}>
+          수정
+        </Button>
         <Button
+          sx={buttonStyle}
           onClick={() => {
             setIsEditing(false);
           }}
