@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { commentValidate } from "../middlewares/commentValidation";
 import { commentService } from "../services/commentService";
 
 const commentRouter = Router();
@@ -11,6 +12,7 @@ const commentRouter = Router();
 commentRouter.post(
   "/comments",
   login_required,
+  commentValidate.createComment,
   async (req, res, next) => {
     try{
       //post 식별 Id
@@ -81,6 +83,7 @@ commentRouter.get(
 commentRouter.put(
   "/comments/:id",
   login_required,
+  commentValidate.updateComment,
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;

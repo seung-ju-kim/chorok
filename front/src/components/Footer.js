@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
@@ -15,19 +14,20 @@ const Footer = () => {
     setValue(newValue);
   };
 
+  // style
+  const footerStlye = {
+    position: "fixed",
+    bottom: 0,
+    bgcolor: "white",
+    width: "100%",
+    py: 1,
+    zIndex: 1,
+    borderTop: "2px solid #f1f3f5",
+  };
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        bottom: 0,
-        bgcolor: "white",
-        width: "100%",
-        py: 1,
-        zIndex: 1,
-        borderTop: "2px solid #f1f3f5",
-      }}
-    >
+    <Box sx={footerStlye}>
       <BottomNavigation
         value={value}
         onChange={handleChange}

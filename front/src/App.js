@@ -9,6 +9,7 @@ import React, {
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import { SnackbarProvider } from "notistack";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -36,9 +37,6 @@ const CommunityCardDetail = lazy(() =>
 const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
 const DiagnosisPicture = lazy(() =>
   import("./components/diagnosis/DiagnosisPicture")
-);
-const DiagnosisResult = lazy(() =>
-  import("./components/diagnosis/DiagnosisResult")
 );
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -83,59 +81,64 @@ function App() {
     fetchCurrentUser();
   }, []);
 
-  if (!isFetchCompleted) {
-    return <Loading />;
-  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
-          <Router>
-            <Header />
-            <Footer />
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" exact element={<Main />} />
-                <Route path="/login" element={<Loginpage />} />
-                <Route path="/register" element={<Registerpage />} />
-                <Route path="/account" element={<Accountpage />} />
-                <Route path="/mygarden" element={<MyGardenpage />} />
-                <Route path="/mygarden/:id" element={<MyPlant />} />
-                <Route
-                  path="/mygarden/myschedule"
-                  element={<MyScheduleList />}
-                />
+          <SnackbarProvider
+            maxSnack={3}
+            sx={{
+              "& .SnackbarContent-root": {},
+            }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Router>
+              <Header />
+              <Footer />
+              <Suspense>
+                <Routes>
+                  <Route path="/" exact element={<Main />} />
+                  <Route path="/login" element={<Loginpage />} />
+                  <Route path="/register" element={<Registerpage />} />
+                  <Route path="/account" element={<Accountpage />} />
+                  <Route path="/mygarden" element={<MyGardenpage />} />
+                  <Route path="/mygarden/:id" element={<MyPlant />} />
+                  <Route
+                    path="/mygarden/myschedule"
+                    element={<MyScheduleList />}
+                  />
+                  <Route path="/diagnosis" element={<Diagnosispage />} />
+                  <Route
+                    path="/diagnosis/picture"
+                    element={<DiagnosisPicture />}
+                  />
+                  <Route
+                    path="/community/infoBoard"
+                    element={<Communitypage />}
+                  />
+                  <Route
+                    path="/community/infoBoard/:id"
+                    element={<CommunityCardDetail />}
+                  />
+                  <Route
+                    path="/community/freeBoard"
+                    element={<Communitypage />}
+                  />
+                  <Route
+                    path="/community/freeBoard/:id"
+                    element={<CommunityCardDetail />}
+                  />
+                  <Route
+                    path="/community/posting"
+                    element={<CommunityPosting />}
+                  />
 
-                <Route path="/diagnosis" element={<Diagnosispage />} />
-                <Route
-                  path="/diagnosis/picture"
-                  element={<DiagnosisPicture />}
-                />
-                <Route
-                  path="/community/infoBoard"
-                  element={<Communitypage />}
-                />
-                <Route
-                  path="/community/infoBoard/:id"
-                  element={<CommunityCardDetail />}
-                />
-                <Route
-                  path="/community/freeBoard"
-                  element={<Communitypage />}
-                />
-                <Route
-                  path="/community/freeBoard/:id"
-                  element={<CommunityCardDetail />}
-                />
-                <Route
-                  path="/community/posting"
-                  element={<CommunityPosting />}
-                />
-                <Route path="*" element={<Main />} />
-              </Routes>
-            </Suspense>
-          </Router>
+                  <Route path="*" element={<Main />} />
+                </Routes>
+              </Suspense>
+            </Router>
+          </SnackbarProvider>
         </UserStateContext.Provider>
       </DispatchContext.Provider>
     </ThemeProvider>

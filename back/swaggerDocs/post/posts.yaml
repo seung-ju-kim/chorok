@@ -10,10 +10,20 @@ post:
         schema:
           required:
           - category
-          - userId
           - title
           - content
-          $ref: "./postSchema.yaml"
+          type: object
+          properties:
+            category: 
+              type: string
+              enum: ["정보공유", "자유"]
+              description: 카테고리를 선택합니다.
+            title:
+              type: string
+              description: 제목을 입력합니다.
+            content:
+              type: string
+              description: 본문을 입력합니다.
 
   responses:
     '201':

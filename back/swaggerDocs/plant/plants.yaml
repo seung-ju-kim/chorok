@@ -1,0 +1,85 @@
+post:
+  tags:
+    - plants
+  summary: 식물(plant)을 생성합니다.
+  description: 식물(plant)을 생성합니다.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          required:
+          - species 
+          - nickname 
+          - imageURL
+          - lastWater
+          - termWater
+          type: object
+          properties:
+            species: 
+              type: string
+              description: plant의 품종
+            nickname: 
+              type: string
+              description: plant의 애칭
+            imageURL: 
+              type: string
+              description: plant의 이미지 경로
+            description : 
+              type: string
+              description: plant의 한줄 소개
+            lastWater: 
+              type: string
+              format: date-time
+              description: 마지막으로 물을 준 날짜
+            termWater:
+              type: number
+              description: 물 주는 주기
+  responses:
+    '201':
+      description: 식물이 정상적으로 등록되었습니다.
+      content: 
+        application/json:
+          schema: 
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              plant:
+                $ref: "./plantSchema.yaml"
+get:
+  tags:
+    - plants
+  summary: 페이지로 나눠진 식물(plant) 목록을 조회합니다.
+  description: Query String으로 페이지 번호 그리고 페이지당 식물 수를 받고 해당 페이지의 식물 목록을 조회합니다.
+  parameters:
+  - name: page
+    in: query
+    description: 페이지 번호
+    type: string
+  - name: perPage
+    in: query
+    description: 페이지당 식물 수
+    type: string
+  responses:
+    '200':
+      description: n번 페이지, m개의 식물 목록이 정상적으로 조회되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              page: 
+                type: number
+                description: 요청한 페이지 번호
+              lastPage:
+                type: number
+                description: 요청한 식물 목록의 최대 페이지 번호
+              plants:
+                type: array
+                description: 요청한 식물 목록
+                $ref: "./plantSchema.yaml"

@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import CloseIcon from "@mui/icons-material/Close";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
+import { useSnackbar } from "notistack";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
@@ -30,6 +31,13 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   const [description, setDescription] = useState("");
   const [term, setTerm] = useState("");
   const [lastSupplyDate, setLastSupplyDate] = useState(dayjs().$d);
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveImage = (e) => {
@@ -87,7 +95,7 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
       setLastSupplyDate(new Date());
       setOpenAddPlant(false);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

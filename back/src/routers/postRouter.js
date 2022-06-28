@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { postService } from "../services/postService";
 import { userAuthService } from "../services/userService";
+import { postValidate } from "../middlewares/postValidation";
 import { login_required } from "../middlewares/login_required";
 
 const postRouter = Router();
@@ -11,6 +12,7 @@ const postRouter = Router();
 postRouter.post(
   "/posts",
   login_required,
+  postValidate.createPost,
   async (req, res, next) => {
     try {
       //로그인한 유저의 고유id
@@ -106,6 +108,7 @@ postRouter.get(
 postRouter.put(
   "/posts/:id",
   login_required,
+  postValidate.updatePost,
   async (req, res, next) => {
     try {
       //const userId = req.currentUserId;
