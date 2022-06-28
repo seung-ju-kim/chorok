@@ -11,7 +11,7 @@ const diaryValidate = {
         await createDiaryJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
@@ -24,7 +24,7 @@ const diaryValidate = {
         await updateDiaryJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
