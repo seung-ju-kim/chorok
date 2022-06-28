@@ -86,6 +86,13 @@ diaryRouter.put(
   async (req, res, next) => {
   try {
     const diaryId = req.params.id;
+    
+    const diary = await diaryService.getDiaryById(diaryId);
+      
+    if(userId !== diary.userId) {
+      const error = new Error("수정 권한이 없습니다.")
+      throw error;
+    }
 
     const imageURL = req.body.imageURL ?? null;
     const content = req.body.content ?? null;
@@ -116,6 +123,14 @@ diaryRouter.put(
 diaryRouter.delete("/diaries/:id", login_required, async (req, res, next) => {
   try {
     const diaryId = req.params.id;
+
+    const diary = await diaryService.getDiaryById(diaryId);
+      
+    if(userId !== diary.userId) {
+      const error = new Error("삭제 권한이 없습니다.")
+      throw error;
+    }
+
     const isDeleted = await diaryService.deleteDiary(diaryId);
 
     res.status(200).json(isDeleted);
