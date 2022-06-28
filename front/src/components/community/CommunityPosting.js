@@ -13,10 +13,14 @@ import {
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useSnackbar } from "notistack";
+
 import * as Api from "../../api";
 
 const CommunityPosting = () => {
   const navigate = useNavigate();
+  // 상태관리
+
   const [image, setImage] = useState({
     imageURL: "",
     upload: false,
@@ -27,6 +31,15 @@ const CommunityPosting = () => {
     content: "",
     category: "",
   });
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
+
+  // 카테고리 선택
   const handleChange = (e) => {
     setPost({ ...post, category: e.target.value });
   };
@@ -65,7 +78,7 @@ const CommunityPosting = () => {
       });
       navigate(-1);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

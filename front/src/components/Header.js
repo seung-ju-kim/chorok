@@ -7,19 +7,22 @@ const Footer = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  // style
+  const logoStyle = {
+    color: "#21750f",
+    fontSize: "2.5rem",
+    fontWeight: "bold",
+    fontFamily: "Hi Melody",
+    cursor: "pointer",
+  };
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ bgcolor: "white", pt: 1 }} elevation={0}>
         <Toolbar>
           <Typography
-            sx={{
-              color: "#21750f",
-              fontSize: "2.5rem",
-              fontWeight: "bold",
-              fontFamily: "Hi Melody",
-              cursor: "pointer",
-            }}
+            sx={logoStyle}
             onClick={() => {
               navigate("/");
             }}

@@ -10,24 +10,29 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import * as Api from "../../api";
-import CommunityEditForm from "./CommunityEditForm";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import { UserStateContext } from "../../App";
+import * as Api from "../../api";
+import CommunityEditForm from "./CommunityEditForm";
+import MenuIcon from "@mui/icons-material/Menu";
 import CommunityCommentModal from "./CommunityCommentModal";
+
 const CommunityCardDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  // Login user 정보
   const userState = useContext(UserStateContext);
 
   const [openAddComment, setOpenAddComment] = useState(false);
   const [board, setBoard] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+
   // 식물 카드 메뉴 상태 관리
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   // 카드 메뉴 관리
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,14 +42,21 @@ const CommunityCardDetail = () => {
   };
 
   useEffect(() => {
-    Api.get(`posts/${id}`).then((res) => {
-      setBoard(res.data.post);
-    });
+    getBoard();
   }, []);
+
+  // 게시물 정보 불러오기
+  const getBoard = async () => {
+    const res = await Api.get(`posts/${id}`);
+    setBoard(res.data.post);
+  };
+
+  // 게시물 삭제
   const deleteBoard = async () => {
     await Api.delete(`posts/${board._id}`);
     navigate(-1);
   };
+
   return (
     <Grid container sx={{ py: 12, px: "5%", mx: "auto", maxWidth: "800px" }}>
       <Grid item xs={3}>
