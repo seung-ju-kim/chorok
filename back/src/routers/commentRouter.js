@@ -88,13 +88,13 @@ commentRouter.put(
     try {
       const userId = req.currentUserId;
       const commentId = req.params.id;
-      const comment = await commentService.getCommentById({commentId});
+      const comment = await commentService.getCommentById(commentId);
 
       if(userId !== comment.userId) {
         const error = new Error("수정 권한이 없습니다.")
         throw error;
       }
-      
+
       const content = req.body.content ?? null;
       
       const toUpdate = { content };
@@ -120,8 +120,9 @@ commentRouter.delete(
   login_required,
   async (req, res, next) => {
     try {
+      const userId = req.currentUserId;
       const commentId = req.params.id;
-      const comment = await commentService.getCommentById({commentId});
+      const comment = await commentService.getCommentById(commentId);
 
       if(userId !== comment.userId) {
         const error = new Error("삭제 권한이 없습니다.")
