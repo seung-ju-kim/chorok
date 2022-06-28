@@ -56,7 +56,7 @@ const RegisterForm = () => {
       // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

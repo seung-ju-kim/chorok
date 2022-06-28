@@ -95,7 +95,7 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
       setLastSupplyDate(new Date());
       setOpenAddPlant(false);
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

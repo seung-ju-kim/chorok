@@ -91,7 +91,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
       setContent("");
       setOpenWriteForm(false);
     } catch (e) {
-      styleSnackbar(e.message, "success");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

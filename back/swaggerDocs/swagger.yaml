@@ -1,0 +1,56 @@
+openapi: "3.0.0"
+info:
+  title: "[3팀 version3.0] chorok"
+  version: "1.0.0"
+  description: "3팀 version 3.0의 API 문서입니다. "
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []    
+host: http://localhost:3000
+servers:
+  - url: http://localhost:5001
+paths:
+
+  /users/register:
+    $ref: "./user/register.yaml"
+  /users/login:
+    $ref: "./user/login.yaml"
+  # /users/list:
+  #   $ref: "./user/register.yaml"
+  # /users/current:
+  #   $ref: "./user/current.yaml"
+  /users/{id}:
+    $ref: "./user/users-id.yaml"
+  /plants:
+    $ref: "./plant/plants.yaml"
+  /plants/{id}:
+    $ref: "./plant/plants-id.yaml"
+  # /schedules:
+  #   $ref: 
+  # /fulfillschedules:
+  #   $ref: 
+  # /pendingschedules:
+  #   $ref: 
+  # /plants/{id}/{scheduleId}:
+  #   $ref:
+  /diaries:
+    $ref: "./diary/diaries.yaml"
+  /diaries/{plantId}:
+    $ref: "./diary/diaries-plantId.yaml"
+  /diaries/{id}:
+    $ref: "./diary/diaries-id.yaml"
+  /posts:
+    $ref: "./post/posts.yaml"
+  /posts/{id}:
+    $ref: "./post/posts-id.yaml"
+  /comments:
+    $ref: "./comment/comments.yaml"
+  /comments/{id}:
+    $ref: "./comment/comments-id.yaml"
+  /image:
+    $ref: "./upload/image.yaml"

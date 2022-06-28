@@ -1,0 +1,930 @@
+openapi: 3.0.0
+info:
+  title: '[3팀 version3.0] chorok'
+  version: 1.0.0
+  description: '3팀 version 3.0의 API 문서입니다. '
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+host: 'http://localhost:3000'
+servers:
+  - url: 'http://localhost:5001'
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: 회원가입을 진행합니다.
+      description: 회원가입을 진행합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '201':
+          description: 정상적으로 회원을 등록하였습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    $ref: '#/paths/~1users~1%7Bid%7D/put/responses/200/content/application~1json/schema/properties/user'
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: 이메일과 패스워드를 입력하여 로그인합니다.
+      description: 이메일과 패스워드를 입력하여 로그인합니다.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: 정상적으로 로그인이 되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: 발급 받은 bearer token
+                      id:
+                        type: string
+                        format: uuid
+                        description: user를 구분하는 uuid
+                      name:
+                        type: string
+                        description: user가 등록한 이름
+                      email:
+                        type: string
+                        format: email
+                        description: user가 등록한 이메일 주소
+                      description:
+                        type: string
+                        description: user가 등록한 자기소개
+  '/users/{id}':
+    put:
+      tags:
+        - users
+      summary: '회원 정보(name, description)를 수정합니다.'
+      description: '회원 정보(name, description)를 수정합니다.'
+      parameters:
+        - name: id
+          in: path
+          description: user 식별id(uuid)
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: 회원 정보가 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: user를 구분하는 ObjectId
+                      id:
+                        type: string
+                        format: uuid
+                        description: user를 구분하는 uuid
+                      name:
+                        type: string
+                        description: user가 등록한 이름
+                      email:
+                        type: string
+                        format: email
+                        description: user가 등록한 이메일 주소
+                      description:
+                        type: string
+                        description: user가 등록한 자기소개
+    get:
+      tags:
+        - users
+      summary: 회원 정보를 조회합니다.
+      description: 회원 정보를 조회합니다.
+      parameters:
+        - name: id
+          in: path
+          description: user 식별id(uuid)
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 회원 정보가 정상적으로 조회되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  user:
+                    $ref: '#/paths/~1users~1%7Bid%7D/put/responses/200/content/application~1json/schema/properties/user'
+  /plants:
+    post:
+      tags:
+        - plants
+      summary: 식물(plant)을 생성합니다.
+      description: 식물(plant)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - species
+                - nickname
+                - imageURL
+                - lastWater
+                - termWater
+              type: object
+              properties:
+                species:
+                  type: string
+                  description: plant의 품종
+                nickname:
+                  type: string
+                  description: plant의 애칭
+                imageURL:
+                  type: string
+                  description: plant의 이미지 경로
+                description:
+                  type: string
+                  description: plant의 한줄 소개
+                lastWater:
+                  type: string
+                  format: date-time
+                  description: 마지막으로 물을 준 날짜
+                termWater:
+                  type: number
+                  description: 물 주는 주기
+      responses:
+        '201':
+          description: 식물이 정상적으로 등록되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  plant:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: plant를 구분하는 ObjectId
+                      userId:
+                        type: string
+                        format: uuid
+                        description: plant를 작성한 유저의 id
+                      species:
+                        type: string
+                        description: plant의 품종
+                      nickname:
+                        type: string
+                        description: plant의 애칭
+                      imageURL:
+                        type: string
+                        description: plant의 이미지 경로
+                      description:
+                        type: string
+                        description: plant의 한줄 소개
+                      lastWater:
+                        type: string
+                        format: date-time
+                        description: 마지막으로 물을 준 날짜
+                      termWater:
+                        type: number
+                        description: 물 주는 주기
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              description: schedule를 구분하는 ObjectId
+                            date:
+                              type: string
+                              format: date-time
+                              description: schedule 날짜
+                            isChecked:
+                              type: boolean
+                              description: schedule 이행 여부
+                        description: 해당 plant에 속한 물주기 schedule 목록
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+    get:
+      tags:
+        - plants
+      summary: 페이지로 나눠진 식물(plant) 목록을 조회합니다.
+      description: Query String으로 페이지 번호 그리고 페이지당 식물 수를 받고 해당 페이지의 식물 목록을 조회합니다.
+      parameters:
+        - name: page
+          in: query
+          description: 페이지 번호
+          type: string
+        - name: perPage
+          in: query
+          description: 페이지당 식물 수
+          type: string
+      responses:
+        '200':
+          description: 'n번 페이지, m개의 식물 목록이 정상적으로 조회되었습니다.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  page:
+                    type: number
+                    description: 요청한 페이지 번호
+                  lastPage:
+                    type: number
+                    description: 요청한 식물 목록의 최대 페이지 번호
+                  plants:
+                    type: array
+                    description: 요청한 식물 목록
+                    $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+  '/plants/{id}':
+    get:
+      tags:
+        - plants
+      summary: 식물(plant)을 상세 조회합니다.
+      description: 식물(plant)을 상세 조회합니다. 조회할 plant의 id를 입력합니다.
+      parameters:
+        - name: _id
+          in: path
+          description: plant objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 입력한 id의 식물이 정상적으로 조회됩니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  plant:
+                    $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+    put:
+      tags:
+        - plants
+      summary: 식물(plant)을 수정합니다.
+      description: '수정할 plant의 id와 수정할 품종, 애칭, 사진경로, 한줄 소개 물주는 주기를 입력합니다.'
+      parameters:
+        - name: id
+          in: path
+          description: plant objectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                species:
+                  type: string
+                  description: plant의 품종
+                nickname:
+                  type: string
+                  description: plant의 애칭
+                imageURL:
+                  type: string
+                  description: plant의 이미지 경로
+                description:
+                  type: string
+                  description: plant의 한줄 소개
+                termWater:
+                  type: number
+                  description: 물 주는 주기
+      responses:
+        '200':
+          description: 식물이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  plant:
+                    $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+    delete:
+      tags:
+        - plants
+      summary: 식물(plant)을 삭제합니다.
+      description: 식물(plant)을 삭제합니다. 삭제할 plant의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 식물이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: plant objectId
+          required: true
+          responses: null
+  /diaries:
+    post:
+      tags:
+        - diaries
+      summary: 생육 일지(diary)를 생성합니다.
+      description: 생육 일지(diary)를 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - imageURL
+                - content
+              type: object
+              properties:
+                imageURL:
+                  type: string
+                  description: diary 이미지의 경로
+                content:
+                  type: string
+                  description: diary의 내용
+      responses:
+        '201':
+          description: 생육 일지가 정상적으로 등록되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  diary:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: diary를 구분하는 ObjectId
+                      userId:
+                        type: string
+                        format: uuid
+                        description: diary를 작성한 유저의 id
+                      plantId:
+                        type: string
+                        description: diary를 plant별로 구분하기 위한 plant의 ObjectId
+                      imageURL:
+                        type: string
+                        description: diary 이미지의 경로
+                      content:
+                        type: string
+                        description: diary의 내용
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+  '/diaries/{plantId}':
+    get:
+      tags:
+        - diaries
+      summary: 생육 일지(diary) 목록을 조회합니다.
+      description: Query String으로 조회할 plant의 ObjectId를 받고 diary 목록을 조회합니다.
+      parameters:
+        - name: plantId
+          in: query
+          description: 조회할 plant의 ObjectId
+          type: string
+      responses:
+        '200':
+          description: 해당 식물의 생육 일지 목록이 정상적으로 조회되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  diarys:
+                    type: array
+                    description: 요청한 생육 일지 목록
+                    $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+  '/diaries/{id}':
+    get:
+      tags:
+        - diaries
+      summary: 생육 일지(diary)를 상세 조회합니다.
+      description: 생육 일지(diary)를 상세 조회합니다. 조회할 diary의 id를 입력합니다.
+      parameters:
+        - name: _id
+          in: path
+          description: diary objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 입력한 id의 생육 일지가 정상적으로 조회됩니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  diary:
+                    $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+    put:
+      tags:
+        - diaries
+      summary: 생육 일지(diary)를 수정합니다.
+      description: 수정할 diary의 id와 수정할 본문을 입력합니다.
+      parameters:
+        - name: id
+          in: path
+          description: diary objectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: diary의 내용
+      responses:
+        '200':
+          description: 생육 일지가 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  diary:
+                    $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+    delete:
+      tags:
+        - diaries
+      summary: 생육 일지(diary)을 삭제합니다.
+      description: 생육 일지(diary)을 삭제합니다. 삭제할 diary의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 생육 일지가 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: diary objectId
+          required: true
+          responses: null
+  /posts:
+    post:
+      tags:
+        - posts
+      summary: 게시글(post)을 생성합니다.
+      description: 게시글(post)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - category
+                - title
+                - content
+              type: object
+              properties:
+                category:
+                  type: string
+                  enum:
+                    - 정보공유
+                    - 자유
+                  description: 카테고리를 선택합니다.
+                title:
+                  type: string
+                  description: 제목을 입력합니다.
+                content:
+                  type: string
+                  description: 본문을 입력합니다.
+      responses:
+        '201':
+          description: 게시물이 정상적으로 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: post를 구분하는 ObjectId
+                      userId:
+                        type: string
+                        format: uuid
+                        description: post를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: post를 작성한 유저의 이름
+                      category:
+                        type: string
+                        description: post가 속한 카테고리
+                      title:
+                        type: string
+                        description: 제목
+                      content:
+                        type: string
+                        description: 본문 내용
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+    get:
+      tags:
+        - posts
+      summary: 페이지로 나눠진 게시글(post) 목록을 조회합니다.
+      description: 'Query String으로 카테고리, 페이지 번호 그리고 페이지당 게시글 수를 받고 해당 페이지의 게시물 목록을 조회합니다.'
+      parameters:
+        - name: category
+          in: query
+          description: 게시물이 속한 카테고리
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: 페이지 번호
+          type: string
+        - name: perPage
+          in: query
+          description: 페이지당 게시글 수
+          type: string
+      responses:
+        '200':
+          description: 'n번 페이지, m개의 게시물 목록이 정상적으로 조회되었습니다.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  page:
+                    type: number
+                    description: 요청한 페이지 번호
+                  lastPage:
+                    type: number
+                    description: 요청한 게시글 목록의 최대 페이지 번호
+                  posts:
+                    type: array
+                    description: 요청한 게시글 목록
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+  '/posts/{id}':
+    get:
+      tags:
+        - posts
+      summary: 게시글(post)을 상세 조회합니다.
+      description: 게시글(post)을 상세 조회합니다. 조회할 post의 id를 입력합니다.
+      parameters:
+        - name: _id
+          in: path
+          description: post objectId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 입력한 id의 게시물이 정상적으로 조회됩니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+    put:
+      tags:
+        - posts
+      summary: 게시글(post)을 수정합니다.
+      description: '수정할 post의 id와 수정할 제목, 본문을 입력합니다.'
+      parameters:
+        - name: id
+          in: path
+          description: post objectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 수정할 제목을 입력합니다.
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+      responses:
+        '200':
+          description: 게시물이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  post:
+                    $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+    delete:
+      tags:
+        - posts
+      summary: 게시글(post)을 삭제합니다.
+      description: 게시글(post)을 삭제합니다. 삭제할 post의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 게시물이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: post objectId
+          required: true
+          responses: null
+  /comments:
+    post:
+      tags:
+        - comments
+      summary: 댓글(comment)을 생성합니다.
+      description: 댓글(comment)을 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postId:
+                  type: string
+                  description: 댓글을 작성할 게시글의 postId
+                content:
+                  type: string
+                  description: 댓글 내용
+            example:
+              postId: 62a8255fa1ffb34422f4727a
+              content: 댓글 테스트
+      responses:
+        '201':
+          description: 댓글이 정상적으로 생성되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    $ref: '#/paths/~1comments/get/responses/200/content/application~1json/schema/properties/comment'
+    get:
+      tags:
+        - comments
+      summary: 댓글(comment)목록을 조회합니다.
+      description: 각 게시물(post)에 속한 댓글(comment)을 조회합니다.
+      parameters:
+        - name: postId
+          in: query
+          description: 댓글이 속한 게시물의 ObjectId
+          required: true
+          type: string
+        - name: page
+          in: query
+          description: 페이지 번호
+          type: string
+        - name: perPage
+          in: query
+          description: 페이지당 댓글 수
+          type: string
+      responses:
+        '200':
+          description: 댓글 목록이 정상적으로 조회되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: comment를 구분하는 ObjectId
+                      postId:
+                        type: string
+                        description: comment가 속한 post의 id
+                      userId:
+                        type: string
+                        description: comment를 작성한 유저의 id
+                      author:
+                        type: string
+                        description: comment를 작성한 유저의 이름
+                      content:
+                        type: string
+                        description: 댓글 내용
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: 작성 시각
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: 업데이트 시각
+  '/comments/{id}':
+    put:
+      tags:
+        - comments
+      summary: 댓글(comment)을 수정합니다.
+      description: 수정할 comments의 id와 수정할 본문을 입력합니다.
+      parameters:
+        - name: id
+          in: path
+          description: comment ObjectId
+          required: true
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 수정할 본문을 입력합니다.
+            example:
+              content: 테스트 댓글입니다
+      responses:
+        '200':
+          description: 댓글이 정상적으로 수정되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  comment:
+                    $ref: '#/paths/~1comments/get/responses/200/content/application~1json/schema/properties/comment'
+              example:
+                success: true
+                comment:
+                  _id: 62b4803e76999dfda189480e
+                  userId: 964db7ed-64f6-4bab-863d-3d44d2b1389a
+                  postId: 62a8254da1ffb34422f4726e
+                  author: 정민2
+                  content: 테스트 댓글입니다
+                  createdAt: 2022-06-23T15:01:18.154Z
+                  updatedAt: 2022-06-23T15:01:18.154Z
+    delete:
+      tags:
+        - comments
+      summary: 댓글(comment)을 삭제합니다.
+      description: 삭제할 comments의 id를 입력합니다.
+      parameters:
+        - '200':
+            description: 댓글이 정상적으로 삭제되었습니다.
+          name: id
+          in: path
+          description: comment ObjectId
+          required: true
+          responses: null
+  /image:
+    post:
+      tags:
+        - upload
+      summary: 하나의 이미지를 업로드합니다.
+      description: 하나의 이미지를 업로드합니다.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 업로드한 파일의 정보
+      responses:
+        '200':
+          description: 이미지가 정상적으로 업로드되었습니다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: 요청이 성공했는지를 나타냅니다.
+                  message:
+                    type: string
+                    description: 업로드 성공 여부
+                  imageURL:
+                    type: string
+                    format: url
+                    description: 업로드한 파일의 접근 경로
+                  fileName:
+                    type: string
+                    description: 업로드한 파일의 이름

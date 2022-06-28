@@ -78,7 +78,7 @@ const CommunityPosting = () => {
       });
       navigate(-1);
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

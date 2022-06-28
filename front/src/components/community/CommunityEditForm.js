@@ -25,7 +25,7 @@ const CommunityEditForm = ({ board, setBoard, setIsEditing }) => {
       });
       setIsEditing(false);
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

@@ -66,7 +66,8 @@ const LoginForm = () => {
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      console.log(e);
+      styleSnackbar(e.response.data, "warning");
     }
   };
   const boxStyle = {

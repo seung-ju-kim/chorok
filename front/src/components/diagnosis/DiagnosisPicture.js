@@ -75,7 +75,7 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
-      styleSnackbar(e.message, "success");
+      styleSnackbar(e.response.data, "success");
     }
   };
   return (

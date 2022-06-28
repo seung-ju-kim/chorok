@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 
+
 const ScheduleSchema = new Schema(
   {
     date: {type: Date},
@@ -43,6 +44,5 @@ const PlantSchema = new Schema(
 )
 
 const PlantModel = model("Plant", PlantSchema);
-const ScheduleModel = model("Schedule", ScheduleSchema);
 
 export {PlantModel};

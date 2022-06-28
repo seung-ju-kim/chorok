@@ -45,7 +45,7 @@ const AccountForm = () => {
       // 탈퇴 후 로그인 화면으로 이동
       navigate("/login", { replace: true });
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

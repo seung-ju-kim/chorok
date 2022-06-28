@@ -10,13 +10,14 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import CommunityEditForm from "./CommunityEditForm";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MenuIcon from "@mui/icons-material/Menu";
+import CommunityCommentModal from "./CommunityCommentModal";
 
 const CommunityCardDetail = () => {
   const { id } = useParams();
@@ -24,6 +25,7 @@ const CommunityCardDetail = () => {
   // Login user 정보
   const userState = useContext(UserStateContext);
 
+  const [openAddComment, setOpenAddComment] = useState(false);
   const [board, setBoard] = useState({});
   const [isEditing, setIsEditing] = useState(false);
 
@@ -124,7 +126,16 @@ const CommunityCardDetail = () => {
           <Box sx={{ width: "100%", mt: 3, mb: 1 }}>
             <Divider />
           </Box>
-          <IconButton size="small">
+          <CommunityCommentModal
+            openAddComment={openAddComment}
+            setOpenAddComment={setOpenAddComment}
+          />
+          <IconButton
+            size="small"
+            onClick={() => {
+              setOpenAddComment(true);
+            }}
+          >
             <ChatBubbleOutlineIcon sx={{ mr: 1 }} />
             댓글
           </IconButton>

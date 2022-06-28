@@ -86,7 +86,14 @@ function App() {
       <CssBaseline />
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
-          <SnackbarProvider maxSnack={3}>
+          <SnackbarProvider
+            maxSnack={3}
+            sx={{
+              "& .SnackbarContent-root": {
+                width: 200,
+              },
+            }}
+          >
             <Router>
               <Header />
               <Footer />
@@ -102,7 +109,6 @@ function App() {
                     path="/mygarden/myschedule"
                     element={<MyScheduleList />}
                   />
-
                   <Route path="/diagnosis" element={<Diagnosispage />} />
                   <Route
                     path="/diagnosis/picture"

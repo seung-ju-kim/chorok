@@ -43,7 +43,7 @@ const AccountEditModal = ({ openLogin, setOpenLogin }) => {
       setOpenLogin(false);
       styleSnackbar("회원정보 수정 완료", "success");
     } catch (e) {
-      styleSnackbar(e.message, "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 

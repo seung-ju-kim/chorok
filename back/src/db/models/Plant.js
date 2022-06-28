@@ -50,7 +50,7 @@ class Plant{
     .lean();
   }
 
-  static async findPlantsByUserId2({userId}) {
+  static async findAllPlantsByUserId({userId}) {
     return await PlantModel
     .find({userId})
     .sort({date: -1})
