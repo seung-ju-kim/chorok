@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { diaryService } from "../services/diaryService";
+import { diaryValidate } from "../middlewares/diaryValidation";
 import { login_required } from "../middlewares/login_required";
 
 const diaryRouter = Router();
@@ -7,7 +8,11 @@ const diaryRouter = Router();
 /**
  * 다이어리 생성
  */
-diaryRouter.post("/diaries", login_required, async (req, res, next) => {
+diaryRouter.post(
+  "/diaries", 
+  login_required, 
+  diaryValidate.createDiary,
+  async (req, res, next) => {
   try {
     const userId = req.currentUserId;
 
@@ -74,7 +79,11 @@ diaryRouter.get("/diaries", login_required, async (req, res, next) => {
  * 다이어리 수정
  */
 
-diaryRouter.put("/diaries/:id", login_required, async (req, res, next) => {
+diaryRouter.put(
+  "/diaries/:id", 
+  login_required, 
+  diaryValidate.updateDiary,
+  async (req, res, next) => {
   try {
     const diaryId = req.params.id;
 
