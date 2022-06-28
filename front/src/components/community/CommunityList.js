@@ -46,7 +46,7 @@ const CommunityList = ({ getList, boards, setBoards }) => {
     setLoad(true); //로딩 시작
     // ---- Get Data Code ---
 
-    const res = await getList(page, 3);
+    const res = await getList(page, 6);
 
     if (res.posts) {
       if (res.posts.end) {

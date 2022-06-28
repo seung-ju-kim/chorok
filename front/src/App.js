@@ -89,10 +89,9 @@ function App() {
           <SnackbarProvider
             maxSnack={3}
             sx={{
-              "& .SnackbarContent-root": {
-                width: 200,
-              },
+              "& .SnackbarContent-root": {},
             }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
           >
             <Router>
               <Header />
