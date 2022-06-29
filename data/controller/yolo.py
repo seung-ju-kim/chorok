@@ -14,38 +14,39 @@ extra_args={}
 model_type=models.ultralytics.yolov5
 backbone=model_type.backbones.small
 extra_args['img_size']=384
-classes= ['Cherry leaf',
- 'Peach leaf',
- 'Corn leaf blight',
- 'Apple rust leaf',
- 'Potato leaf late blight',
- 'Strawberry leaf',
- 'Corn rust leaf',
- 'Tomato leaf late blight',
- 'Tomato mold leaf',
- 'Potato leaf early blight',
- 'Apple leaf',
- 'Tomato leaf yellow virus',
- 'Blueberry leaf',
- 'Tomato leaf mosaic virus',
- 'Raspberry leaf',
- 'Tomato leaf bacterial spot',
- 'Squash Powdery mildew leaf',
- 'grape leaf',
- 'Corn Gray leaf spot',
- 'Tomato Early blight leaf',
- 'Apple Scab Leaf',
- 'Tomato Septoria leaf spot',
- 'Tomato leaf',
- 'Soyabean leaf',
- 'Bell_pepper leaf spot',
- 'Bell_pepper leaf',
- 'grape leaf black rot',
- 'Potato leaf',
- 'Tomato two spotted spider mites leaf']
-class_map= ClassMap(classes)
-model=model_type.model(backbone=backbone(pretrained=False),num_classes=30,**extra_args)
-state_dict= torch.load('yolo_trained.pth',map_location=torch.device('cpu'))
+# classes= ['Cherry leaf',
+#  'Peach leaf',
+#  'Corn leaf blight',
+#  'Apple rust leaf',
+#  'Potato leaf late blight',
+#  'Strawberry leaf',
+#  'Corn rust leaf',
+#  'Tomato leaf late blight',
+#  'Tomato mold leaf',
+#  'Potato leaf early blight',
+#  'Apple leaf',
+#  'Tomato leaf yellow virus',
+#  'Blueberry leaf',
+#  'Tomato leaf mosaic virus',
+#  'Raspberry leaf',
+#  'Tomato leaf bacterial spot',
+#  'Squash Powdery mildew leaf',
+#  'grape leaf',
+#  'Corn Gray leaf spot',
+#  'Tomato Early blight leaf',
+#  'Apple Scab Leaf',
+#  'Tomato Septoria leaf spot',
+#  'Tomato leaf',
+#  'Soyabean leaf',
+#  'Bell_pepper leaf spot',
+#  'Bell_pepper leaf',
+#  'grape leaf black rot',
+#  'Potato leaf',
+#  'Tomato two spotted spider mites leaf']
+# class_map= ClassMap(classes)
+class_map={'background': 0, 'unhealthy': 1, 'healthy': 2}
+model=model_type.model(backbone=backbone(pretrained=False),num_classes=3,**extra_args)
+state_dict= torch.load('bs_yolo.pth',map_location=torch.device('cpu'))
 model.load_state_dict(state_dict)
 valid_tfms = tfms.A.Adapter(
     [*tfms.A.resize_and_pad(384), tfms.A.Normalize()])
@@ -62,9 +63,10 @@ def show_preds_gradio(input_image):
     conv = convert_preds_to_coco_style(preds)
     if len(conv['annotations'])==0:
         return "객체를 탐지하지 못하였습니다. 촬영 예시를 잘 보고 다시 찍어주세요"
-    uh=[3,4,5,7,8,9,10,12,14,16,17,19,20,21,22,25,27,29]
-    print(conv['annotations'])
-    label= 'unhealthy' if conv['annotations'][0]['category_id'] in uh else 'healthy'
+    # uh=[3,4,5,7,8,9,10,12,14,16,17,19,20,21,22,25,27,29]
+    # print(conv['annotations'])
+    # label= 'unhealthy' if conv['annotations'][0]['category_id'] in uh else 'healthy'
+    label= 'unhealthy' if conv['annotations'][0]['category_id']==1 else 'healthy'
     my_dict[label]=float(conv['annotations'][0]['score'])
     return my_dict
     # pred_dict = model_type.end2end_detect(img, valid_tfms, model, class_map=class_map, detection_threshold=detection_threshold,
