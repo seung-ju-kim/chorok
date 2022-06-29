@@ -4,7 +4,7 @@ import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import { Oval } from "react-loader-spinner";
 import { useSnackbar } from "notistack";
 
-import defaultImg from "../../imgs/default_image.webp";
+import defaultImg from "../../imgs/default_image.jpg";
 import * as Api from "../../api";
 import DiagnosisResult from "./DiagnosisResult";
 
@@ -75,7 +75,7 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
-      styleSnackbar(e.response.data, "success");
+      styleSnackbar(e.response.data, "warning");
     }
   };
   return (

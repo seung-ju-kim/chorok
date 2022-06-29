@@ -115,7 +115,15 @@ plantRouter.put(
   plantValidate.updatePlant, 
   async (req, res, next) => {
     try {
+      const userId = req.currentUserId;
       const plantId = req.params.id;
+
+      const plant = await plantService.getPlantById(plantId);
+      
+      if(userId !== plant.userId) {
+        const error = new Error("수정 권한이 없습니다.")
+        throw error;
+      }
 
       const species = req.body.species ?? null;
       const nickname = req.body.nickname ?? null;
@@ -153,7 +161,16 @@ plantRouter.delete(
   login_required, 
   async (req, res, next) => {
     try {
+      const userId = req.currentUserId;
       const plantId = req.params.id;
+      
+      const plant = await plantService.getPlantById(plantId);
+      
+      if(userId !== plant.userId) {
+        const error = new Error("삭제 권한이 없습니다.")
+        throw error;
+      }
+
       const isDeleted = await plantService.deletePlant(plantId);
 
     res.status(200).json(isDeleted);

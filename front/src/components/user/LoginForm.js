@@ -66,7 +66,6 @@ const LoginForm = () => {
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (e) {
-      console.log(e);
       styleSnackbar(e.response.data, "warning");
     }
   };

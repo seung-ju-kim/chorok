@@ -50,25 +50,7 @@ const MyScheduleList = () => {
           );
         })}
       </Grid>
-      <Typography
-        fontFamily="CookieRun-Regular"
-        fontSize="1.5rem"
-        sx={{ my: 3 }}
-      >
-        완료한 스케줄
-      </Typography>
-      <Grid container spacing={2}>
-        {fulfillschedules.map((myPlant, i) => {
-          return (
-            <Grid item xs={12} key={i}>
-              <MyScheduleCard
-                setMyPlants={setFullfillSchedules}
-                myPlant={myPlant}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
+
       <Typography
         fontFamily="CookieRun-Regular"
         fontSize="1.5rem"

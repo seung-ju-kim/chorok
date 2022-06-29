@@ -1,27 +1,33 @@
 import React, { useContext, useState, useEffect } from "react";
-import { TextField, Box, IconButton } from "@mui/material";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 import TimeCheck from "../element/TimeCheck";
+import { useParams } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
+import { TextField, Box, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useParams } from "react-router-dom";
 
-const CommunityComment = ({ content, setContentList, setPage }) => {
+const CommunityComment = ({
+  contentList,
+  content,
+  setContentList,
+  setPage,
+}) => {
   const { id } = useParams();
   const [comment, setComment] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const userState = useContext(UserStateContext);
   const commentedTime = content.createdAt;
 
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      editComment();
-      setIsEditing(false);
-    }
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
   };
 
   const deleteComment = async () => {
@@ -31,18 +37,26 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
     setContentList(res.data.comments);
   };
 
-  const editComment = async () => {
-    await Api.put(`comments/${content._id}`, {
-      content: comment,
-    });
-    const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
-    setPage(1);
-    setContentList(res.data.comments);
+  const editComment = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.put(`comments/${content._id}`, {
+        content: comment,
+      });
+      const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
+      setPage(1);
+      setContentList(res.data.comments);
+      setIsEditing(false);
+      setComment("");
+    } catch (e) {
+      const errorMessage = e.response.data;
+      styleSnackbar(errorMessage, "warning");
+    }
   };
 
   useEffect(() => {
     setComment(content.content);
-  }, []);
+  }, [contentList]);
   return (
     <>
       {!isEditing ? (
@@ -104,7 +118,8 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
       ) : (
         <Box
           sx={{ px: 3, alignItems: "center", display: "flex" }}
-          onKeyPress={handleOnKeyPress}
+          component="form"
+          onSubmit={editComment}
         >
           <TextField
             variant="standard"
@@ -114,10 +129,7 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
           <IconButton
             edge="end"
             aria-label="check"
-            onClick={() => {
-              editComment();
-              setIsEditing(false);
-            }}
+            type="submit"
             sx={{
               "&:hover": {
                 backgroundColor: "transparent",

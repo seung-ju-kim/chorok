@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-import video from "../video/main.webm";
+import video1 from "../video/main.webm";
+import video2 from "../video/main.mp4";
 import LoginForm from "../components/user/LoginForm";
 
 const Loginpage = () => {
@@ -60,7 +61,8 @@ const Loginpage = () => {
           loop
           sx={videoStyle}
         >
-          <Box component="source" src={video} type="video/webm" />
+          <Box component="source" src={video1} type="video/webm" />
+          <Box component="source" src={video2} type="video/mp4" />
         </Box>
         <LoginForm />
       </Box>

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Box,
-  BottomNavigation,
-  BottomNavigationAction,
-  SliderValueLabel,
-} from "@mui/material";
+import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
@@ -19,7 +14,10 @@ const Footer = () => {
   useEffect(() => {
     if (pathname === "/diagnosis") {
       setValue("2");
-    } else if (pathname === "/community") {
+    } else if (
+      pathname === "/community" ||
+      pathname.split("/")[1] === "community"
+    ) {
       setValue("3");
     } else if (pathname == "/account") {
       setValue("4");
