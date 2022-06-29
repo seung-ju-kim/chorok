@@ -22,13 +22,10 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
   const navigate = useNavigate();
-
-  // 진단 페이지로 이동
   const handleClick = () => {
     setOpenDiagnosisDialog(false);
     navigate("/diagnosis/picture");
   };
-
   return (
     <Dialog
       fullScreen
@@ -38,7 +35,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
       }}
       fullWidth
     >
-      <DialogTitle sx={{ bgcolor: "white" }}>
+      <DialogTitle sx={{ pt: 5, bgcolor: "white" }}>
         <IconButton
           aria-label="close"
           onClick={() => {
@@ -48,14 +45,14 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[1000],
+            color: (theme) => theme.palette.grey[500],
           }}
         >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <Box>
-        <DialogContent sx={{ pb: 10 }}>
+        <DialogContent sx={{ pb: 15 }}>
           <Box textAlign="center" sx={{ mb: 3 }}>
             <Typography variant="h4">촬영 팁</Typography>
           </Box>
@@ -64,7 +61,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <Box
                 component="img"
                 src={correct}
-                width="50%"
+                width="80%"
                 height="100%"
                 sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
               />
@@ -123,7 +120,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions sx={{ px: 10 }}>
+        <DialogActions sx={{ px: 10, mb: 10 }}>
           <Button
             color="success"
             variant="contained"

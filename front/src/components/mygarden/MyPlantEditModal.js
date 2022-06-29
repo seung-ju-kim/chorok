@@ -12,7 +12,6 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useSnackbar } from "notistack";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
@@ -24,13 +23,6 @@ const MyPlantEditModal = ({
   setOpenEditModal,
 }) => {
   const { id } = useParams();
-
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
 
   // 식물 등록하기 버튼 클릭 시 넘겨주는 데이터
   const handleSubmit = async (e) => {
@@ -44,7 +36,7 @@ const MyPlantEditModal = ({
       });
       setOpenEditModal(false);
     } catch (e) {
-      styleSnackbar(e.response.data, "warning");
+      console.log(e);
     }
   };
 

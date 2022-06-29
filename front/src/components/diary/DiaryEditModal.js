@@ -10,7 +10,10 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+
+import * as Api from "../../api";
 
 const DiaryEditModal = ({
   handleEvent,

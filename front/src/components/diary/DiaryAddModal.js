@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
 import defaultImg from "../../imgs/default_image.webp";
@@ -21,13 +20,6 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
   // useParams, useNavigate
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
 
   // 다이어리 상태 관리
   const [image, setImage] = useState({
@@ -82,6 +74,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
 
       await Api.get(`diaries?plantId=${id}`).then((res) => {
         setDiaries(res.data.diaries);
+        console.log(res.data.diaries);
       });
 
       setImage({
@@ -91,7 +84,7 @@ const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
       setContent("");
       setOpenWriteForm(false);
     } catch (e) {
-      styleSnackbar(e.response.data, "warning");
+      console.log(e);
     }
   };
 

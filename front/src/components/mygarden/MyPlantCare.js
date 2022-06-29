@@ -13,6 +13,7 @@ import {
   MenuItem,
   Skeleton,
   Container,
+  Box,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -44,16 +45,14 @@ const MyPlantCare = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getPlant();
-  }, [id]);
-
   // params를 통해 식물 정보 불러오기
-  const getPlant = async () => {
-    const res = await Api.get(`plants/${id}`);
-    setPlants(res.data.plant);
-    setIsLoading(false);
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    Api.get(`plants/${id}`).then((res) => {
+      setPlants(res.data.plant);
+      setIsLoading(false);
+    });
+  }, [id]);
 
   // 식물 삭제
   const handleDelete = () => {

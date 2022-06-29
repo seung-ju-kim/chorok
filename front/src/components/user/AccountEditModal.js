@@ -11,25 +11,16 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 
 const AccountEditModal = ({ openLogin, setOpenLogin }) => {
-  // 상태관리
   const userState = useContext(UserStateContext);
   const [user, setUser] = useState(userState.user);
   const [name, setName] = useState(user.name);
   const [email] = useState(user.email);
   const [description, setDescription] = useState(user.description);
-
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,20 +30,12 @@ const AccountEditModal = ({ openLogin, setOpenLogin }) => {
         email,
         description,
       });
-      setUser(res.data);
+      const updatedUser = res.data;
+      setUser(updatedUser);
       setOpenLogin(false);
-      styleSnackbar("회원정보 수정 완료", "success");
     } catch (e) {
-      styleSnackbar(e.response.data, "warning");
+      console.log(e);
     }
-  };
-
-  // style
-  const buttonStyle = {
-    mx: "auto",
-    bgcolor: "#64a68a",
-    color: "white",
-    ":hover": { bgcolor: "#64a68a", color: "white" },
   };
 
   return (
@@ -126,10 +109,8 @@ const AccountEditModal = ({ openLogin, setOpenLogin }) => {
         </DialogContent>
         <DialogActions sx={{ pb: 5, bgcolor: "white" }}>
           <Button
-            sx={buttonStyle}
+            sx={{ mx: "auto", bgcolor: "#64a68a", color: "white" }}
             type="submit"
-            color="success"
-            variant="contained"
           >
             수정
           </Button>

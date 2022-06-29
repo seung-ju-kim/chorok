@@ -15,35 +15,6 @@ host: http://localhost:3000
 servers:
   - url: http://localhost:5001
 paths:
-
-  /users/register:
-    $ref: "./user/register.yaml"
-  /users/login:
-    $ref: "./user/login.yaml"
-  # /users/list:
-  #   $ref: "./user/register.yaml"
-  # /users/current:
-  #   $ref: "./user/current.yaml"
-  /users/{id}:
-    $ref: "./user/users-id.yaml"
-  /plants:
-    $ref: "./plant/plants.yaml"
-  /plants/{id}:
-    $ref: "./plant/plants-id.yaml"
-  # /schedules:
-  #   $ref: 
-  # /fulfillschedules:
-  #   $ref: 
-  # /pendingschedules:
-  #   $ref: 
-  # /plants/{id}/{scheduleId}:
-  #   $ref:
-  /diaries:
-    $ref: "./diary/diaries.yaml"
-  /diaries/{plantId}:
-    $ref: "./diary/diaries-plantId.yaml"
-  /diaries/{id}:
-    $ref: "./diary/diaries-id.yaml"
   /posts:
     $ref: "./post/posts.yaml"
   /posts/{id}:
@@ -52,5 +23,3 @@ paths:
     $ref: "./comment/comments.yaml"
   /comments/{id}:
     $ref: "./comment/comments-id.yaml"
-  /image:
-    $ref: "./upload/image.yaml"

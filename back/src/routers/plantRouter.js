@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { plantService } from "../services/plantService";
-import { plantValidate } from "../middlewares/plantValidation";
 import { login_required } from "../middlewares/login_required";
 
 
@@ -11,11 +10,7 @@ const plantRouter = Router();
 /**
  * plant(plant) 생성
  */
-plantRouter.post(
-  "/plants", 
-  login_required, 
-  plantValidate.createPlant,
-  async (req, res, next) => {
+plantRouter.post("/plants", login_required, async (req, res, next) => {
   try {
     //로그인한 유저의 고유id
     const userId = req.currentUserId;
@@ -111,24 +106,16 @@ plantRouter.get(
  */
 plantRouter.put(
   "/plants/:id", 
-  login_required,
-  plantValidate.updatePlant, 
+  login_required, 
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
       const plantId = req.params.id;
-
-      const plant = await plantService.getPlantById(plantId);
-      
-      if(userId !== plant.userId) {
-        const error = new Error("수정 권한이 없습니다.")
-        throw error;
-      }
 
       const species = req.body.species ?? null;
       const nickname = req.body.nickname ?? null;
       const imageURL = req.body.imageURL ?? null;
       const description = req.body.description ?? null;
+      const lastWater = req.body.lastWater ?? null;
       const termWater = req.body.termWater ?? null;
 
       const toUpdate = {
@@ -136,6 +123,7 @@ plantRouter.put(
         nickname,
         imageURL,
         description,
+        lastWater,
         termWater,
       };
 
@@ -161,16 +149,7 @@ plantRouter.delete(
   login_required, 
   async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
       const plantId = req.params.id;
-      
-      const plant = await plantService.getPlantById(plantId);
-      
-      if(userId !== plant.userId) {
-        const error = new Error("삭제 권한이 없습니다.")
-        throw error;
-      }
-
       const isDeleted = await plantService.deletePlant(plantId);
 
     res.status(200).json(isDeleted);

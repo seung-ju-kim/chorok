@@ -17,7 +17,7 @@ class commentService {
   /**
    * Community : commentId로 comment 읽기
    */
-  static async getCommentById(commentId) {
+  static async getComment(commentId) {
     const comment = await Comment.findCommentById(commentId);
     return comment;
   }
@@ -33,7 +33,7 @@ class commentService {
   /**
    * Community : postId로 commentList(comments) 읽기
    */
-  static async getCommentByPostId({postId, page, perPage}) {
+  static async getComments({postId, page, perPage}) {
     const comments = await Comment.findCommentsByPostId({postId, page, perPage});
     return comments;
   }

@@ -39,14 +39,8 @@ const ConfirmDialog = ({
               sx={{
                 color: "white",
                 bgcolor: "#64a68a",
-                ":hover": {
-                  color: "white",
-                  bgcolor: "#64a68a",
-                },
                 mr: 1,
               }}
-              color="success"
-              variant="contained"
               onClick={handleEvent}
             >
               확인
@@ -55,13 +49,7 @@ const ConfirmDialog = ({
               sx={{
                 color: "white",
                 bgcolor: "#64a68a",
-                ":hover": {
-                  color: "white",
-                  bgcolor: "#64a68a",
-                },
               }}
-              color="success"
-              variant="contained"
               onClick={() => {
                 setOpenModal(false);
               }}

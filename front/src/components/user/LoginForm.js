@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
@@ -13,13 +12,6 @@ const LoginForm = () => {
   // 상태관리
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -44,6 +36,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post("users/login", {
@@ -56,18 +49,16 @@ const LoginForm = () => {
       const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       sessionStorage.setItem("userToken", jwtToken);
-
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-      styleSnackbar("로그인", "success");
+
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
-    } catch (e) {
-      console.log(e);
-      styleSnackbar(e.response.data, "warning");
+    } catch (err) {
+      console.log("로그인에 실패하였습니다.\n", err);
     }
   };
   const boxStyle = {
@@ -77,14 +68,6 @@ const LoginForm = () => {
     left: "50%",
     transform: "translate(-50%, 50%)",
     zIndex: 3,
-  };
-  const buttonStyle = {
-    bgcolor: "#64a68a",
-    color: "white",
-    ":hover": {
-      color: "#64a68a",
-      bgcolor: "white",
-    },
   };
 
   return (
@@ -129,7 +112,14 @@ const LoginForm = () => {
       <Box textAlign="center" sx={{ mt: 3, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
-          sx={buttonStyle}
+          sx={{
+            bgcolor: "#64a68a",
+            color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
+          }}
           size="large"
           type="submit"
           disabled={!isFormValid}
@@ -140,7 +130,14 @@ const LoginForm = () => {
       <Box textAlign="center" sx={{ mt: 2, width: "50vw", mx: "auto" }}>
         <Button
           fullWidth
-          sx={buttonStyle}
+          sx={{
+            bgcolor: "#64a68a",
+            color: "white",
+            ":hover": {
+              color: "#64a68a",
+              bgcolor: "white",
+            },
+          }}
           size="large"
           onClick={() => {
             navigate("/register");

@@ -1,36 +1,24 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, TextField, Grid } from "@mui/material";
-import { Oval } from "react-loader-spinner";
-import { useSnackbar } from "notistack";
-
 import defaultImg from "../../imgs/default_image.webp";
 import * as Api from "../../api";
+import { useNavigate } from "react-router-dom";
 import DiagnosisResult from "./DiagnosisResult";
-
+import { Oval } from "react-loader-spinner";
 const DiagnosisPicture = () => {
   const navigate = useNavigate();
-
-  // 상태관리
   const [isLoading, setIsLoading] = useState(false);
   const [openResult, setOpenResult] = useState(false);
   const [result, setResult] = useState({
     diseaseList: [],
     imageURL: "",
   });
+  // 상태 관리
   const [image, setImage] = useState({
     imageFile: "",
     previewURL: defaultImg,
   });
 
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
-
-  // 이미지 미리보기 저장
   const saveImage = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
@@ -45,7 +33,7 @@ const DiagnosisPicture = () => {
       });
     };
   };
-  // 미리보기 삭제
+
   const deleteImage = () => {
     setImage({
       imageFile: "",
@@ -53,7 +41,6 @@ const DiagnosisPicture = () => {
     });
   };
 
-  // 진단 결과 받아오기
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -61,12 +48,13 @@ const DiagnosisPicture = () => {
     formData.append("file", image.imageFile);
 
     try {
-      const res = await Api.postForm("diags", formData);
-      setResult({
-        ...result,
-        diseaseList: res.data.diseaseList,
-        imageURL: res.data.imageURL,
-      });
+      await Api.postForm("diags", formData).then((res) =>
+        setResult({
+          ...result,
+          diseaseList: res.data.diseaseList,
+          imageURL: res.data.imageURL,
+        })
+      );
 
       setImage({
         imageFile: "",
@@ -75,7 +63,7 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
-      styleSnackbar(e.response.data, "success");
+      console.log(e);
     }
   };
   return (

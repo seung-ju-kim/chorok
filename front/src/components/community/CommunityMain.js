@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 
@@ -14,24 +14,16 @@ const CommunityMain = () => {
   };
 
   const navigate = useNavigate();
-  const [infoBoards, setInfoBoards] = useState([]);
-  const [freeBoards, setFreeBoards] = useState([]);
-
-  // 정보공유 게시판 불러오기
-  const getInfoList = async (page, perPage) => {
-    const res = await Api.get(
-      `posts?category=정보공유&page=${page}&perPage=${perPage}`
+  const [boards, setBoards] = useState([]);
+  const getInfoList = () => {
+    Api.get(`posts?category=정보공유&page=1&perPage=10`).then((res) =>
+      setBoards(res.data.posts)
     );
-
-    return res.data;
   };
-  // 자유게시판 불러오기
-  const getFreeList = async (page, perPage) => {
-    const res = await Api.get(
-      `posts?category=자유&page=${page}&perPage=${perPage}`
+  const getFreeList = () => {
+    Api.get(`posts?category=자유&page=1&perPage=10`).then((res) =>
+      setBoards(res.data.posts)
     );
-
-    return res.data;
   };
 
   return (
@@ -63,6 +55,9 @@ const CommunityMain = () => {
               fontSize: "1.2rem",
             }}
             value="1"
+            onClick={() => {
+              navigate("/community/infoBoard");
+            }}
           />
           <Tab
             label="자유게시판"
@@ -71,21 +66,24 @@ const CommunityMain = () => {
               fontSize: "1.2rem",
             }}
             value="2"
+            onClick={() => {
+              navigate("/community/freeBoard");
+            }}
           />
         </TabList>
       </Box>
       <TabPanel value="1" sx={{ p: 0 }}>
         <CommunityList
           getList={getInfoList}
-          boards={infoBoards}
-          setBoards={setInfoBoards}
+          boards={boards}
+          setBoards={setBoards}
         />
       </TabPanel>
       <TabPanel value="2" sx={{ p: 0 }}>
         <CommunityList
           getList={getFreeList}
-          boards={freeBoards}
-          setBoards={setFreeBoards}
+          boards={boards}
+          setBoards={setBoards}
         />
       </TabPanel>
     </TabContext>

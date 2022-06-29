@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Button,
   Dialog,
@@ -12,48 +12,60 @@ import {
   Box,
   Input,
 } from "@mui/material";
-
+import CloseIcon from "@mui/icons-material/Close";
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
-import CommunityComment from "./CommunityComment";
-import { useSnackbar } from "notistack";
-
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CircularProgress from "@mui/material/CircularProgress";
-import CloseIcon from "@mui/icons-material/Close";
+import CommunityComment from "./CommunityComment";
 
 const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [comment, setComment] = useState("");
   const [contentList, setContentList] = useState([]);
-  const [page, setPage] = useState(1);
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(false); //로딩 스피너
-  const [lastPage, setLastPage] = useState(0);
-
-  // 스낵바
-  const { enqueueSnackbar } = useSnackbar();
-  const styleSnackbar = (message, variant) => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar(message, { variant });
-  };
+  const obsRef = useRef(null); //observer Element
+  const [page, setPage] = useState(1); // 현재 페이지
+  const [perPage, setPerPage] = useState(10);
+  const [load, setLoad] = useState(false); //로딩스피너
+  const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
+  const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
 
   useEffect(() => {
-    if (page >= 0) {
-      getComment();
-    }
+    // threshold 0.5 -> 데이터가 50% 로딩 됐을 때 불러옴
+    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
+    if (obsRef.current) observer.observe(obsRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    getComment();
   }, [page]);
 
+  const obsHandler = (entries) => {
+    const target = entries[0];
+    if (!endRef.current && target.isIntersecting && preventRef.current) {
+      preventRef.current = false; // 옵저버 중복 실행 방지
+      setPage((prev) => prev + 1);
+    }
+  };
+
   const getComment = useCallback(async () => {
-    setIsLoading(true);
-    // Get Data Code
-    const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
-    if (res.data.comments) {
-      setContentList((prev) => [...prev, ...res.data.comments]);
-      setLastPage(res.data.lastPage);
+    setLoad(true);
+
+    const res = await Api.get(`comments?postId=${id}&page=1&perPage=20`);
+
+    if (res.data) {
+      if (res.data.end) {
+        setEndRef(true);
+      }
+
+      setContentList(res.data.comments);
+      setPreventRef(true);
     } else {
       console.log(res);
     }
-    setIsLoading(false);
+    setLoad(false);
   }, [page]);
 
   const postComment = async () => {
@@ -63,31 +75,20 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
         content: comment,
       });
 
-      const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
-      setPage(1);
-      setContentList(res.data.comments);
+      const res = await Api.get(`comments?postId=${id}&page=`);
+      console.log(res);
+      setContentList(res.data.comment);
       setComment("");
-    } catch (e) {
-      const errorMessage = e.response.data;
-      styleSnackbar(errorMessage, "warning");
+      getComment();
+    } catch (err) {
+      console.log(err);
     }
-  };
-
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      postComment();
-    }
-  };
-
-  const handleClick = async () => {
-    setPage((prev) => prev + 1);
   };
 
   return (
     <Dialog
       open={openAddComment}
-      fullWidth={true}
+      fullScreen
       onClose={() => {
         setOpenAddComment(false);
       }}
@@ -108,22 +109,34 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
           <CloseIcon />
         </IconButton>
         <DialogContent sx={{ bgcolor: "white" }}>
-          <DialogContentText
-            align="center"
-            sx={{ mt: 3, fontSize: "1rem", fontWeight: "bold" }}
-          >
+          <DialogContentText align="center" sx={{ mt: 3, fontSize: "1rem" }}>
             댓글 목록
           </DialogContentText>
         </DialogContent>
-        {/* <hr /> */}
+        <hr />
       </DialogTitle>
+      <Box>
+        {contentList?.map((content, i) => {
+          return (
+            <CommunityComment
+              key={i}
+              content={content}
+              comment={comment}
+              setComment={setComment}
+              setContentList={setContentList}
+              getComment={getComment}
+            />
+          );
+        })}
+        {load && <CircularProgress color="success" />}
+        <div ref={obsRef}></div>
+      </Box>
       <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="standard-adornment-comment">
             댓글 달기...
           </InputLabel>
           <Input
-            onKeyPress={handleOnKeyPress}
             value={comment}
             id="standard-adornment-comment"
             onChange={(e) => setComment(e.target.value)}
@@ -134,38 +147,6 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             }
           />
         </FormControl>
-      </Box>
-      <Box sx={{ pt: 2 }}>
-        {contentList?.map((content, i) => {
-          return (
-            <CommunityComment
-              key={i}
-              content={content}
-              setContentList={setContentList}
-              setPage={setPage}
-            />
-          );
-        })}
-      </Box>
-      <Box display="flex" sx={{ justifyContent: "center", pb: 1 }}>
-        {isLoading ? (
-          <Box>
-            <CircularProgress color="success" />
-          </Box>
-        ) : (
-          <IconButton
-            onClick={handleClick}
-            sx={{
-              color: "#212121",
-              "&:hover": {
-                backgroundColor: "transparent",
-                color: "#212121",
-              },
-            }}
-          >
-            <AddCircleOutlineIcon />
-          </IconButton>
-        )}
       </Box>
     </Dialog>
   );

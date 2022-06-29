@@ -1,67 +1,17 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Grid, IconButton, Skeleton } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
-import Loading from "../Loading";
 import CommunityCard from "./CommunityCard";
+import { useNavigate } from "react-router-dom";
 
 const CommunityList = ({ getList, boards, setBoards }) => {
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
-  const [preventRef, setPreventRef] = useState(true); //중복 실행 방지
-  const [endRef, setEndRef] = useState(false); //모든 글 로드 확인
   const [isLoading, setIsLoading] = useState(true);
-  const [load, setLoad] = useState(false);
-  const obsRef = useRef(null); //observer Element
-
-  // Infinite Scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(obsHandler, {
-      threshold: 0.5,
-      rootMargin: "15%",
-    });
-    if (obsRef.current) observer.observe(obsRef.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  const obsHandler = (entries) => {
-    const target = entries[0];
-    if (!endRef && target.isIntersecting && preventRef) {
-      setPreventRef(false); //옵저버 중복 실행 방지
-      setPage((prev) => prev + 1); //페이지 값 증가
-    }
-  };
 
   useEffect(() => {
-    if (page >= 0) {
-      getPost();
-    }
-  }, [page]);
-
-  // 커뮤니티 리스트 불러오기
-  const getPost = useCallback(async () => {
-    //글 불러오기
-    setLoad(true); //로딩 시작
-    // ---- Get Data Code ---
-
-    const res = await getList(page, 6);
-
-    if (res.posts) {
-      if (res.posts.end) {
-        //마지막 페이지일 경우
-        setEndRef(true);
-      }
-      setBoards((prev) => [...prev, ...res.posts]);
-
-      setPreventRef(true);
-    } else {
-      console.log(res);
-    }
-    setLoad(false); //로딩 종료
+    getList();
     setIsLoading(false);
-  }, [page]);
+  }, []);
 
   return (
     <Grid container rowSpacing={5} columnSpacing={3} sx={{ my: 2 }}>
@@ -86,6 +36,7 @@ const CommunityList = ({ getList, boards, setBoards }) => {
           })}
         </>
       )}
+
       <IconButton
         sx={{
           position: "fixed",
@@ -105,8 +56,6 @@ const CommunityList = ({ getList, boards, setBoards }) => {
       >
         <CreateIcon />
       </IconButton>
-      <div ref={obsRef}></div>
-      {load && <Loading />}
     </Grid>
   );
 };

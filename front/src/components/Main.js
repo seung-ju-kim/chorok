@@ -15,7 +15,7 @@ const Main = () => {
       navigate("/login", { replace: true });
       return;
     }
-  }, [params, userState]);
+  }, [params, userState, navigate]);
 
   return <MyGardenpage />;
 };

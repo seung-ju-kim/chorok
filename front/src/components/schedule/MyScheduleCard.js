@@ -1,5 +1,3 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Typography,
   CardActions,
@@ -7,21 +5,19 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
-
 const MyScheduleCard = ({ myPlant, setMyPlants }) => {
   const navigate = useNavigate();
-
-  // 물주기
   const watering = async () => {
     await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
       isChecked: true,
     });
-    const res = await Api.get("schedules");
-    setMyPlants(res.data);
+    await Api.get("schedules").then((res) => {
+      setMyPlants(res.data);
+    });
   };
-
   return (
     <Card
       sx={{
@@ -37,15 +33,13 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
         }}
       >
         <Typography>
+          오늘은{" "}
           <Typography component="span" sx={{ fontWeight: "bold" }}>
             {myPlant.nickname}
-          </Typography>
+          </Typography>{" "}
           물 주는 날입니다.
         </Typography>
         <Typography variant="subtitle1">{myPlant.species}</Typography>
-        <Typography variant="subtitle1">
-          {myPlant.date.split("T")[0]}
-        </Typography>
       </CardContent>
 
       <CardActions>
