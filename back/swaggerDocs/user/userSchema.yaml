@@ -1,0 +1,19 @@
+type: object
+properties:
+  _id: 
+    type: string
+    description: user를 구분하는 ObjectId
+  id:
+    type: string
+    format: uuid
+    description: user를 구분하는 uuid
+  name:
+    type: string
+    description: user가 등록한 이름
+  email:
+    type: string
+    format: email
+    description: user가 등록한 이메일 주소
+  description:
+    type: string
+    description: user가 등록한 자기소개

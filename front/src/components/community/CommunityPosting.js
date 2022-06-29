@@ -13,10 +13,14 @@ import {
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useSnackbar } from "notistack";
+
 import * as Api from "../../api";
 
 const CommunityPosting = () => {
   const navigate = useNavigate();
+  // 상태관리
+
   const [image, setImage] = useState({
     imageURL: "",
     upload: false,
@@ -27,6 +31,15 @@ const CommunityPosting = () => {
     content: "",
     category: "",
   });
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
+
+  // 카테고리 선택
   const handleChange = (e) => {
     setPost({ ...post, category: e.target.value });
   };
@@ -65,10 +78,17 @@ const CommunityPosting = () => {
       });
       navigate(-1);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.response.data, "warning");
     }
   };
 
+  // style
+  const buttonStyle = {
+    mx: "auto",
+    bgcolor: "#64a68a",
+    color: "white",
+    ":hover": { bgcolor: "#64a68a", color: "white" },
+  };
   return (
     <Box
       component="form"
@@ -79,6 +99,7 @@ const CommunityPosting = () => {
         onClick={() => {
           navigate(-1);
         }}
+        sx={{ color: "black" }}
       >
         뒤로가기
       </Button>
@@ -146,8 +167,15 @@ const CommunityPosting = () => {
           />
         </Grid>
       </Grid>
-      <Grid item xs={12} textAlign="center">
-        <Button type="submit">작성</Button>
+      <Grid item xs={12} textAlign="center" sx={{ mt: 3 }}>
+        <Button
+          type="submit"
+          sx={buttonStyle}
+          variant="contained"
+          color="success"
+        >
+          작성
+        </Button>
       </Grid>
     </Box>
   );

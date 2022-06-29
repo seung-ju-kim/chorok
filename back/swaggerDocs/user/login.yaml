@@ -1,0 +1,51 @@
+post:
+  tags:
+    - "users"
+  summary: 이메일과 패스워드를 입력하여 로그인합니다.
+  description: 이메일과 패스워드를 입력하여 로그인합니다.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+  responses:
+    '200':
+      description: 정상적으로 로그인이 되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              user:
+                type: object
+                properties:
+                  token: 
+                    type: string
+                    description: 발급 받은 bearer token
+                  id:
+                    type: string
+                    format: uuid
+                    description: user를 구분하는 uuid
+                  name:
+                    type: string
+                    description: user가 등록한 이름
+                  email:
+                    type: string
+                    format: email
+                    description: user가 등록한 이메일 주소
+                  description:
+                    type: string
+                    description: user가 등록한 자기소개
+                

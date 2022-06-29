@@ -8,9 +8,13 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import defaultImage from "../../imgs/default_image.webp";
+
 const CommunityCard = ({ board }) => {
   const navigate = useNavigate();
+
+  // 카테고리에 따라 url 변경
   const handleClick = () => {
     if (board.category === "정보공유") {
       navigate(`/community/infoBoard/${board._id}`);

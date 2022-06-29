@@ -12,6 +12,7 @@ import {
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useSnackbar } from "notistack";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
@@ -36,6 +37,13 @@ const MyPlantImageEditModal = ({
 
   const { id } = useParams();
   const navigate = useNavigate("/mygarden");
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   // 이미지 등록 시 저장 후 미리보기를 보여주는 이벤트
   const saveImage = (e) => {
@@ -79,7 +87,7 @@ const MyPlantImageEditModal = ({
 
       setOpenImageEditModal(false);
     } catch (e) {
-      console.log(e);
+      styleSnackbar(e.response.data, "warning");
     }
   };
 
