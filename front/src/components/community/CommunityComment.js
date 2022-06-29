@@ -11,7 +11,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
-const CommunityComment = ({ content, setContentList, setPage }) => {
+const CommunityComment = ({
+  contentList,
+  content,
+  setContentList,
+  setPage,
+}) => {
   const { id } = useParams();
   const [comment, setComment] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -25,13 +30,6 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
     enqueueSnackbar(message, { variant });
   };
 
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      editComment();
-      setIsEditing(false);
-    }
-  };
-
   const deleteComment = async () => {
     await Api.delete(`comments/${content._id}`);
     const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
@@ -39,7 +37,8 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
     setContentList(res.data.comments);
   };
 
-  const editComment = async () => {
+  const editComment = async (e) => {
+    e.preventDefault();
     try {
       await Api.put(`comments/${content._id}`, {
         content: comment,
@@ -47,6 +46,8 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
       const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
       setPage(1);
       setContentList(res.data.comments);
+      setIsEditing(false);
+      setComment("");
     } catch (e) {
       const errorMessage = e.response.data;
       styleSnackbar(errorMessage, "warning");
@@ -55,7 +56,7 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
 
   useEffect(() => {
     setComment(content.content);
-  }, []);
+  }, [contentList]);
   return (
     <>
       {!isEditing ? (
@@ -117,7 +118,8 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
       ) : (
         <Box
           sx={{ px: 3, alignItems: "center", display: "flex" }}
-          onKeyPress={handleOnKeyPress}
+          component="form"
+          onSubmit={editComment}
         >
           <TextField
             variant="standard"
@@ -127,10 +129,7 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
           <IconButton
             edge="end"
             aria-label="check"
-            onClick={() => {
-              editComment();
-              setIsEditing(false);
-            }}
+            type="submit"
             sx={{
               "&:hover": {
                 backgroundColor: "transparent",
