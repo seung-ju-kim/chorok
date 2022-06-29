@@ -19,7 +19,7 @@ const Loginpage = () => {
     width: "100vw",
     height: "100vh",
     display: "block",
-    overflowY: "hidden",
+    overflow: "hidden",
     "&::before": {
       content: "''",
       top: 0,
@@ -35,7 +35,6 @@ const Loginpage = () => {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    overflowY: "hidden",
   };
   return (
     <>
@@ -57,7 +56,6 @@ const Loginpage = () => {
           component="video"
           muted
           autoPlay
-          data-keepplaying
           loop
           sx={videoStyle}
           playsInline
