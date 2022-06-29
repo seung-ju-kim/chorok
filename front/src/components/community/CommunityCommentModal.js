@@ -16,6 +16,7 @@ import {
 import * as Api from "../../api";
 import { useParams } from "react-router-dom";
 import CommunityComment from "./CommunityComment";
+import { useSnackbar } from "notistack";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -28,6 +29,13 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false); //로딩 스피너
   const [lastPage, setLastPage] = useState(0);
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   useEffect(() => {
     if (page >= 0) {
@@ -59,8 +67,9 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
       setPage(1);
       setContentList(res.data.comments);
       setComment("");
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      const errorMessage = e.response.data.message;
+      styleSnackbar(errorMessage, "warning");
     }
   };
 

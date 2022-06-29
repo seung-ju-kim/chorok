@@ -1,14 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { TextField, Box, IconButton } from "@mui/material";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 import TimeCheck from "../element/TimeCheck";
+import { useParams } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
+import { TextField, Box, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useParams } from "react-router-dom";
 
 const CommunityComment = ({ content, setContentList, setPage }) => {
   const { id } = useParams();
@@ -16,6 +17,13 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
   const [isEditing, setIsEditing] = useState(false);
   const userState = useContext(UserStateContext);
   const commentedTime = content.createdAt;
+
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -32,12 +40,17 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
   };
 
   const editComment = async () => {
-    await Api.put(`comments/${content._id}`, {
-      content: comment,
-    });
-    const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
-    setPage(1);
-    setContentList(res.data.comments);
+    try {
+      await Api.put(`comments/${content._id}`, {
+        content: comment,
+      });
+      const res = await Api.get(`comments?postId=${id}&page=1&perPage=15`);
+      setPage(1);
+      setContentList(res.data.comments);
+    } catch (e) {
+      const errorMessage = e.response.data.message;
+      styleSnackbar(errorMessage, "warning");
+    }
   };
 
   useEffect(() => {
