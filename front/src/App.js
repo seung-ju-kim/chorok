@@ -13,7 +13,7 @@ import { SnackbarProvider } from "notistack";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Loading from "./components/Loading";
+
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";

@@ -94,7 +94,7 @@ const DiagnosisPicture = () => {
             variant="h6"
             sx={{ my: "10vh" }}
           >
-            AI 의사가 식물을 진단 중입니다.
+            AI 의사가 식물을 진단 중입니다. 잠시만 기다려주세요.
           </Typography>
 
           <Oval
