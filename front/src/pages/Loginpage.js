@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-
+import "../App.css";
 import video from "../video/main.mp4";
 import LoginForm from "../components/user/LoginForm";
 
@@ -17,7 +17,7 @@ const Loginpage = () => {
   };
   const videoBoxStyle = {
     width: "100vw",
-    height: "100vh",
+    height: "calc(var(--vh, 1vh) * 100)",
     display: "block",
     overflow: "hidden",
     "&::before": {
