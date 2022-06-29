@@ -11,7 +11,7 @@ const userValidate = {
         await registerUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
@@ -24,7 +24,7 @@ const userValidate = {
         await loginUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
@@ -37,7 +37,7 @@ const userValidate = {
         await updateUserJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 

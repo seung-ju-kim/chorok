@@ -10,11 +10,9 @@ const MyScheduleList = () => {
   const [fulfillschedules, setFullfillSchedules] = useState([]);
   const [pendingschedules, setPendingSchedules] = useState([]);
 
-  const today = dayjs().format("YYYY-MM-DD");
-
   useEffect(() => {
     getSchedule();
-    getSchedule();
+    getFulfillSchedule();
     getPendingSchedule();
   }, []);
 
@@ -30,7 +28,7 @@ const MyScheduleList = () => {
   };
   // 스케줄 목록 받아오기
   const getPendingSchedule = async () => {
-    const res = await Api.get("schedules");
+    const res = await Api.get("pendingschedules");
     setPendingSchedules(res.data);
   };
 

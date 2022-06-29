@@ -37,7 +37,6 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
         }}
       >
         <Typography>
-          오늘은
           <Typography component="span" sx={{ fontWeight: "bold" }}>
             {myPlant.nickname}
           </Typography>

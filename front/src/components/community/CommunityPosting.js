@@ -82,6 +82,13 @@ const CommunityPosting = () => {
     }
   };
 
+  // style
+  const buttonStyle = {
+    mx: "auto",
+    bgcolor: "#64a68a",
+    color: "white",
+    ":hover": { bgcolor: "#64a68a", color: "white" },
+  };
   return (
     <Box
       component="form"
@@ -92,6 +99,7 @@ const CommunityPosting = () => {
         onClick={() => {
           navigate(-1);
         }}
+        sx={{ color: "black" }}
       >
         뒤로가기
       </Button>
@@ -159,8 +167,15 @@ const CommunityPosting = () => {
           />
         </Grid>
       </Grid>
-      <Grid item xs={12} textAlign="center">
-        <Button type="submit">작성</Button>
+      <Grid item xs={12} textAlign="center" sx={{ mt: 3 }}>
+        <Button
+          type="submit"
+          sx={buttonStyle}
+          variant="contained"
+          color="success"
+        >
+          작성
+        </Button>
       </Grid>
     </Box>
   );

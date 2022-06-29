@@ -56,7 +56,7 @@ postRouter.get(
   async (req, res, next) => {
     try {
       const postId = req.params.id;
-      const post =await postService.getPost(postId);
+      const post =await postService.getPostById(postId);
 
       const body = {
           success: true,
@@ -111,8 +111,15 @@ postRouter.put(
   postValidate.updatePost,
   async (req, res, next) => {
     try {
-      //const userId = req.currentUserId;
+      const userId = req.currentUserId;
       const postId = req.params.id;
+
+      const post = await postService.getPostById(postId);
+      
+      if(userId !== post.userId) {
+        const error = new Error("수정 권한이 없습니다.")
+        throw error;
+      }
 
       const category = req.body.category ?? null;
       const title = req.body.title ?? null;
@@ -143,7 +150,16 @@ postRouter.delete(
   login_required,
   async (req, res, next) => {
     try {
+      const userId = req.currentUserId;
       const postId = req.params.id;
+
+      const post = await postService.getPostById(postId);
+      
+      if(userId !== post.userId) {
+        const error = new Error("삭제 권한이 없습니다.")
+        throw error;
+      }
+
       const isDeleted = await postService.deletePost(postId);
 
       res.status(200).json(isDeleted);

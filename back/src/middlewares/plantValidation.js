@@ -14,7 +14,8 @@ const plantValidate = {
         await createPlantJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+
+        return res.status(400).send(error.message);
     }
   },
 
@@ -30,7 +31,7 @@ const plantValidate = {
         await updatePlantJoi.validateAsync(req.body);
         next();
     } catch(error) {
-        return res.status(400).json({ success: false, statusCode: 400, message: error.message });
+        return res.status(400).send(error.message);
     }
   },
 
