@@ -281,6 +281,33 @@ paths:
                         type: string
                         format: date-time
                         description: 업데이트 시각
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     get:
       tags:
         - plants
@@ -316,6 +343,33 @@ paths:
                     type: array
                     description: 요청한 식물 목록
                     $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
   '/plants/{id}':
     get:
       tags:
@@ -341,6 +395,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   plant:
                     $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     put:
       tags:
         - plants
@@ -386,6 +467,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   plant:
                     $ref: '#/paths/~1plants/post/responses/201/content/application~1json/schema/properties/plant'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     delete:
       tags:
         - plants
@@ -459,6 +567,33 @@ paths:
                         type: string
                         format: date-time
                         description: 업데이트 시각
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
   '/diaries/{plantId}':
     get:
       tags:
@@ -485,6 +620,33 @@ paths:
                     type: array
                     description: 요청한 생육 일지 목록
                     $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
   '/diaries/{id}':
     get:
       tags:
@@ -510,6 +672,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   diary:
                     $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     put:
       tags:
         - diaries
@@ -543,6 +732,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   diary:
                     $ref: '#/paths/~1diaries/post/responses/201/content/application~1json/schema/properties/diary'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     delete:
       tags:
         - diaries
@@ -626,6 +842,33 @@ paths:
                         type: string
                         format: date-time
                         description: 업데이트 시각
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     get:
       tags:
         - posts
@@ -666,6 +909,39 @@ paths:
                     type: array
                     description: 요청한 게시글 목록
                     $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+                example:
+                  error.message: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+                example:
+                  error.message: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
+                example:
+                  error.message: 파일을 찾을 수 없습니다.
   '/posts/{id}':
     get:
       tags:
@@ -691,6 +967,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   post:
                     $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     put:
       tags:
         - posts
@@ -727,6 +1030,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   post:
                     $ref: '#/paths/~1posts/post/responses/201/content/application~1json/schema/properties/post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     delete:
       tags:
         - posts
@@ -775,6 +1105,33 @@ paths:
                     description: 요청이 성공했는지를 나타냅니다.
                   comment:
                     $ref: '#/paths/~1comments/get/responses/200/content/application~1json/schema/properties/comment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     get:
       tags:
         - comments
@@ -831,6 +1188,33 @@ paths:
                         type: string
                         format: date-time
                         description: 업데이트 시각
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
   '/comments/{id}':
     put:
       tags:
@@ -877,6 +1261,33 @@ paths:
                   content: 테스트 댓글입니다
                   createdAt: 2022-06-23T15:01:18.154Z
                   updatedAt: 2022-06-23T15:01:18.154Z
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 잘못된 요청입니다.
+        '401':
+          description: unAuthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 유효한 인증이 아닙니다.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                properties:
+                  error.message:
+                    type: string
+                    description: 파일을 찾을 수 없습니다.
     delete:
       tags:
         - comments
