@@ -35,6 +35,7 @@ const Loginpage = () => {
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    overflowY: "hidden",
   };
   return (
     <>
@@ -59,6 +60,8 @@ const Loginpage = () => {
           data-keepplaying
           loop
           sx={videoStyle}
+          playsInline
+          controls={false}
         >
           <Box component="source" src={video} type="video/mp4" />
         </Box>
