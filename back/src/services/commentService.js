@@ -5,8 +5,8 @@ class commentService {
   /**
    * Community : comment 생성
    */
-  static async addComment({postId, author, content}) {
-    const newComment = {postId, author, content};
+  static async addComment({userId, postId, author, content}) {
+    const newComment = {userId, postId, author, content};
 
     // db에 저장
     const createdNewComment = await Comment.createComment(newComment);

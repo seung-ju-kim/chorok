@@ -1,4 +1,4 @@
-import {CommentModel} from "../schemas/comment.js";
+import {CommentModel} from "../schemas/comment";
 
 class Comment {
   static async createComment(Comment) {
@@ -22,7 +22,7 @@ class Comment {
 
   static async findCommentsByPostId({postId, page, perPage}) {
     return CommentModel
-    .find({ postId })
+    .find(postId ? { postId } :{})
     .sort({createdAt: -1})
     .limit(perPage)
     .skip((page-1) * perPage)

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { postService } from "../services/postService";
 import { userAuthService } from "../services/userService";
-import { s3Upload, s3Delete } from "../middlewares/multerS3";
 import { login_required } from "../middlewares/login_required";
 
 const postRouter = Router();
@@ -9,7 +8,8 @@ const postRouter = Router();
 /*
  * Community : Post 생성
  */
-postRouter.post("/posts",
+postRouter.post(
+  "/posts",
   login_required,
   async (req, res, next) => {
     try {
@@ -43,37 +43,6 @@ postRouter.post("/posts",
     }
 });
 
-/*
- * Community : Post 이미지 업로드
- */
-postRouter.post(
-  "/image",
-  login_required,
-  s3Upload(),
-  async (req, res, next) => {
-    try{
-      const saveFile = req.file;
-      const fileName = String(saveFile.key).split("img/")[1];
-
-      if (!saveFile){
-        return res.status(400).json({
-          success: false,
-          message: "업로드 실패"
-        });
-      } else {
-        return res.status(200).json({
-          success: true,
-          message: "업로드 성공",
-          imageURL : saveFile.location,
-          fileName : fileName
-        });
-      };
-
-    } catch(error) {
-      next(error);
-    }
-  }
-)
   
 
 /*

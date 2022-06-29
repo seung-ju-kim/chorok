@@ -1,8 +1,8 @@
 import { Diag } from "../db";
 
 const diagService = {
-  getDisease: async (diseaseName) => {
-    const result = await Diag.findByName({ name: diseaseName });
+  getDisease: async (key) => {
+    const result = await Diag.findByName(key);
     return result;
   }
 };

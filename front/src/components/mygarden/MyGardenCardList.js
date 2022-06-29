@@ -1,61 +1,102 @@
-import React from "react";
-import { Grid, Typography, Container } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Grid, Typography, Button, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import MyGardenCard from "./MyGardenCard";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
-const dummyData = [
-  {
-    id: 1,
-    name: "쑥쑥이",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-  {
-    id: 2,
-    name: "다육이",
-    img: "http://www.foodnmed.com/news/photo/201907/18729_4420_594.jpg",
-  },
-  {
-    id: 3,
-    name: "고무나무",
-    img: "https://img.marieclairekorea.com/2021/04/mck_60657bd4d3c01.jpg",
-  },
-  {
-    id: 4,
-    name: "쑥쑥이2",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-  {
-    id: 5,
-    name: "쑥쑥이3",
-    img: "https://www.hdec.kr/FileContents/EditorImg/20220308/20200331_7447_650.jpg",
-  },
-];
-const MyGardenCardList = () => {
-  // style
-  const cardListStyle = {
-    width: "100%",
-    height: "80%",
-    borderRadius: "10px",
-    boxShadow: "0 0 15px 0 rgba(128, 128, 128, 0.372)",
-    bgcolor: "#64a68a",
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    cursor: "pointer",
-  };
+import MyGardenCard from "./MyGardenCard";
+import MyGardenAddModal from "./MyGardenAddModal";
+import * as Api from "../../api";
+
+const MyGardenCardList = ({ initMyPlants = [] }) => {
+  // 나의 식물 상태관리
+  const [myPlants, setMyPlants] = useState(initMyPlants);
+  const [openAddPlant, setOpenAddPlant] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  // 나의 식물 리스트 받아오기
+  useEffect(() => {
+    Api.get("plants").then((res) => {
+      setMyPlants(res.data.plants);
+      setIsLoading(false);
+    });
+  }, []);
+
   return (
     <>
-      <Grid item xs={6}>
-        <Container sx={cardListStyle}>
-          <AddIcon />
-          <Typography>식물 등록하기</Typography>
-        </Container>
+      <Button
+        size="small"
+        variant="outlined"
+        color="success"
+        sx={{ position: "absolute", right: 20, top: 100 }}
+        startIcon={<CalendarMonthOutlinedIcon />}
+        onClick={() => {
+          navigate("/mygarden/myschedule");
+        }}
+      >
+        스케줄
+      </Button>
+
+      <Grid item xs={12} sx={{ my: "auto" }}>
+        {isLoading ? (
+          <Skeleton variant="text" width="60%" />
+        ) : (
+          <Typography variant="body2">
+            현재 {myPlants.length}개의 식물을 키우고 있습니다.
+          </Typography>
+        )}
       </Grid>
-      {dummyData.map((data, i) => {
-        return <MyGardenCard key={i} data={data} />;
-      })}
+
+      <Grid item xs={6} md={3} lg={2}>
+        <Card sx={{ height: "182px", mx: "auto", minWidth: "150px" }}>
+          <Button
+            sx={{
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              color: "#64a68a",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={() => {
+              setOpenAddPlant(true);
+            }}
+          >
+            <AddIcon />
+          </Button>
+        </Card>
+      </Grid>
+      {isLoading ? (
+        Array(20)
+          .fill(1)
+          .map((e, i) => {
+            return (
+              <Grid item xs={6} md={3} lg={2} key={i}>
+                <Skeleton variant="rectangular" height={182} />
+              </Grid>
+            );
+          })
+      ) : (
+        <>
+          {myPlants.map((myplant, i) => {
+            return (
+              <Grid item xs={6} md={3} lg={2} key={i}>
+                <MyGardenCard myplant={myplant} />
+              </Grid>
+            );
+          })}
+        </>
+      )}
+
+      <MyGardenAddModal
+        openAddPlant={openAddPlant}
+        setOpenAddPlant={setOpenAddPlant}
+        setMyPlants={setMyPlants}
+      />
     </>
   );
 };

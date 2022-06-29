@@ -5,8 +5,7 @@ class postService {
      * Community : post 생성
      */
     static async addPost({category, userId, title, content, author, imageURL}) {
-  
-      //const createdAtKT = await PostService.getCurrentDate();
+
       const view = 0;
       const newPost = {category, userId, title, content, author, imageURL, view};
   
@@ -45,29 +44,37 @@ class postService {
     /**
      * Community : post 수정
      */
-      static async setPost({ postId, toUpdate }) {
-          let post = await Post.findPostById(postId);
-      
-          if (!post) {
-              const error = new Error(
-                "수정할 게시글을 찾을 수 없습니다."
-              );
-              error.status = 404;
-              throw error;
-          }
-      
-          const myKeys = Object.keys(toUpdate);
-      
-          for (let i = 0; i < myKeys.length; i++) {
-            if (toUpdate[myKeys[i]]!==null) {
-              const fieldToUpdate = myKeys[i];
-              const newValue = toUpdate[myKeys[i]];
-              post = await Post.update({ postId, fieldToUpdate, newValue });
-            }
-          }
-      
-          return post;
+
+    // async cleanObject(obj) {
+    //   const initialObj = {};
+    //   return Object.entries(obj)
+    //     .filter(([, value]) => !!value)
+    //     .reduce((prev, [key, value]) => ({ ...prev, [key]: value }), initialObj);    
+    // }
+    
+    static async setPost({ postId, toUpdate }) {
+        let post = await Post.findPostById(postId);
+    
+        if (!post) {
+            const error = new Error(
+              "수정할 게시글을 찾을 수 없습니다."
+            );
+            error.status = 404;
+            throw error;
         }
+    
+        const myKeys = Object.keys(toUpdate);
+    
+        for (let i = 0; i < myKeys.length; i++) {
+          if (toUpdate[myKeys[i]]!==null) {
+            const fieldToUpdate = myKeys[i];
+            const newValue = toUpdate[myKeys[i]];
+            post = await Post.update({ postId, fieldToUpdate, newValue });
+          }
+        }
+    
+        return post;
+      }
   
     /**
      * Community : post 삭제

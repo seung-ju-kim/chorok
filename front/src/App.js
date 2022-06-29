@@ -10,27 +10,42 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
 
-const Footer = lazy(() => import("./components/Footer"));
 const Loginpage = lazy(() => import("./pages/Loginpage"));
 const Registerpage = lazy(() => import("./pages/Registerpage"));
 const Accountpage = lazy(() => import("./pages/Accountpage"));
 const Main = lazy(() => import("./components/Main"));
 const MyGardenpage = lazy(() => import("./pages/MyGardenpage"));
-const MyGardenDetail = lazy(() =>
-  import("./components/mygarden/MyGardenDetail")
+const MyPlant = lazy(() => import("./components/mygarden/MyPlant"));
+const MyScheduleList = lazy(() =>
+  import("./components/schedule/MyScheduleList")
 );
-const Community = lazy(() => import("./pages/Community"));
-
+const Communitypage = lazy(() => import("./pages/Communitypage"));
+const CommunityPosting = lazy(() =>
+  import("./components/community/CommunityPosting")
+);
+const CommunityCardDetail = lazy(() =>
+  import("./components/community/CommunityCardDetail")
+);
+const Diagnosispage = lazy(() => import("./pages/Diagnosispage"));
+const DiagnosisPicture = lazy(() =>
+  import("./components/diagnosis/DiagnosisPicture")
+);
+const DiagnosisResult = lazy(() =>
+  import("./components/diagnosis/DiagnosisResult")
+);
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 
 const theme = createTheme({
   typography: {
-    fontFamily: "IBM Plex Sans KR, sans-serif",
+    fontFamily: "EF_Diary",
   },
 });
 
@@ -69,7 +84,7 @@ function App() {
   }, []);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
   return (
     <ThemeProvider theme={theme}>
@@ -77,16 +92,46 @@ function App() {
       <DispatchContext.Provider value={dispatch}>
         <UserStateContext.Provider value={userState}>
           <Router>
-            <Suspense fallback={<div>Loading..</div>}>
-              <Footer />
+            <Header />
+            <Footer />
+            <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" exact element={<Main />} />
                 <Route path="/login" element={<Loginpage />} />
                 <Route path="/register" element={<Registerpage />} />
                 <Route path="/account" element={<Accountpage />} />
                 <Route path="/mygarden" element={<MyGardenpage />} />
-                <Route path="/mygarden/:id" element={<MyGardenDetail />} />
-                <Route path="/community" element={<Community />} />
+                <Route path="/mygarden/:id" element={<MyPlant />} />
+                <Route
+                  path="/mygarden/myschedule"
+                  element={<MyScheduleList />}
+                />
+
+                <Route path="/diagnosis" element={<Diagnosispage />} />
+                <Route
+                  path="/diagnosis/picture"
+                  element={<DiagnosisPicture />}
+                />
+                <Route
+                  path="/community/infoBoard"
+                  element={<Communitypage />}
+                />
+                <Route
+                  path="/community/infoBoard/:id"
+                  element={<CommunityCardDetail />}
+                />
+                <Route
+                  path="/community/freeBoard"
+                  element={<Communitypage />}
+                />
+                <Route
+                  path="/community/freeBoard/:id"
+                  element={<CommunityCardDetail />}
+                />
+                <Route
+                  path="/community/posting"
+                  element={<CommunityPosting />}
+                />
                 <Route path="*" element={<Main />} />
               </Routes>
             </Suspense>

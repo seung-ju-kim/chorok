@@ -1,47 +1,20 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Tab, Tabs, Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import FenceOutlinedIcon from "@mui/icons-material/FenceOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-
-const StyledTabs = styled((props) => (
-  <Tabs
-    {...props}
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))({
-  "& .MuiTabs-indicator": {
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
-  "& .MuiTabs-indicatorSpan": {
-    width: 0,
-  },
-});
-
-const LinkTab = (props) => {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-};
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const Footer = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
+  const { pathname } = useLocation();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { pathname } = useLocation();
+
   if (pathname === "/login" || pathname === "/register") return null;
   return (
     <Box
@@ -50,44 +23,57 @@ const Footer = () => {
         bottom: 0,
         bgcolor: "white",
         width: "100%",
-        p: 2,
+        py: 1,
         zIndex: 1,
+        borderTop: "2px solid #f1f3f5",
       }}
     >
-      <StyledTabs value={value} onChange={handleChange} textColor="inherit">
-        <LinkTab
-          icon={<CalendarMonthOutlinedIcon />}
-          value="1"
-          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-        <LinkTab
+      <BottomNavigation
+        value={value}
+        onChange={handleChange}
+        sx={{
+          "& .Mui-selected, .Mui-selected > svg": {
+            color: "black",
+          },
+        }}
+      >
+        <BottomNavigationAction
           icon={<FenceOutlinedIcon />}
-          value="2"
+          value="1"
+          label="MyGarden"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/mygarden");
           }}
         />
-        <LinkTab
-          icon={<ForumOutlinedIcon />}
-          value="3"
+        <BottomNavigationAction
+          icon={<LocalHospitalOutlinedIcon />}
+          value="2"
+          label="Diagnosis"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
-            navigate("/community");
+            navigate("/diagnosis");
           }}
         />
-        <LinkTab
-          icon={<PersonOutlineOutlinedIcon />}
+        <BottomNavigationAction
+          icon={<ForumOutlinedIcon />}
+          value="3"
+          label="Community"
+          sx={{ fontSize: "0.5rem", flexGrow: 1 }}
+          onClick={() => {
+            navigate("/community/infoBoard");
+          }}
+        />
+        <BottomNavigationAction
+          icon={<SettingsOutlinedIcon />}
           value="4"
+          label="Account"
           sx={{ fontSize: "0.5rem", flexGrow: 1 }}
           onClick={() => {
             navigate("/account");
           }}
         />
-      </StyledTabs>
+      </BottomNavigation>
     </Box>
   );
 };
