@@ -48,7 +48,7 @@ const CommunityComment = ({ content, setContentList, setPage }) => {
       setPage(1);
       setContentList(res.data.comments);
     } catch (e) {
-      const errorMessage = e.response.data.message;
+      const errorMessage = e.response.data;
       styleSnackbar(errorMessage, "warning");
     }
   };
