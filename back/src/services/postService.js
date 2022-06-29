@@ -18,7 +18,7 @@ class postService {
     /**
      * Community : post 읽기
      */
-    static async getPost(postId) {
+    static async getPostById(postId) {
       const post = await Post.findPostById(postId);
       return post; 
     }

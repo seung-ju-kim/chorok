@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import dayjs from "dayjs";
 
 import DiaryEditModal from "./DiaryEditModal";
 import ConfirmDialog from "../dialog/ConfirmDialog";
@@ -65,7 +64,7 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
   };
 
   return (
-    <Card sx={{ height: "400px", mx: "auto", minWidth: "300px" }}>
+    <Card sx={{ mx: "auto", maxWidth: "800px" }}>
       {diary.imageURL && (
         <>
           {isLoading ? (

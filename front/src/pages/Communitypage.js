@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import CommunityMain from "../components/community/CommunityMain";
 
-const Community = () => {
+const Communitypage = ({ type }) => {
   return (
     <Box
       sx={{
@@ -12,9 +12,9 @@ const Community = () => {
         overflow: "auto",
       }}
     >
-      <CommunityMain />
+      <CommunityMain type={type} />
     </Box>
   );
 };
 
-export default Community;
+export default Communitypage;

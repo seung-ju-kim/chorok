@@ -1,26 +1,6 @@
 import { Schema, model } from "mongoose";
 
-/**
- * @swagger
- * components:
- *   schemas: 
- *     User: 
- *       type: obejct
- *       required:
- *         - id
- *         - email
- *         - name
- *         - password
- *       properties:
- *         id: 
- *           type: string
- *         email: 
- *           type: string
- *         name: 
- *           type: string
- *         password: 
- *           type: string
- */
+
 
 const UserSchema = new Schema(
   {

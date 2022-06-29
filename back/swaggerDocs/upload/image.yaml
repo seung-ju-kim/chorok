@@ -1,0 +1,37 @@
+post:
+  tags:
+    - upload
+  summary: 하나의 이미지를 업로드합니다.
+  description: 하나의 이미지를 업로드합니다.
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            file:
+              type: string
+              format: binary
+              description: 업로드한 파일의 정보
+  responses:
+    '200':
+      description: 이미지가 정상적으로 업로드되었습니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              message:
+                type: string
+                description: 업로드 성공 여부
+              imageURL:
+                type: string
+                format: url
+                description: 업로드한 파일의 접근 경로
+              fileName:
+                type: string
+                description: 업로드한 파일의 이름

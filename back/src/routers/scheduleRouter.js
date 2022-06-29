@@ -1,8 +1,6 @@
 import { Router } from "express";
-import { plantService } from "../services/plantService";
-import { Plant } from "../db";
+import { scheduleService } from "../services/scheduleService";
 import { login_required } from "../middlewares/login_required";
-import dayjs from "dayjs";
 
 const scheduleRouter = Router();
 
@@ -15,12 +13,8 @@ scheduleRouter.get(
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      const schedules = await plantService.getSchedulesByUserId({ userId });
-      const todaySchedules = schedules.filter((schedule) => {
-      let isToday = dayjs(schedule.date).format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD");
-        // let isFalse = !schedule.isChecked;
-        return isToday;
-    });
+      const todaySchedules = await scheduleService.getTodaySchedules({ userId });
+
       res.status(200).json(todaySchedules);
     } catch (error) {
       next(error);
@@ -37,10 +31,8 @@ scheduleRouter.get(
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      const schedules = await plantService.getSchedulesByUserId({ userId });
-      const fulfillSchedules = schedules.filter((schedule) => {
-        return schedule.isChecked;
-      });
+      const fulfillSchedules = await scheduleService.getFulfillSchedules({ userId });
+
       res.status(200).json(fulfillSchedules);
     } catch (error) {
       next(error);
@@ -57,13 +49,8 @@ scheduleRouter.get(
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      const schedules = await plantService.getSchedulesByUserId({ userId });
-      const pendingSchedules = schedules.filter((schedule) => {
-        return dayjs().isBefore(
-          dayjs(schedule.date).format("YYYY-MM-DD"),
-          "day"
-        );
-      });
+      const pendingSchedules = await scheduleService.getPendingSchedules({ userId });
+
       res.status(200).json(pendingSchedules);
     } catch (error) {
       next(error);
@@ -83,23 +70,11 @@ scheduleRouter.post(
       const scheduleId = req.params.scheduleId;
       const isChecked = req.body.isChecked ?? false;
 
-      const updatedSchedulePlant = await Plant.updateSchedule({
-        plantId,
-        scheduleId,
-        isChecked,
-      }).then((plant) => {
-        const lastSchedule = plant.schedule[plant.schedule.length - 1];
-        const copiedLastSchedule = new Date(lastSchedule.date.getTime());
-        const termWater = plant.termWater;
-        const nextSchedule = copiedLastSchedule.setDate(
-          copiedLastSchedule.getDate() + termWater
-        );
-        if (lastSchedule.isChecked == true) {
-          plant.schedule.push({ date: nextSchedule, isChecked: false });
-        }
-        return plant;
-      });
-
+      const updatedSchedulePlant = await scheduleService.checkAndUpdateSchedule({
+        plantId, 
+        scheduleId, 
+        isChecked
+      })
       res.status(200).json(updatedSchedulePlant);
     } catch (error) {
       next(error);
