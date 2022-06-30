@@ -1,5 +1,5 @@
 import { PlantModel } from "../schemas/plant";
-
+import dayjs from "dayjs";
 
 class Plant{
 
@@ -78,9 +78,15 @@ class Plant{
   }
 
   static async updateSchedule({plantId, scheduleId, isChecked }) {
+    const today = new Date();
+    
     const updatedSchedule = await PlantModel.findOne({
       _id: plantId
     }).then((plant) =>{
+      if (dayjs().isBefore(dayjs(plant.schedule.id(scheduleId).date), "day")){
+        const error = new Error("예정된 스케줄은 체크할 수 없습니다.");
+        throw error;
+      }
       plant.schedule.id(scheduleId).set({isChecked:isChecked});
       plant.save();
       return plant;
