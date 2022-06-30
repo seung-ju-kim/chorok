@@ -1,7 +1,5 @@
-import ssl
-from flask import Flask, render_template, request, jsonify, Blueprint
+from flask import Flask, render_template, request, jsonify, Blueprint,abort
 from dotenv import load_dotenv
-from pymongo import DESCENDING
 from torchvision import transforms as T
 import torch
 import urllib.request
@@ -11,6 +9,10 @@ import json
 from PIL import Image
 import numpy as np
 import ssl
+from pytorch_resnet_cifar10 import resnet
+from pytorch_metric_learning.utils import common_functions as c_f
+from pytorch_metric_learning.utils.inference import InferenceModel, MatchFinder
+from pytorch_metric_learning.distances import CosineSimilarity
 ml = Blueprint('ml', __name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 load_dotenv()
@@ -23,17 +25,6 @@ aws_region = os.environ.get("AWS_REGION")
 @ml.route('/')
 def main():
     return render_template('home.html')
-
-
-def count_frequency(my_list):
-
-    count = {}
-
-    for item in my_list:
-        count[item] = count.get(item, 0) + 1
-
-    return count
-
 
 def edge_and_cut(img):
     emb_img = img.copy()
@@ -53,7 +44,6 @@ def edge_and_cut(img):
 
 
 def work(imgs):
-    imgs = imgs.unsqueeze(0)
     model2=torch.load('k_cross_CNN_version4.pt', map_location=device)
     model2.eval()
     with torch.no_grad():
@@ -75,15 +65,14 @@ def work(imgs):
 
 @ml.route('/predict/<name>', methods=['GET'])
 def predict(name):
-    try:
-        def s3_get_image_url( name):
+    def s3_get_image_url( name):
                     # location=s3.get_bucket_location(Bucket="ap-northeast-2")["LocationConstraint"]
             return f"https://s3.{aws_region}.amazonaws.com/{bucket}/diag_img/{name}"
-        context = ssl._create_unverified_context()
+    context = ssl._create_unverified_context()
+    try:
         req = urllib.request.urlopen(s3_get_image_url(name), context=context)
     except:
-        print('s3에 해당파일이 없습니다!')
-
+        abort(403)
     img = np.asarray(bytearray(req.read()), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -97,10 +86,21 @@ def predict(name):
         # T.Normalize([0.431, 0.498,  0.313], [0.237, 0.239, 0.227]),  # custom
     ])
     img=VALID_TRANSFORM(img)
+    img = img.unsqueeze(0)
+    #metric_learning
+    match_finder = MatchFinder(distance=CosineSimilarity(), threshold=0.7)
+    new_model=torch.nn.DataParallel(resnet.resnet20())
+    new_model.load_state_dict(torch.load('index.pt'))
+    new_model.module.linear = c_f.Identity()
+    inference_model = InferenceModel(new_model, match_finder=match_finder)
+    inference_model.load_knn_func("firstmodel.index")
+    distances,_ = inference_model.get_nearest_neighbors(img, k=1)
+    print(distances)
+    if distances>=0.045:
+        return "misCategory" #이상한 거 올경우
     idx,temp=work(img)
     stat=[temp[i] for i in idx]
-    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
-    #print(idx)
+    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#':4}
     def get_key(val):
         for key, value in my_dict.items():
             if val == value:
@@ -109,9 +109,10 @@ def predict(name):
         return "There is no such Key"
     result_dict={}
     for i in range(0,2):
-        if stat[i]>=0.6:
-            result_dict[get_key(idx[i])]=round(float(stat[i]),3)
-        # if get_key(idx[i]=='healthy') and stat[i]==1.0:
-        #     result_dict={'healthy':1.0}
-    print(json.dumps(result_dict))
-    return json.dumps(result_dict)
+        if (np.max(stat))>=0.6:           
+            if stat[i]>=0.6:
+                result_dict[get_key(idx[i])]=round(float(stat[i]),3)
+            else: pass
+        else: return "misTest"
+    #print(result_dict)
+    return jsonify(result_dict)
