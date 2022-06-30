@@ -14,6 +14,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
+  console.log(result);
   return (
     <Dialog
       fullScreen
@@ -106,7 +107,13 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <Typography>{result.diseaseList[0]?.solution}</Typography>
+                {result.diseaseList[0]?.mission.map((solution, i) => {
+                  return (
+                    <Typography>
+                      {i + 1}. {solution}
+                    </Typography>
+                  );
+                })}
               </Grid>
               <Box sx={{ width: "100%", my: 3 }}>
                 <Divider />
