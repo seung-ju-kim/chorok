@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import defaultImage from "../../imgs/default_image.webp";
+import defaultImage from "../../imgs/default_image.jpg";
 
 const CommunityCard = ({ board }) => {
   const navigate = useNavigate();

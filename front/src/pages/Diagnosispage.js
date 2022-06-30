@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
 import Diagnosis from "../components/diagnosis/Diagnosis";
-import diagnosis from "../imgs/diagnosis.webp";
+import diagnosis from "../imgs/diagnosis.jpg";
 
 const Diagnosispage = () => {
   return (

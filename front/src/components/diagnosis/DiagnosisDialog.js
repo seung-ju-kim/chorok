@@ -13,10 +13,10 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 
-import correct from "../../imgs/correct.webp";
-import manySpecies from "../../imgs/manySpecies.webp";
-import tooFar from "../../imgs/tooFar.webp";
-import filtered from "../../imgs/filtered.webp";
+import correct from "../../imgs/correct.jpg";
+import manySpecies from "../../imgs/manySpecies.jpg";
+import tooFar from "../../imgs/tooFar.jpg";
+import filtered from "../../imgs/filtered.jpg";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
@@ -61,13 +61,21 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
           </Box>
           <Grid container columnSpacing={1} rowSpacing={3}>
             <Grid item xs={10} sx={{ mx: "auto", textAlign: "center", mb: 4 }}>
-              <Box
-                component="img"
-                src={correct}
-                width="50%"
-                height="100%"
-                sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
-              />
+              <Box component="picture">
+                <Box
+                  component="source"
+                  type="image/webp"
+                  srcset="correct.webp"
+                />
+                <Box component="source" type="image/jpg" srcset="correct.jpg" />
+                <Box
+                  component="img"
+                  src={correct}
+                  width="50%"
+                  height="100%"
+                  sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
+                />
+              </Box>
               <IconButton>
                 <ExpandCircleDownOutlinedIcon sx={{ color: "green" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
@@ -77,13 +85,25 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
             </Grid>
 
             <Grid item xs={4} sx={{ mx: "auto", textAlign: "center" }}>
-              <Box
-                component="img"
-                src={filtered}
-                width="100%"
-                height="100%"
-                sx={{ borderRadius: "50%" }}
-              />
+              <Box component="picture">
+                <Box
+                  component="source"
+                  type="image/webp"
+                  srcset="filtered.webp"
+                />
+                <Box
+                  component="source"
+                  type="image/jpg"
+                  srcset="filtered.jpg"
+                />
+                <Box
+                  component="img"
+                  src={filtered}
+                  width="100%"
+                  height="100%"
+                  sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
+                />
+              </Box>
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
@@ -92,13 +112,21 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               </IconButton>
             </Grid>
             <Grid item xs={4} sx={{ mx: "auto", textAlign: "center" }}>
-              <Box
-                component="img"
-                src={tooFar}
-                width="100%"
-                height="100%"
-                sx={{ borderRadius: "50%", objectFit: "cover" }}
-              />
+              <Box component="picture">
+                <Box
+                  component="source"
+                  type="image/webp"
+                  srcset="tooFar.webp"
+                />
+                <Box component="source" type="image/jpg" srcset="tooFar.jpg" />
+                <Box
+                  component="img"
+                  src={tooFar}
+                  width="100%"
+                  height="100%"
+                  sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
+                />
+              </Box>
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
@@ -107,13 +135,25 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               </IconButton>
             </Grid>
             <Grid item xs={4} sx={{ mx: "auto", textAlign: "center" }}>
-              <Box
-                component="img"
-                src={manySpecies}
-                width="100%"
-                height="100%"
-                sx={{ borderRadius: "50%", objectFit: "cover" }}
-              />
+              <Box component="picture">
+                <Box
+                  component="source"
+                  type="image/webp"
+                  srcset="manySpecies.webp"
+                />
+                <Box
+                  component="source"
+                  type="image/jpg"
+                  srcset="manySpecies.jpg"
+                />
+                <Box
+                  component="img"
+                  src={manySpecies}
+                  width="100%"
+                  height="100%"
+                  sx={{ display: "block", mx: "auto", borderRadius: "50%" }}
+                />
+              </Box>
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>

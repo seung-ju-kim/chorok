@@ -50,13 +50,12 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     if (res.data.comments) {
       setContentList((prev) => [...prev, ...res.data.comments]);
       setLastPage(res.data.lastPage);
-    } else {
-      console.log(res);
     }
     setIsLoading(false);
   }, [page]);
 
-  const postComment = async () => {
+  const postComment = async (e) => {
+    e.preventDefault();
     try {
       await Api.post(`comments`, {
         postId: id,
@@ -70,13 +69,6 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     } catch (e) {
       const errorMessage = e.response.data;
       styleSnackbar(errorMessage, "warning");
-    }
-  };
-
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      postComment();
     }
   };
 
@@ -115,21 +107,26 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             댓글 목록
           </DialogContentText>
         </DialogContent>
-        {/* <hr /> */}
       </DialogTitle>
-      <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
+      <Box
+        sx={{ px: 3 }}
+        onSubmit={postComment}
+        component="form"
+        autoComplete="off"
+        noValidate
+      >
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="standard-adornment-comment">
             댓글 달기...
           </InputLabel>
+
           <Input
-            onKeyPress={handleOnKeyPress}
             value={comment}
             id="standard-adornment-comment"
             onChange={(e) => setComment(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
-                <Button onClick={postComment}>게시</Button>
+                <Button type="submit">게시</Button>
               </InputAdornment>
             }
           />
@@ -143,6 +140,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
               content={content}
               setContentList={setContentList}
               setPage={setPage}
+              contentList={contentList}
             />
           );
         })}

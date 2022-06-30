@@ -16,7 +16,7 @@ import { useSnackbar } from "notistack";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.webp";
+import defaultImg from "../../imgs/default_image.jpg";
 
 const MyPlantImageEditModal = ({
   plants,

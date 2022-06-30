@@ -10,7 +10,7 @@ import {
 
 import * as Api from "../../api";
 
-const MyScheduleCard = ({ myPlant, setMyPlants }) => {
+const MyScheduleCard = ({ myPlant, setMyPlants, getList }) => {
   const navigate = useNavigate();
 
   // 물주기
@@ -18,8 +18,7 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
     await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
       isChecked: true,
     });
-    const res = await Api.get("schedules");
-    setMyPlants(res.data);
+    await getList();
   };
 
   return (
@@ -50,12 +49,15 @@ const MyScheduleCard = ({ myPlant, setMyPlants }) => {
 
       <CardActions>
         {!myPlant.isChecked ? (
-          <Button onClick={watering}>물주기</Button>
+          <Button onClick={watering} color="success">
+            물주기
+          </Button>
         ) : (
           <Button
             onClick={() => {
               alert("이미 물을 주셨습니다.");
             }}
+            color="warning"
           >
             완료
           </Button>

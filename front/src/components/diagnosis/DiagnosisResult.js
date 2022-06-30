@@ -9,6 +9,7 @@ import {
   Typography,
   Grid,
   Button,
+  Divider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -20,7 +21,6 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
       onClose={() => {
         setOpenResult(false);
       }}
-      fullWidth
     >
       <DialogTitle sx={{ pt: 5, bgcolor: "white" }}>
         <IconButton
@@ -37,63 +37,89 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
         >
           <CloseIcon />
         </IconButton>
+        <Typography textAlign="center" sx={{ mt: 3 }}>
+          당신의 식물은{" "}
+          <Typography
+            variant="h6"
+            component="span"
+            fontWeight="bold"
+            fontFamily="CookieRun-Regular"
+          >
+            {result.diseaseList[0]?.percent}%
+          </Typography>{" "}
+          확률로{" "}
+          <Typography
+            variant="h6"
+            component="span"
+            fontWeight="bold"
+            fontFamily="CookieRun-Regular"
+          >
+            {result.diseaseList[0]?.korean}
+          </Typography>
+          입니다.
+        </Typography>
       </DialogTitle>
       <Box>
-        <DialogContent>
-          <Box component="img" width="100%" src={result.imageURL} />
+        <DialogContent sx={{ py: 0 }}>
+          <Box textAlign="center">
+            <Box
+              sx={{ borderRadius: "20px", my: 3, border: "2px solid gray" }}
+              component="img"
+              width="80%"
+              src={result.imageURL}
+              maxWidth="800px"
+            />
+          </Box>
           {result.diseaseList[0]?.korean === "정상" ? (
-            <Typography variant="h6">
-              AI 의사가 당신의 식물을 진단하였습니다. 당신의 식물은 정상입니다.
+            <Typography variant="h5" textAlign="center" sx={{ mb: 10 }}>
+              당신의 식물은 정상입니다.
             </Typography>
           ) : (
             <Grid container rowSpacing={3}>
               <Grid item xs={12}>
-                <Typography>
-                  AI 의사가 당신의 식물을 진단하였습니다. 당신의 식물은{" "}
-                  <Typography
-                    component="span"
-                    fontWeight="bold"
-                    fontFamily="CookieRun-Regular"
-                  >
-                    {result.diseaseList[0]?.percent}%
-                  </Typography>{" "}
-                  확률로{" "}
-                  <Typography
-                    component="span"
-                    fontWeight="bold"
-                    fontFamily="CookieRun-Regular"
-                  >
-                    {result.diseaseList[0]?.korean}
-                  </Typography>
-                  입니다.
-                </Typography>
+                <Box sx={{ width: "100%", mt: 3 }}>
+                  <Divider textAlign="left">
+                    <Typography
+                      variant="h6"
+                      component="span"
+                      fontWeight="bold"
+                      fontFamily="CookieRun-Regular"
+                    >
+                      {result.diseaseList[0]?.korean}
+                    </Typography>
+                  </Divider>
+                </Box>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
-                  <Typography
-                    component="span"
-                    fontWeight="bold"
-                    fontFamily="CookieRun-Regular"
-                  >
-                    {result.diseaseList[0]?.korean}
-                  </Typography>
-                  이란? {result.diseaseList[0]?.symptom}
-                </Typography>
+                <Typography>{result.diseaseList[0]?.symptom}</Typography>
+                <Box sx={{ width: "100%", mt: 3 }}>
+                  <Divider textAlign="left">
+                    <Typography
+                      variant="h6"
+                      component="span"
+                      fontWeight="bold"
+                      fontFamily="CookieRun-Regular"
+                    >
+                      관리법
+                    </Typography>
+                  </Divider>
+                </Box>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
-                  <Typography component="span"> 관리법</Typography> :
-                  {result.diseaseList[0]?.solution}
-                </Typography>
+                <Typography>{result.diseaseList[0]?.solution}</Typography>
               </Grid>
+              <Box sx={{ width: "100%", my: 3 }}>
+                <Divider />
+              </Box>
             </Grid>
           )}
         </DialogContent>
-        <DialogActions sx={{ px: 10, py: 5 }}>
+        <DialogActions sx={{ pb: 5 }}>
           <Button
             onClick={() => {
               setOpenResult(false);
             }}
+            size="large"
             color="success"
             variant="contained"
             sx={{

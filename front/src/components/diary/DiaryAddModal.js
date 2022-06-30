@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useSnackbar } from "notistack";
 
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.webp";
+import defaultImg from "../../imgs/default_image.jpg";
 
 const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
   // useParams, useNavigate
