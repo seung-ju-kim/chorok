@@ -18,11 +18,12 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
     const diseaseList = []
     for (const [key, value] of Object.entries(diagList)){
       let disease = await diagService.getDisease(key);
-      disease.percent = value*100;
+      disease["percent"] = value >= 0.99 ? 98.8888 : value*100;
       diseaseList.push(disease);
     };
 
     const result = { diseaseList, imageURL };
+    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     next(error);

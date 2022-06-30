@@ -25,6 +25,9 @@ const diaryService = {
    */
   getDiariesByPlantId : async(plantId) => {
     const diaries = await Diary.findDiariesByPlantId(plantId);
+    diaries.map((diary)=>{
+      diary.createdAt.setHours(diary.createdAt.getHours()+9);
+    })
     return diaries;
   },
   /**
