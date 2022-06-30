@@ -23,7 +23,6 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
     };
 
     const result = { diseaseList, imageURL };
-    console.log(result);
     res.status(200).json(result);
   } catch (error) {
     next(error);
