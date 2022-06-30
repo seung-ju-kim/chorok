@@ -46,7 +46,7 @@ extra_args['img_size']=384
 # class_map= ClassMap(classes)
 class_map={'background': 0, 'unhealthy': 1, 'healthy': 2}
 model=model_type.model(backbone=backbone(pretrained=False),num_classes=3,**extra_args)
-state_dict= torch.load('bs_yolo.pth',map_location=torch.device('cpu'))
+state_dict= torch.load('final_yolo.pth',map_location=torch.device('cpu'))
 model.load_state_dict(state_dict)
 valid_tfms = tfms.A.Adapter(
     [*tfms.A.resize_and_pad(384), tfms.A.Normalize()])
