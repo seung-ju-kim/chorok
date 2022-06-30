@@ -7,18 +7,32 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { useSnackbar } from "notistack";
+import dayjs from "dayjs";
 
 import * as Api from "../../api";
 
 const MyScheduleCard = ({ myPlant, setMyPlants, getList }) => {
   const navigate = useNavigate();
 
+  // 스낵바
+  const { enqueueSnackbar } = useSnackbar();
+  const styleSnackbar = (message, variant) => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar(message, { variant });
+  };
+
   // 물주기
   const watering = async () => {
-    await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
-      isChecked: true,
-    });
-    await getList();
+    try {
+      await Api.post(`plants/${myPlant.plantId}/${myPlant._id}`, {
+        isChecked: true,
+      });
+      await getList();
+      styleSnackbar("식물에 물을 주셨습니다.", "success");
+    } catch (e) {
+      styleSnackbar(e.response.data, "error");
+    }
   };
 
   return (
@@ -31,13 +45,14 @@ const MyScheduleCard = ({ myPlant, setMyPlants, getList }) => {
       }}
     >
       <CardContent
+        sx={{ cursor: "pointer", width: "100%" }}
         onClick={() => {
           navigate(`/mygarden/${myPlant.plantId}`);
         }}
       >
         <Typography>
           <Typography component="span" sx={{ fontWeight: "bold" }}>
-            {myPlant.nickname}
+            {myPlant.nickname}{" "}
           </Typography>
           물 주는 날입니다.
         </Typography>
@@ -48,20 +63,12 @@ const MyScheduleCard = ({ myPlant, setMyPlants, getList }) => {
       </CardContent>
 
       <CardActions>
-        {!myPlant.isChecked ? (
-          <Button onClick={watering} color="success">
-            물주기
-          </Button>
-        ) : (
-          <Button
-            onClick={() => {
-              alert("이미 물을 주셨습니다.");
-            }}
-            color="warning"
-          >
-            완료
-          </Button>
-        )}
+        {!myPlant.isChecked &&
+          myPlant.date.split("T")[0] === dayjs().format("YYYY-MM-DD") && (
+            <Button onClick={watering} color="success">
+              물주기
+            </Button>
+          )}
       </CardActions>
     </Card>
   );

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
-  Typography,
+  Card,
   Grid,
   ToggleButton,
   ToggleButtonGroup,
+  CardContent,
+  Typography,
 } from "@mui/material";
-import dayjs from "dayjs";
 
 import MyScheduleCard from "./MyScheduleCard";
 import * as Api from "../../api";
@@ -48,7 +48,6 @@ const MyScheduleList = () => {
         aria-label="text alignment"
         sx={{
           mb: 3,
-          ".Mui-selected, .Mui-selected:hover": { bgcolor: "#64a68a" },
           ".MuiToggleButtonGroup-grouped": {
             border: 0,
           },
@@ -64,33 +63,57 @@ const MyScheduleList = () => {
       {alignment === "today" ? (
         <>
           <Grid container spacing={2}>
-            {schedules.map((myPlant, i) => {
-              return (
-                <Grid item xs={12} key={i}>
-                  <MyScheduleCard
-                    setMyPlants={setSchedules}
-                    myPlant={myPlant}
-                    getList={getSchedule}
-                  />
-                </Grid>
-              );
-            })}
+            {schedules.length === 0 ? (
+              <Grid item xs={12}>
+                <Card sx={{ mt: 10, maxWidth: "700px", mx: "auto" }}>
+                  <CardContent sx={{ m: 5 }}>
+                    <Typography textAlign="center">
+                      오늘 예정된 스케줄이 없습니다.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ) : (
+              schedules.map((myPlant, i) => {
+                return (
+                  <Grid item xs={12} key={i}>
+                    <MyScheduleCard
+                      setMyPlants={setSchedules}
+                      myPlant={myPlant}
+                      getList={getSchedule}
+                    />
+                  </Grid>
+                );
+              })
+            )}
           </Grid>
         </>
       ) : (
         <>
           <Grid container spacing={2}>
-            {pendingschedules.map((myPlant, i) => {
-              return (
-                <Grid item xs={12} key={i}>
-                  <MyScheduleCard
-                    setMyPlants={setPendingSchedules}
-                    myPlant={myPlant}
-                    getList={getPendingSchedule}
-                  />
-                </Grid>
-              );
-            })}
+            {pendingschedules.length === 0 ? (
+              <Grid item xs={12}>
+                <Card sx={{ maxWidth: "700px", mx: "auto" }}>
+                  <CardContent sx={{ m: 5 }}>
+                    <Typography textAlign="center">
+                      예정된 스케줄이 없습니다.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ) : (
+              pendingschedules.map((myPlant, i) => {
+                return (
+                  <Grid item xs={12} key={i}>
+                    <MyScheduleCard
+                      setMyPlants={setPendingSchedules}
+                      myPlant={myPlant}
+                      getList={getPendingSchedule}
+                    />
+                  </Grid>
+                );
+              })
+            )}
           </Grid>
         </>
       )}
