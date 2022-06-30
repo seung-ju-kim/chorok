@@ -97,10 +97,10 @@ def predict(name):
     distances,_ = inference_model.get_nearest_neighbors(img, k=1)
     print(distances)
     if distances>=0.045:
-        return "촬영 예시에 맞게 찍어주세요"
+        return "misCategory" #이상한 거 올경우
     idx,temp=work(img)
     stat=[temp[i] for i in idx]
-    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#,'rust':4}
+    my_dict={'rust': 0,'frog eye leaf spot': 1,'healthy': 2,'powdery mildew': 3,'scab': 4}#':4}
     def get_key(val):
         for key, value in my_dict.items():
             if val == value:
@@ -113,6 +113,6 @@ def predict(name):
             if stat[i]>=0.6:
                 result_dict[get_key(idx[i])]=round(float(stat[i]),3)
             else: pass
-        else: return "잎을 한장만 찍어주세요!"
+        else: return "misTest"
     #print(result_dict)
     return jsonify(result_dict)
