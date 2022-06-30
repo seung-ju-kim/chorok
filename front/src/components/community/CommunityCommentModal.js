@@ -28,7 +28,6 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [page, setPage] = useState(1);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false); //로딩 스피너
-  const [lastPage, setLastPage] = useState(0);
 
   // 스낵바
   const { enqueueSnackbar } = useSnackbar();
@@ -37,22 +36,15 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     enqueueSnackbar(message, { variant });
   };
 
-  useEffect(() => {
-    if (page >= 0) {
-      getComment();
-    }
-  }, [page]);
-
   const getComment = useCallback(async () => {
     setIsLoading(true);
     // Get Data Code
     const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
     if (res.data.comments) {
       setContentList((prev) => [...prev, ...res.data.comments]);
-      setLastPage(res.data.lastPage);
     }
     setIsLoading(false);
-  }, [page]);
+  }, [page, id]);
 
   const postComment = async (e) => {
     e.preventDefault();
@@ -71,6 +63,12 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
       styleSnackbar(errorMessage, "warning");
     }
   };
+
+  useEffect(() => {
+    if (page >= 0) {
+      getComment();
+    }
+  }, [page, getComment]);
 
   const handleClick = async () => {
     setPage((prev) => prev + 1);
