@@ -14,7 +14,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
-  console.log(result);
   return (
     <Dialog
       fullScreen
