@@ -1,0 +1,89 @@
+get:
+  tags:
+    - users
+  summary: 로그인한 user의 정보를 찾습니다.
+  description: jwt 토큰으로부터 확인된 userId로 user 정보를 찾습니다.
+  responses:
+    '200':
+      description: user 정보가 정상적으로 조회됩니다.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              post:
+                $ref: "./userSchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '401': 
+      description: unAuthorized
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 유효한 인증이 아닙니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
+
+delete:
+  tags:
+    - users
+  summary: 회원 탈퇴를 진행합니다.
+  description:  회원 탈퇴를 진행합니다.
+  responses:
+    '200':
+      description: 회원 탈퇴가 정상적으로 진행되었습니다. 
+      content:
+        application/json:
+          schema:
+            properties: 
+              result: 
+                type: string
+                description: 탈퇴되었습니다.
+          example: 탈퇴되었습니다. 
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '401': 
+      description: unAuthorized
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 유효한 인증이 아닙니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
