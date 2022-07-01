@@ -6,7 +6,7 @@ import LoginForm from "../components/user/LoginForm";
 
 const Loginpage = () => {
   // style
-  const boxStyle = {
+  const textBoxStyle = {
     color: "white",
     position: "absolute",
     top: "15%",
@@ -16,11 +16,11 @@ const Loginpage = () => {
     zIndex: 1,
   };
   const videoBoxStyle = {
-    width: "100vw",
+    width: "100%",
     height: "calc(var(--vh, 1vh) * 100)",
-    display: "block",
     overflow: "hidden",
     "&::before": {
+      display: "block",
       content: "''",
       top: 0,
       left: 0,
@@ -38,7 +38,7 @@ const Loginpage = () => {
   };
   return (
     <>
-      <Box sx={boxStyle}>
+      <Box sx={textBoxStyle}>
         <Typography
           align="center"
           fontSize="4rem"

@@ -1,6 +1,3 @@
-:root {
-  --vh: 100%;
-}
 @font-face {
   font-family: "Hi Melody";
   src: url(./fonts/HiMelody-Regular.ttf) format("truetype");

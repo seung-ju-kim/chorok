@@ -108,7 +108,7 @@ const DiagnosisResult = ({ result, openResult, setOpenResult }) => {
               <Grid item xs={12}>
                 {result.diseaseList[0]?.mission.map((solution, i) => {
                   return (
-                    <Typography>
+                    <Typography key={i}>
                       {i + 1}. {solution}
                     </Typography>
                   );
