@@ -1,6 +1,6 @@
 get:
   tags:
-    - plants
+    - schedules
   summary: 오늘 날짜의 물주기 스케줄(schedule) 목록을 조회합니다.
   description: 오늘 날짜의 물주기 스케줄(schedule) 목록을 조회합니다.
   responses:
