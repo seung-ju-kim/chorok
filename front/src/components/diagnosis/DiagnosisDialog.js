@@ -79,7 +79,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <IconButton>
                 <ExpandCircleDownOutlinedIcon sx={{ color: "green" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
-                  적당한 거리
+                  잎 한장
                 </Typography>
               </IconButton>
             </Grid>
@@ -157,7 +157,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
-                  다양한 종
+                  잎 여러장
                 </Typography>
               </IconButton>
             </Grid>
