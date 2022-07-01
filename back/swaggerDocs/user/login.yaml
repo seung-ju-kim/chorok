@@ -48,4 +48,31 @@ post:
                   description:
                     type: string
                     description: user가 등록한 자기소개
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '401': 
+      description: unAuthorized
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 유효한 인증이 아닙니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
                 
