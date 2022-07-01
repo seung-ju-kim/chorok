@@ -1,17 +1,20 @@
 @font-face {
   font-family: "Hi Melody";
   src: url(./fonts/HiMelody-Regular.ttf) format("truetype");
+  font-display: swap;
 }
 @font-face {
   font-family: "EF_Diary";
   font-weight: 100;
   src: url(./fonts/EF_Diary.ttf) format("truetype");
+  font-display: swap;
 }
 @font-face {
   font-family: "CookieRun-Regular";
   src: url("./fonts/CookieRun\ Regular.ttf") format("woff");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 .completed {
   text-decoration: line-through;
