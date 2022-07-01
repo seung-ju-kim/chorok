@@ -1,0 +1,30 @@
+
+type: array
+items:
+  type: object
+  properties:
+    _id:
+      type: string
+      description: schedule를 구분하는 ObjectId
+    userId:
+      type: string
+      format: uuid
+      description: 로그인한 유저의 식별id
+    plantId:
+      type: string
+      description: schedule이 속한 plant를 구분하는 ObjectId
+    nickname: 
+      type: string
+      description: schedule이 속한 plant의 애칭
+    species:
+      type: string
+      description: schedule이 속한 plant의 품종
+    date:
+      type: string
+      format: date-time
+      description: schedule 날짜
+    isChecked:
+      type: boolean
+      description: schedule 체크 상태
+    
+              
