@@ -22,20 +22,20 @@ paths:
     $ref: "./user/login.yaml"
   # /users/list:
   #   $ref: "./user/register.yaml"
-  # /users/current:
-  #   $ref: "./user/current.yaml"
+  /users/current:
+    $ref: "./user/current.yaml"
   /users/{id}:
     $ref: "./user/users-id.yaml"
   /plants:
     $ref: "./plant/plants.yaml"
   /plants/{id}:
     $ref: "./plant/plants-id.yaml"
+  /plants/{id}/{scheduleId}:
+    $ref: "./plant/plants-id-scheduleId.yaml"
   /schedules:
     $ref: "./schedule/schedules.yaml"
   /pendingschedules:
     $ref: "./schedule/pendingschedules.yaml"
-  /plants/{id}/{scheduleId}:
-    $ref: "./plant/plants-id-scheduleId.yaml"
   /diaries:
     $ref: "./diary/diaries.yaml"
   /diaries/{plantId}:
