@@ -22,10 +22,10 @@ paths:
     $ref: "./user/login.yaml"
   # /users/list:
   #   $ref: "./user/register.yaml"
-  /users/current:
-    $ref: "./user/current.yaml"
   /users/{id}:
     $ref: "./user/users-id.yaml"
+  /users/current:
+    $ref: "./user/current.yaml"
   /plants:
     $ref: "./plant/plants.yaml"
   /plants/{id}:
