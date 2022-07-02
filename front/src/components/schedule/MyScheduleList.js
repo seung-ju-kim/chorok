@@ -65,7 +65,7 @@ const MyScheduleList = () => {
           <Grid container spacing={2}>
             {schedules.length === 0 ? (
               <Grid item xs={12}>
-                <Card sx={{ mt: 10, maxWidth: "700px", mx: "auto" }}>
+                <Card sx={{ maxWidth: "700px", mx: "auto" }}>
                   <CardContent sx={{ m: 5 }}>
                     <Typography textAlign="center">
                       오늘 예정된 스케줄이 없습니다.

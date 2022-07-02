@@ -36,7 +36,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
       onClose={() => {
         setOpenDiagnosisDialog(false);
       }}
-      fullWidth
+      sx={{ maxWidth: "600px", mx: "auto" }}
     >
       <DialogTitle sx={{ bgcolor: "white" }}>
         <IconButton
@@ -130,7 +130,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
-                  먼 거리
+                  잎 여러장
                 </Typography>
               </IconButton>
             </Grid>
@@ -157,7 +157,7 @@ const DiagnosisDialog = ({ openDiagnosisDialog, setOpenDiagnosisDialog }) => {
               <IconButton>
                 <CancelOutlinedIcon sx={{ color: "red" }} />
                 <Typography variant="body1" sx={{ color: "black" }}>
-                  잎 여러장
+                  다양한 종
                 </Typography>
               </IconButton>
             </Grid>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Box, Typography, Button } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 
 import DiagnosisDialog from "./DiagnosisDialog";
 
