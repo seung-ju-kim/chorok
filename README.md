@@ -1,7 +1,3 @@
-# AI_project_Team3
-
-## (서비스 명)
-
 
 
 ## [식물 케어 서비스]초록(chorok)
