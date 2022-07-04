@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import { Oval } from "react-loader-spinner";
 import { useSnackbar } from "notistack";
@@ -9,8 +8,6 @@ import * as Api from "../../api";
 import DiagnosisResult from "./DiagnosisResult";
 
 const DiagnosisPicture = () => {
-  const navigate = useNavigate();
-
   // 상태관리
   const [isLoading, setIsLoading] = useState(false);
   const [openResult, setOpenResult] = useState(false);
@@ -75,6 +72,7 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
+      setIsLoading(false);
       styleSnackbar(e.response.data, "warning");
     }
   };

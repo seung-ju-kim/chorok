@@ -6,7 +6,7 @@ properties:
   userId: 
     type: string
     format: uuid
-    description: post를 작성한 유저의 id
+    description: 로그인한 유저의 식별id
   author: 
     type: string
     description: post를 작성한 유저의 이름

@@ -47,15 +47,6 @@ post:
               error.message: 
                 type: string
                 description: 잘못된 요청입니다.
-    '401': 
-      description: unAuthorized
-      content:
-        application/json:
-          schema:
-            properties: 
-              error.message: 
-                type: string
-                description: 유효한 인증이 아닙니다.
     '404':
       description: Not Found
       content:
@@ -116,17 +107,6 @@ get:
                 description: 잘못된 요청입니다.
             example:
               error.message: 잘못된 요청입니다.
-    '401': 
-      description: unAuthorized
-      content:
-        application/json:
-          schema:
-            properties: 
-              error.message: 
-                type: string
-                description: 유효한 인증이 아닙니다.
-            example:
-              error.message: 유효한 인증이 아닙니다.
     '404':
       description: Not Found
       content:

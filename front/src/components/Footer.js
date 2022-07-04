@@ -12,14 +12,14 @@ const Footer = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname === "/diagnosis") {
+    if (pathname === "/diagnosis" || pathname.split("/")[1] === "diagnosis") {
       setValue("2");
     } else if (
       pathname === "/community" ||
       pathname.split("/")[1] === "community"
     ) {
       setValue("3");
-    } else if (pathname == "/account") {
+    } else if (pathname === "/account") {
       setValue("4");
     } else {
       setValue("1");

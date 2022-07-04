@@ -10,7 +10,7 @@ import {
   Button,
   DialogActions,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSnackbar } from "notistack";
 
@@ -20,7 +20,6 @@ import defaultImg from "../../imgs/default_image.jpg";
 const DiaryAddModal = ({ openWriteForm, setOpenWriteForm, setDiaries }) => {
   // useParams, useNavigate
   const { id } = useParams();
-  const navigate = useNavigate();
 
   // 스낵바
   const { enqueueSnackbar } = useSnackbar();

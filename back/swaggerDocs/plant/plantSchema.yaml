@@ -6,7 +6,7 @@ properties:
   userId: 
     type: string
     format: uuid
-    description: plant를 작성한 유저의 id
+    description: 로그인한 유저의 식별id
   species: 
     type: string
     description: plant의 품종

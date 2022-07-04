@@ -71,7 +71,7 @@ const CommunityList = ({ getList, boards, setBoards }) => {
           .map((e, i) => {
             return (
               <Grid item xs={12} sm={6} lg={4} key={i}>
-                <Skeleton variant="rectangular" height={400} />
+                <Skeleton animation="wave" variant="rectangular" height={400} />
               </Grid>
             );
           })
