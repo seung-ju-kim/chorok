@@ -5,6 +5,8 @@ import axios from "axios";
 
 const diagRouter = Router();
 
+const ML_BASE_URL = process.env.ML_BASE_URL || "http://localhost:8000";
+
 diagRouter.post("/", s3Upload(), async (req, res, next) => {
   try {
     const { key } = req.file;
@@ -12,7 +14,7 @@ diagRouter.post("/", s3Upload(), async (req, res, next) => {
     const fileName = String(key).split("diag_img/")[1];
 
     const mlResponse = await axios.get(
-      `http://localhost:8000/predict/${fileName}`
+      `${ML_BASE_URL}/predict/${fileName}`
     );
 
     if(mlResponse.data=="misCategory"){
