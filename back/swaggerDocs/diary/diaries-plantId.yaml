@@ -23,3 +23,21 @@ get:
                 type: array
                 description: 요청한 생육 일지 목록
                 $ref: "./diarySchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.

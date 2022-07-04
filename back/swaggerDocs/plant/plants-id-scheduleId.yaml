@@ -1,0 +1,60 @@
+post:
+  tags:
+    - plants
+  summary: 식물(plant)의 스케줄을 체크하고 다음 스케줄을 생성합니다.
+  description: 식물(plant)의 스케줄을 체크하고 다음 스케줄을 생성합니다.
+  parameters:
+  - name: _id
+    in: path
+    description: plant objectId
+    required: true
+    type: string
+  - name: scheduleId
+    in: path
+    description: schedule objectId
+    required: true
+    type: string
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          required:
+          - isChecked
+          type: object
+          properties:
+            isChecked: 
+              type: boolean
+              format : true
+              description: 물주기 스케줄 체크 상태
+  responses:
+    '201':
+      description: 물주기 스케줄이 정상적으로 체크되었으며 자동으로 다음 스케줄이 생성되었습니다.
+      content: 
+        application/json:
+          schema: 
+            type: object
+            properties:
+              success:
+                type: boolean
+                description: 요청이 성공했는지를 나타냅니다.
+              plant:
+                $ref: "./plantSchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.

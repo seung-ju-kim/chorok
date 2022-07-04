@@ -30,6 +30,7 @@ const userValidate = {
 
   updateUser :  async(req, res, next) => {
     const updateUserJoi = Joi.object().keys({
+        email: Joi.string().email().required(),
         name: Joi.string().min(1).max(20).trim(),
         description: Joi.string(),
     })

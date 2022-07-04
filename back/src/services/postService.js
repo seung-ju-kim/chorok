@@ -1,5 +1,6 @@
 import { Post } from "../db";
 
+
 class postService {
     /**
      * Community : post 생성
@@ -20,6 +21,7 @@ class postService {
      */
     static async getPostById(postId) {
       const post = await Post.findPostById(postId);
+      post.createdAt.setHours(post.createdAt.getHours()+9);
       return post; 
     }
   
@@ -29,6 +31,7 @@ class postService {
      */
     static async getPosts({category, page, perPage}) {
       const posts = await Post.findPosts({category, page, perPage});
+
       return posts;
     }
     

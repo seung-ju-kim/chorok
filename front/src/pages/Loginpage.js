@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-
-import video from "../video/main.webm";
+import "../App.css";
+import video from "../video/main.mp4";
 import LoginForm from "../components/user/LoginForm";
 
 const Loginpage = () => {
   // style
-  const boxStyle = {
+  const textBoxStyle = {
     color: "white",
     position: "absolute",
     top: "15%",
@@ -16,11 +16,11 @@ const Loginpage = () => {
     zIndex: 1,
   };
   const videoBoxStyle = {
-    width: "100vw",
-    height: "100vh",
-    display: "block",
-    overflowY: "hidden",
+    width: "100%",
+    height: "calc(var(--vh, 1vh) * 100)",
+    overflow: "hidden",
     "&::before": {
+      display: "block",
       content: "''",
       top: 0,
       left: 0,
@@ -32,13 +32,13 @@ const Loginpage = () => {
     },
   };
   const videoStyle = {
-    width: "100vw",
-    height: "100vh",
-    objectFit: "fill",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   };
   return (
     <>
-      <Box sx={boxStyle}>
+      <Box sx={textBoxStyle}>
         <Typography
           align="center"
           fontSize="4rem"
@@ -56,11 +56,12 @@ const Loginpage = () => {
           component="video"
           muted
           autoPlay
-          data-keepplaying
           loop
           sx={videoStyle}
+          playsInline
+          controls={false}
         >
-          <Box component="source" src={video} type="video/webm" />
+          <Box component="source" src={video} type="video/mp4" />
         </Box>
         <LoginForm />
       </Box>

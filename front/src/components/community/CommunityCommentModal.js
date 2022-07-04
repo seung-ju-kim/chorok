@@ -28,7 +28,6 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
   const [page, setPage] = useState(1);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false); //로딩 스피너
-  const [lastPage, setLastPage] = useState(0);
 
   // 스낵바
   const { enqueueSnackbar } = useSnackbar();
@@ -37,26 +36,18 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     enqueueSnackbar(message, { variant });
   };
 
-  useEffect(() => {
-    if (page >= 0) {
-      getComment();
-    }
-  }, [page]);
-
   const getComment = useCallback(async () => {
     setIsLoading(true);
     // Get Data Code
     const res = await Api.get(`comments?postId=${id}&page=${page}&perPage=15`);
     if (res.data.comments) {
       setContentList((prev) => [...prev, ...res.data.comments]);
-      setLastPage(res.data.lastPage);
-    } else {
-      console.log(res);
     }
     setIsLoading(false);
-  }, [page]);
+  }, [page, id]);
 
-  const postComment = async () => {
+  const postComment = async (e) => {
+    e.preventDefault();
     try {
       await Api.post(`comments`, {
         postId: id,
@@ -73,12 +64,11 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
     }
   };
 
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      postComment();
+  useEffect(() => {
+    if (page >= 0) {
+      getComment();
     }
-  };
+  }, [page, getComment]);
 
   const handleClick = async () => {
     setPage((prev) => prev + 1);
@@ -115,21 +105,26 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
             댓글 목록
           </DialogContentText>
         </DialogContent>
-        {/* <hr /> */}
       </DialogTitle>
-      <Box sx={{ px: 3 }} component="form" autoComplete="off" noValidate>
+      <Box
+        sx={{ px: 3 }}
+        onSubmit={postComment}
+        component="form"
+        autoComplete="off"
+        noValidate
+      >
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="standard-adornment-comment">
             댓글 달기...
           </InputLabel>
+
           <Input
-            onKeyPress={handleOnKeyPress}
             value={comment}
             id="standard-adornment-comment"
             onChange={(e) => setComment(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
-                <Button onClick={postComment}>게시</Button>
+                <Button type="submit">게시</Button>
               </InputAdornment>
             }
           />
@@ -143,6 +138,7 @@ const CommunityCommentModal = ({ openAddComment, setOpenAddComment }) => {
               content={content}
               setContentList={setContentList}
               setPage={setPage}
+              contentList={contentList}
             />
           );
         })}

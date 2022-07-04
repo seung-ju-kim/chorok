@@ -18,7 +18,7 @@ import { useSnackbar } from "notistack";
 
 import "./react-datepicker.css";
 import * as Api from "../../api";
-import defaultImg from "../../imgs/default_image.webp";
+import defaultImg from "../../imgs/default_image.jpg";
 
 const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
   // 식물 추가 상태 관리
@@ -95,7 +95,7 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
       setLastSupplyDate(new Date());
       setOpenAddPlant(false);
     } catch (e) {
-      styleSnackbar(e.response.data, "warning");
+      styleSnackbar("사진을 꼭 등록해주세요!", "warning");
     }
   };
 
@@ -164,7 +164,6 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
             >
               등록
               <TextField
-                required
                 type="file"
                 accept="image/*"
                 sx={{ display: "none" }}

@@ -22,6 +22,25 @@ get:
                 description: 요청이 성공했는지를 나타냅니다.
               diary:
                 $ref: "./diarySchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
 
 put:
   tags:
@@ -56,6 +75,25 @@ put:
                 description: 요청이 성공했는지를 나타냅니다.
               diary:
                 $ref: "./diarySchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
 
 delete:
   tags:

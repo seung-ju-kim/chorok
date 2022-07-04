@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, TextField, Grid } from "@mui/material";
 import { Oval } from "react-loader-spinner";
 import { useSnackbar } from "notistack";
 
-import defaultImg from "../../imgs/default_image.webp";
+import defaultImg from "../../imgs/default_image.jpg";
 import * as Api from "../../api";
 import DiagnosisResult from "./DiagnosisResult";
 
 const DiagnosisPicture = () => {
-  const navigate = useNavigate();
-
   // 상태관리
   const [isLoading, setIsLoading] = useState(false);
   const [openResult, setOpenResult] = useState(false);
@@ -75,7 +72,8 @@ const DiagnosisPicture = () => {
       setIsLoading(false);
       setOpenResult(true);
     } catch (e) {
-      styleSnackbar(e.response.data, "success");
+      setIsLoading(false);
+      styleSnackbar(e.response.data, "warning");
     }
   };
   return (
@@ -94,7 +92,7 @@ const DiagnosisPicture = () => {
             variant="h6"
             sx={{ my: "10vh" }}
           >
-            AI 의사가 식물을 진단 중입니다.
+            AI 의사가 식물을 진단 중입니다. 잠시만 기다려주세요.
           </Typography>
 
           <Oval

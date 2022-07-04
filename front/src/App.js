@@ -13,7 +13,7 @@ import { SnackbarProvider } from "notistack";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Loading from "./components/Loading";
+
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 import "./App.css";
@@ -53,10 +53,20 @@ function App() {
     user: null,
   });
 
-  // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
-  // 아래 코드를 보면 isFetchCompleted 가 true여야 컴포넌트가 구현됨.
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  // 모바일 사이즈
+  const handleResize = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
 
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // 아래의 fetchCurrentUser 함수가 실행된 다음에 컴포넌트가 구현되도록 함.
   const fetchCurrentUser = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
@@ -73,8 +83,6 @@ function App() {
     } catch {
       console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
     }
-    // fetchCurrentUser 과정이 끝났으므로, isFetchCompleted 상태를 true로 바꿔줌
-    setIsFetchCompleted(true);
   };
   // useEffect함수를 통해 fetchCurrentUser 함수를 실행함.
   useEffect(() => {
@@ -114,18 +122,10 @@ function App() {
                     element={<DiagnosisPicture />}
                   />
                   <Route path="/community" element={<Communitypage />} />
-                  {/* <Route
-                    path="/community/infoBoard"
-                    element={<Communitypage />}
-                  /> */}
                   <Route
                     path="/community/infoBoard/:id"
                     element={<CommunityCardDetail />}
                   />
-                  {/* <Route
-                    path="/community/freeBoard"
-                    element={<Communitypage />}
-                  /> */}
                   <Route
                     path="/community/freeBoard/:id"
                     element={<CommunityCardDetail />}
@@ -134,7 +134,6 @@ function App() {
                     path="/community/posting"
                     element={<CommunityPosting />}
                   />
-
                   <Route path="*" element={<Main />} />
                 </Routes>
               </Suspense>

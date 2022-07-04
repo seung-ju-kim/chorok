@@ -38,6 +38,24 @@ post:
                 description: 요청이 성공했는지를 나타냅니다.
               post:
                 $ref: "./postSchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
 get:
   tags:
     - posts
@@ -78,3 +96,25 @@ get:
                 type: array
                 description: 요청한 게시글 목록
                 $ref: "./postSchema.yaml"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+            example:
+              error.message: 잘못된 요청입니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
+            example:
+              error.message: 파일을 찾을 수 없습니다.

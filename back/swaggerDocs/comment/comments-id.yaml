@@ -43,6 +43,24 @@ put:
               content: "테스트 댓글입니다"
               createdAt: 2022-06-23T15:01:18.154+00:00
               updatedAt: 2022-06-23T15:01:18.154+00:00
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 잘못된 요청입니다.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            properties: 
+              error.message: 
+                type: string
+                description: 파일을 찾을 수 없습니다.
 
 delete:
   tags:
@@ -57,3 +75,4 @@ delete:
     responses:
     '200':
       description: 댓글이 정상적으로 삭제되었습니다.
+
