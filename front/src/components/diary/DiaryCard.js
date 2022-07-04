@@ -68,7 +68,12 @@ const DiaryCard = ({ diary, setDiaries, isLoading }) => {
       {diary.imageURL && (
         <>
           {isLoading ? (
-            <Skeleton variant="rectangular" width="100%" height="300px" />
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              width="100%"
+              height="300px"
+            />
           ) : (
             <CardMedia
               component="img"

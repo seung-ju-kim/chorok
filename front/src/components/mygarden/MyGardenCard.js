@@ -1,29 +1,42 @@
 import React from "react";
-import { Card, CardMedia, Typography, CardActionArea } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  Typography,
+  CardActionArea,
+  Box,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const MyGardenCard = ({ myplant }) => {
   const navigate = useNavigate();
 
   return (
-    <Card
-      sx={{
-        cursor: "pointer",
-        mx: "auto",
-        minWidth: "150px",
-      }}
-    >
+    <Card>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          image={myplant.imageURL}
-          sx={{ objectFit: "fill", height: "150px" }}
-          onClick={() => {
-            navigate(`/mygarden/${myplant._id}`);
+        <Box
+          sx={{
+            position: "relative",
+            width: "100%",
+            pb: "100%",
+            overflow: "hidden",
           }}
-        />
-
-        <Typography textAlign="center" sx={{ p: 0.5 }}>
+        >
+          <CardMedia
+            component="img"
+            image={myplant.imageURL}
+            sx={{
+              objectFit: "cover",
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+            }}
+            onClick={() => {
+              navigate(`/mygarden/${myplant._id}`);
+            }}
+          />
+        </Box>
+        <Typography textAlign="center" sx={{ py: 0.5 }}>
           {myplant.nickname}
         </Typography>
       </CardActionArea>

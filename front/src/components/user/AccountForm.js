@@ -85,7 +85,7 @@ const AccountForm = () => {
           </Box>
         </ListItem>
         <ListItem divider>
-          <ListItemText primary="버전 정보" secondary="1.0.0" />
+          <ListItemText primary="버전 정보" secondary="v1.2.0-release2" />
         </ListItem>
         <ListItem divider>
           <ListItemText primary="회원탈퇴" secondary="회원을 탈퇴합니다." />
