@@ -38,7 +38,6 @@
     "multer-s3": "^2.10.0",
     "node-cron": "^3.0.1",
     "request": "^2.0.2",
-    "supertest": "^6.1.6",
     "swagger-cli": "^4.0.4",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0",
@@ -50,9 +49,13 @@
     "@babel/node": "^7.16.8",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "dotenv": "^16.0.0",
     "jest": "^28.1.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "superagent": "^8.0.0",
+    "supertest": "^6.2.4"
   },
   "jest": {
     "testEnvironment": "node",
