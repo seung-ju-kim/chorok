@@ -95,7 +95,7 @@ const MyGardenAddModal = ({ openAddPlant, setOpenAddPlant, setMyPlants }) => {
       setLastSupplyDate(new Date());
       setOpenAddPlant(false);
     } catch (e) {
-      styleSnackbar("사진을 꼭 등록해주세요!", "warning");
+      styleSnackbar(e.response.data, "warning");
     }
   };
 
