@@ -32,9 +32,9 @@ const plantValidate = {
         }),
         termWater: Joi.number().min(1).max(100).required()
         .messages({ 
-            "number.min": "물주는 주기는 1일 이하로 입력할 수 없습니다.", 
+            "number.min": "물주는 주기는 1일 미만으로 입력할 수 없습니다.", 
             "number.empty": "물주는 주기를 입력해주세요.",
-            "number.max": "물주는 주기는 100일 이상 입력할 수 없습니다."
+            "number.max": "물주는 주기는 100일을 초과하여 입력할 수 없습니다."
         }),
     })
     try {
@@ -69,9 +69,9 @@ const plantValidate = {
         }),  
         termWater: Joi.number().min(1).max(100)
         .messages({ 
-            "number.min": "물주는 주기는 1일 이하로 입력할 수 없습니다.", 
+            "number.min": "물주는 주기는 1일 미만으로 입력할 수 없습니다.", 
             "number.empty": "물주는 주기를 입력해주세요.",
-            "number.max": "물주는 주기는 100일 이상 입력할 수 없습니다."
+            "number.max": "물주는 주기는 100일을 초과하여 입력할 수 없습니다."
         })
     })
     try {
