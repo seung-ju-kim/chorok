@@ -9,13 +9,13 @@ const plantValidate = {
         .messages({ 
             "number.min": "식물 종류를 1자 이상 입력해주세요", 
             "string.empty": "식물 종류를 1자 이상 입력해주세요",
-            "number.max": "식물 종류는 50자 이하 제한입니다"
+            "string.max": "식물 종류를 50자 이하로 입력해주세요"
         }),
         nickname: Joi.string().min(1).max(50).trim().required()
         .messages({ 
             "number.min": "애칭을 1자 이상 입력해주세요", 
             "string.empty": "애칭을 1자 이상 입력해주세요",
-            "number.max": "애칭은 50자 이하 제한입니다"
+            "string.max": "애칭을 50자 이하로 입력해주세요"
         }),
         imageURL: Joi.string().required()
         .messages({ 
