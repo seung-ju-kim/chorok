@@ -32,7 +32,7 @@ uploadRouter.post(
 
     } catch(error) {
       next(error);
-      return res.status(400).send("사진을 다시 등록해주세요");
+      return res.status(400).send("변경사항이 정상적으로 적용되지 않았습니다. 사진을 다시 등록해주세요");
     }
   }
 )
