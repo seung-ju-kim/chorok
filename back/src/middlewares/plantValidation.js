@@ -47,11 +47,32 @@ const plantValidate = {
 
   updatePlant :  async(req, res, next) => {
     const updatePlantJoi = Joi.object().keys({
-        species: Joi.string().min(1).max(50).trim(),
-        nickname: Joi.string().min(1).max(50).trim(),
-        imageURL: Joi.string(),
-        description: Joi.string(),  
+        species: Joi.string().min(1).max(50).trim()
+        .messages({ 
+            "number.min": "식물 종류를 1자 이상 입력해주세요", 
+            "string.empty": "식물 종류를 1자 이상 입력해주세요",
+            "string.max": "식물 종류를 50자 이하로 입력해주세요"
+        }),
+        nickname: Joi.string().min(1).max(50).trim()
+        .messages({ 
+            "number.min": "애칭을 1자 이상 입력해주세요", 
+            "string.empty": "애칭을 1자 이상 입력해주세요",
+            "string.max": "애칭을 50자 이하로 입력해주세요"
+        }),
+        imageURL: Joi.string()
+        .messages({ 
+            "string.empty": "식물 이미지를 등록해주세요",
+        }),
+        description: Joi.string()
+        .messages({ 
+            "string.empty": "한줄 소개를 1자 이상 입력해주세요",
+        }),  
         termWater: Joi.number().min(1).max(100)
+        .messages({ 
+            "number.min": "물주는 주기는 1일 이하로 입력할 수 없습니다.", 
+            "number.empty": "물주는 주기를 입력해주세요.",
+            "number.max": "물주는 주기는 100일 이상 입력할 수 없습니다."
+        })
     })
     try {
         await updatePlantJoi.validateAsync(req.body);
