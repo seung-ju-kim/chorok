@@ -123,7 +123,7 @@
 
 **- 아키텍처**  
 
-![image](uploads/a484ec6ca8840c80ad518a41ffd67670/image.png)
+![image](https://user-images.githubusercontent.com/59358910/179131804-4b206ee1-d5cd-4baa-831f-c134590bec78.png)
 
 **- 와이어프레임 (whimsical, figma 등 링크 삽입)**  
 
