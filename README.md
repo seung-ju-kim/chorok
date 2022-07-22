@@ -97,9 +97,9 @@
 ![image](https://user-images.githubusercontent.com/59358910/179131804-4b206ee1-d5cd-4baa-831f-c134590bec78.png)
 
 
-
-### 6. 기능 설명 🔮
+### 5. 기능 설명 🔮
 https://capable-puma-504.notion.site/chorok-3-36307461f8664937945110dfd9619799
 
-### 7. 기술 문서 및 시연영상
+
+### 6. 기술 문서 및 시연영상
 https://capable-puma-504.notion.site/chorok-3-e1c9047d66dc4000946d390300798abc
